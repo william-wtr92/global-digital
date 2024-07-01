@@ -1,8 +1,0 @@
-*.pem
-*.tsbuildinfo
-.DS_Store
-.env*.local
-.next
-build/
-coverage
-dist/
