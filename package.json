@@ -9,7 +9,7 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier -c ./src",
-    "format:fix": "prettier -c ./src"
+    "format:fix": "prettier -w ./src"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.6.0",
