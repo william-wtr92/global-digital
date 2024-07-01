@@ -1,1 +1,6 @@
-{}
+{
+  "Navbar": {
+    "signup": "Inscription",
+    "login": "Connexion"
+  }
+}
