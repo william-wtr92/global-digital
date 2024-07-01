@@ -3,13 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "dev": "next dev",
+    "dev:compose": "docker-compose --env-file .env.local -f compose.dev.yml up",
+    "format": "prettier -c ./src",
+    "format:fix": "prettier -w ./src",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "format": "prettier -c ./src",
-    "format:fix": "prettier -w ./src"
+    "start": "next start"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.6.0",
