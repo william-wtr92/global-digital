@@ -5,12 +5,16 @@ export const users = pgTable("Users", {
   firstName: text("first_name").notNull(),
   lastName: text("last_name").notNull(),
   email: text("email").notNull().unique(),
-  password: text("password").notNull(),
+  passwordHash: text("password_hash").notNull(),
+  passwordSalt: text("password_salt").notNull(),
   avatarUrl: text("avatar_url").notNull(),
   phoneNumber: text("phone_number").notNull(),
   isVerified: boolean("is_verified").default(false).notNull(),
-  createdAt: timestamp("created_at").notNull(),
-  updatedAt: timestamp("updated_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
 })
 
 export const area = pgTable("Area", {
@@ -35,8 +39,11 @@ export const freelance = pgTable("Freelance", {
     .notNull(),
   localisation: text("localisation").notNull(),
   registrationNumber: text("registration_number").notNull(),
-  createdAt: timestamp("created_at").notNull(),
-  updatedAt: timestamp("updated_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
 })
 
 export const employee = pgTable("Employee", {
@@ -47,8 +54,11 @@ export const employee = pgTable("Employee", {
   companyId: uuid("company_id")
     .references(() => company.id)
     .notNull(),
-  createdAt: timestamp("created_at").notNull(),
-  updatedAt: timestamp("updated_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
 })
 
 export const employeeRole = pgTable("Employee_role", {
@@ -66,13 +76,18 @@ export const employeeRole = pgTable("Employee_role", {
 
 export const company = pgTable("Company", {
   id: uuid("id").defaultRandom().primaryKey().notNull(),
-  name: text("name").notNull(),
   businessName: text("business_name").notNull(),
   kbisUrl: text("kbis_url").notNull(),
   headQuarter: text("head_quarter").notNull(),
   description: text("description").notNull(),
-  createdAt: timestamp("created_at").notNull(),
-  updatedAt: timestamp("updated_at").notNull(),
+  areaId: uuid("area_id")
+    .references(() => area.id)
+    .notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
 })
 
 export type InsertUser = typeof users.$inferInsert
@@ -83,15 +98,3 @@ export type SelectFreelance = typeof freelance.$inferSelect
 
 export type InsertEmployee = typeof employee.$inferInsert
 export type SelectEmployee = typeof employee.$inferSelect
-
-export type InsertCompany = typeof company.$inferInsert
-export type SelectCompany = typeof company.$inferSelect
-
-export type InsertArea = typeof area.$inferInsert
-export type SelectArea = typeof area.$inferSelect
-
-export type InsertRole = typeof role.$inferInsert
-export type SelectRole = typeof role.$inferSelect
-
-export type InsertEmployeeRole = typeof employeeRole.$inferInsert
-export type SelectEmployeeRole = typeof employeeRole.$inferSelect

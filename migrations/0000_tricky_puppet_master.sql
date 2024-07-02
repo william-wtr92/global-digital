@@ -5,21 +5,21 @@ CREATE TABLE IF NOT EXISTS "Area" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "Company" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"name" text NOT NULL,
 	"business_name" text NOT NULL,
 	"kbis_url" text NOT NULL,
 	"head_quarter" text NOT NULL,
 	"description" text NOT NULL,
-	"created_at" timestamp NOT NULL,
-	"updated_at" timestamp NOT NULL
+	"area_id" uuid NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "Employee" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"user_id" uuid NOT NULL,
 	"company_id" uuid NOT NULL,
-	"created_at" timestamp NOT NULL,
-	"updated_at" timestamp NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "Employee_role" (
@@ -37,8 +37,8 @@ CREATE TABLE IF NOT EXISTS "Freelance" (
 	"area_id" uuid NOT NULL,
 	"localisation" text NOT NULL,
 	"registration_number" text NOT NULL,
-	"created_at" timestamp NOT NULL,
-	"updated_at" timestamp NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "Role" (
@@ -51,14 +51,21 @@ CREATE TABLE IF NOT EXISTS "Users" (
 	"first_name" text NOT NULL,
 	"last_name" text NOT NULL,
 	"email" text NOT NULL,
-	"password" text NOT NULL,
+	"password_hash" text NOT NULL,
+	"password_salt" text NOT NULL,
 	"avatar_url" text NOT NULL,
 	"phone_number" text NOT NULL,
 	"is_verified" boolean DEFAULT false NOT NULL,
-	"created_at" timestamp NOT NULL,
-	"updated_at" timestamp NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "Users_email_unique" UNIQUE("email")
 );
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "Company" ADD CONSTRAINT "Company_area_id_Area_id_fk" FOREIGN KEY ("area_id") REFERENCES "public"."Area"("id") ON DELETE no action ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "Employee" ADD CONSTRAINT "Employee_user_id_Users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."Users"("id") ON DELETE no action ON UPDATE no action;
