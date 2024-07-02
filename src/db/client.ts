@@ -6,7 +6,10 @@ import * as schema from "@/db/schema"
 const { DB_USER, DB_PASSWORD, DB_PORT, DB_NAME } = process.env
 
 const client = new Client({
-  connectionString: `postgresql://${DB_USER}:${DB_PASSWORD}@localhost:${DB_PORT}/${DB_NAME}`,
+  user: DB_USER,
+  password: DB_PASSWORD,
+  port: parseInt(DB_PORT!, 10),
+  database: DB_NAME,
 })
 
 await client.connect()
