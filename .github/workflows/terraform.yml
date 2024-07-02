@@ -1,0 +1,71 @@
+name: Terraform
+
+on:
+  workflow_dispatch:
+    inputs:
+      destroy:
+        description: 'Set to true to destroy resources'
+        required: false
+        default: 'false'
+
+permissions:
+  contents: read
+
+jobs:
+
+  terraform:
+    name: Terraform
+    runs-on: ubuntu-latest
+    environment: dev  
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./infrastructure/terraform/plan
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Restore Terraform state
+        id: restore-state
+        uses: actions/download-artifact@v3
+        with:
+          name: terraform-state
+          path: ./infrastructure/terraform/plan
+        continue-on-error: true
+
+      - name: Create terraform.tfvars file
+        run: |
+          echo "access_key = \"${{ secrets.ACCESS_KEY }}\"" > terraform.tfvars
+          echo "secret_key = \"${{ secrets.SECRET_KEY }}\"" >> terraform.tfvars
+          echo "project_id = \"${{ secrets.PROJECT_ID }}\"" >> terraform.tfvars
+          echo "organization_id = \"${{ secrets.ORGANIZATION_ID }}\"" >> terraform.tfvars
+          echo "region = \"${{ vars.REGION }}\"" >> terraform.tfvars
+          echo "zone = \"${{ vars.ZONE }}\"" >> terraform.tfvars
+          echo "project_name = \"${{ vars.PROJECT_NAME }}\"" >> terraform.tfvars
+          echo "project_env = \"${{ vars.PROJECT_ENV }}\"" >> terraform.tfvars
+          echo "pool_size = \"${{ vars.POOL_SIZE }}\"" >> terraform.tfvars
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run : terraform plan -input=false -var-file=terraform.tfvars
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -var-file=terraform.tfvars
+
+      - name: Save Terraform state
+        if: success() || failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: terraform-state
+          path: ./infrastructure/terraform/plan/terraform.tfstate
+
+      - name: Terraform Destroy
+        if: ${{ github.event.inputs.destroy == 'true' }}
+        run: terraform destroy -auto-approve -var-file=terraform.tfvars
