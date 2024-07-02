@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -27,33 +26,24 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { apiFetch } from "@/lib/api"
+import { capitalizeFirstLetter } from "@/utils/forms"
+import type { ReadonlyArrayZod } from "@/utils/types"
+import {
+  companiesCreateFormValidator,
+  type CompaniesCreateValidatorType,
+} from "@/validators/companies"
 import routes from "@/web/routes"
 
-const companiesCreateValidator = (areas: readonly [string, ...string[]]) =>
-  z.object({
-    address: z.string().min(1),
-    businessName: z.string().min(1),
-    logo: z.string(),
-    headquarters: z.string().min(1),
-    businessSector: z.string().min(1),
-    areaId: z.enum(areas),
-    kbis: z.string(),
-    descriptionCompany: z.string().min(1),
-    accept: z.string(),
-  })
-
-type CompaniesCreateValidatorType = z.infer<
-  ReturnType<typeof companiesCreateValidator>
->
-
 const CompaniesCreatePage = () => {
-  const { data: areas } = useQuery({
+  const { data: areas } = useQuery<ReadonlyArrayZod>({
     queryKey: [routes.api.areas.index],
     queryFn: () => apiFetch({ url: routes.api.areas.index }),
   })
   const t = useTranslations("CompaniesCreatePage")
   const companiesCreateForm = useForm<CompaniesCreateValidatorType>({
-    resolver: zodResolver(companiesCreateValidator(areas)),
+    resolver: zodResolver(
+      companiesCreateFormValidator(areas as ReadonlyArrayZod),
+    ),
   })
   const { mutateAsync } = useMutation<
     void,
@@ -138,7 +128,11 @@ const CompaniesCreatePage = () => {
                       <SelectValue placeholder={t("area.placeholder")} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="apple">Apple</SelectItem>
+                      {areas?.map((area) => (
+                        <SelectItem value={area} key={area}>
+                          {capitalizeFirstLetter(area)}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -205,7 +199,10 @@ const CompaniesCreatePage = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Checkbox {...field} />
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
                 </FormControl>
                 <FormLabel>{t("accept.label")}</FormLabel>
                 <FormMessage />
