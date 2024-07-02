@@ -49,6 +49,7 @@
   "Success": {
     "registrationSuccess": "Inscription réussie"
   },
+  "Areas": {},
   "CompaniesCreatePage": {
     "button": "Valider la demande",
     "title": "Demande de création de page entreprise",
@@ -61,6 +62,11 @@
       "label": "Raison sociale de l'entreprise",
       "placeholder": "Raison sociale de l'entreprise",
       "description": "Entrez la raison sociale de l'entreprise"
+    },
+    "area": {
+      "label": "Sélectionner un secteur d'activité",
+      "placeholder": "Choissisez une image",
+      "description": "Entrez le logo de l'entreprise"
     },
     "logo": {
       "label": "Logo de l'entreprise",
