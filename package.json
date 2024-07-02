@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "build": "next build",
+    "db:generate": "pnpm exec drizzle-kit generate",
+    "db:migrate": "pnpm exec drizzle-kit migrate",
     "dev": "next dev",
     "dev:compose": "docker-compose --env-file .env.local -f compose.dev.yml up",
     "format": "prettier -c ./src",
