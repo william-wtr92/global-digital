@@ -4,7 +4,7 @@ const routes = {
   freelanceCreateProfile: "/freelance/create-profile",
   api: {
     createAccount: "/freelance/create-account",
-    areas: "/freelance/areas",
+    areas: "/areas",
   },
 } as const
 
