@@ -1,17 +1,22 @@
 "use client"
 
-import { createContext, useContext } from "react"
+import { createContext, useContext, useState } from "react"
 
 type AppContextType = {
-  // Add your context properties here
+  userInfo: { id: string }
 }
 
-const AdminContextProvider = () => {
-  return <AdminContext.Provider value={{}} />
+const AppContextProvider = (props: {
+  sessionUserInfo: { id: string }
+  children: React.ReactNode
+}) => {
+  const [userInfo] = useState(props.sessionUserInfo)
+
+  return <AppContext.Provider {...props} value={{ userInfo }} />
 }
 
-const AdminContext = createContext<AppContextType>({} as AppContextType)
-const useAdminContext = () => useContext(AdminContext)
+const AppContext = createContext<AppContextType>({} as AppContextType)
+const useAppContext = () => useContext(AppContext)
 
-export { AdminContextProvider }
-export default useAdminContext
+export { AppContextProvider }
+export default useAppContext
