@@ -1,9 +1,9 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -18,37 +18,43 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-
-const companiesCreateValidator = z.object({
-  address: z.string().min(1),
-  businessName: z.string().min(1),
-  logo: z.string(),
-  headquarters: z.string().min(1),
-  kbis: z.string(),
-  descriptionCompany: z.string().min(1),
-  accept: z.boolean(),
-})
+import { apiFetch } from "@/lib/api"
+import {
+  type CompaniesCreateValidatorType,
+  companiesCreateValidator,
+} from "@/validators/companies"
+import routes from "@/web/routes"
 
 const CompaniesCreatePage = () => {
   const t = useTranslations("CompaniesCreatePage")
+  const companiesCreateForm = useForm<CompaniesCreateValidatorType>({
+    resolver: zodResolver(companiesCreateValidator),
+  })
+  const { mutateAsync } = useMutation<
+    void,
+    Error,
+    CompaniesCreateValidatorType
+  >({
+    mutationKey: [routes.api.companies.create],
+    mutationFn: async (data) =>
+      await apiFetch<CompaniesCreateValidatorType>({
+        url: routes.api.companies.create,
+        method: "POST",
+        data,
+      }),
+  })
 
-  const companiesCreateForm = useForm<z.infer<typeof companiesCreateValidator>>(
-    {
-      resolver: zodResolver(companiesCreateValidator),
-    },
-  )
-
-  const onSubmit = (values: z.infer<typeof companiesCreateValidator>) => {
-    console.log(values)
+  const onSubmit = async (values: CompaniesCreateValidatorType) => {
+    await mutateAsync(values)
   }
 
   return (
-    <>
+    <div className="mt-6 flex flex-col items-center gap-5">
       <h1 className="text-2xl">{t("title")}</h1>
       <Form {...companiesCreateForm}>
         <form
           onSubmit={companiesCreateForm.handleSubmit(onSubmit)}
-          className="space-y-8"
+          className="space-y-5"
         >
           <FormField
             control={companiesCreateForm.control}
@@ -90,11 +96,7 @@ const CompaniesCreatePage = () => {
               <FormItem>
                 <FormLabel>{t("logo.label")}</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder={t("logo.placeholder")}
-                    type="file"
-                    {...field}
-                  />
+                  <Input type="file" {...field} />
                 </FormControl>
                 <FormDescription>{t("logo.description")}</FormDescription>
                 <FormMessage />
@@ -127,11 +129,7 @@ const CompaniesCreatePage = () => {
               <FormItem>
                 <FormLabel>{t("kbis.label")}</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder={t("kbis.placeholder")}
-                    type="file"
-                    {...field}
-                  />
+                  <Input type="file" {...field} />
                 </FormControl>
                 <FormDescription>{t("kbis.description")}</FormDescription>
                 <FormMessage />
@@ -173,7 +171,7 @@ const CompaniesCreatePage = () => {
           <Button type="submit">{t("button")}</Button>
         </form>
       </Form>
-    </>
+    </div>
   )
 }
 
