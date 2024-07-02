@@ -42,8 +42,68 @@
       "label": "J'accepte les conditions d'utilisation"
     }
   },
+  "Error": {
+    "anErrorOccurred": "Une erreur est survenue",
+    "email_unique": "Cet email est déjà utilisé"
+  },
+  "Success": {
+    "registrationSuccess": "Inscription réussie"
+  },
   "Navbar": {
     "signup": "Inscription",
-    "login": "Connexion"
+    "login": "Connexion",
+    "logout": "Déconnexion"
+  },
+  "Registration": {
+    "hello": "Bonjour !",
+    "whoAreYou": "Qui êtes-vous ?",
+    "freeLance": "Freelance",
+    "recruiter": "Recruteur"
+  },
+  "Form": {
+    "stepCompleted": "Etape {currentStep} complétée avec succès",
+    "FreelanceStep": {
+      "createProfileTitle": "Creation de votre profil",
+      "moreAboutYouTitle": "Dites-nous en plus sur votre activité...",
+      "addPictureTitle": "Ajout de votre photo de profil",
+      "lastStepTitle": "Dernière étape..."
+    },
+    "CreateProfilForm": {
+      "description": "Entrer votre {field}",
+      "submit": "Poursuivre l'inscription",
+      "lastName": "nom",
+      "firstName": "prénom",
+      "email": "email",
+      "phoneNumber": "numéro de téléphone"
+    },
+    "MoreAboutFreelanceProfileForm": {
+      "jobTitle": "profession",
+      "businessName": "raison sociale",
+      "activityArea": "secteur d'activité",
+      "localisation": "localisation",
+      "registrationNumber": "immatriculation",
+      "registrationSiren": "Numéro de SIREN",
+      "termOfUse": "conditions d'utilisation",
+      "description": "Entrer votre {field}",
+      "selectActivityArea": "Sélectionner votre secteur d'activité",
+      "submit": "Valider mon profil",
+      "acceptTermOfUse": "J’accepte les conditions d’utilisation"
+    },
+    "PictureFreelanceProfile": {
+      "submit": "Suivant"
+    },
+    "PasswordProfilForm": {
+      "passwordDescription": "Entrez votre mot de passe",
+      "confirmPasswordDescription": "Confirmez votre mot de passe",
+      "password": "mot de passe",
+      "submit": "Valider mon profil",
+      "passwordsDoNotMatch": "Les mots de passe ne correspondent pas"
+    }
+  },
+  "FormMessage": {
+    "tooShort": "Trop court",
+    "invalidEmail": "Email invalide",
+    "passwordTooShort": "Mot de passe trop court",
+    "Required": "Requis"
   }
 }

@@ -1,7 +1,67 @@
 {
   "CompaniesCreatePage": {},
+  "Error": {
+    "anErrorOccurred": "An error occurred",
+    "email_unique": "This email is already used"
+  },
+  "Success": {
+    "registrationSuccess": "Registration successful"
+  },
   "Navbar": {
     "signup": "Registration",
-    "login": "Connection"
+    "login": "Connection",
+    "logout": "Logout"
+  },
+  "Registration": {
+    "hello": "Hello !",
+    "whoAreYou": "Who are you ?",
+    "freeLance": "Freelance",
+    "recruiter": "Recruiter"
+  },
+  "Form": {
+    "stepCompleted": "Step {currentStep} completed successfully",
+    "FreelanceStep": {
+      "createProfileTitle": "Create your profile",
+      "moreAboutYouTitle": "Tell us more about your activity...",
+      "addPictureTitle": "Add your profile picture",
+      "lastStepTitle": "Last step..."
+    },
+    "CreateProfilForm": {
+      "description": "Enter your {field}",
+      "submit": "Submit",
+      "lastName": "lastname",
+      "firstName": "firstname",
+      "email": "email",
+      "phoneNumber": "phone number"
+    },
+    "MoreAboutFreelanceProfileForm": {
+      "jobTitle": "occupation",
+      "businessName": "social reason",
+      "activityArea": "activity area",
+      "localisation": "localisation",
+      "registrationNumber": "registration",
+      "registrationSiren": "SIREN number",
+      "termOfUse": "term of use",
+      "description": "Enter your {field}",
+      "selectActivityArea": "Select your activity area",
+      "submit": "Validate my profile",
+      "acceptTermOfUse": "I accept the terms of use"
+    },
+    "PictureFreelanceProfile": {
+      "submit": "Next"
+    },
+    "PasswordProfilForm": {
+      "passwordDescription": "Enter your password",
+      "confirmPasswordDescription": "Confirm your password",
+      "password": "password",
+      "submit": "Validate my profile",
+      "passwordsDoNotMatch": "Passwords do not match"
+    }
+  },
+  "FormMessage": {
+    "tooShort": "Too short",
+    "invalidEmail": "Invalid email",
+    "passwordTooShort": "Password too short",
+    "Required": "Required"
   }
 }

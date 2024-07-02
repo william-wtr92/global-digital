@@ -1,3 +1,5 @@
+import configuration from "@/config"
+
 type IApiFetch<Body> = {
   url: string
   data?: Body
@@ -9,11 +11,14 @@ export const apiFetch = async <Body>({
   data,
   ...options
 }: IApiFetch<Body>) => {
-  const res = await fetch(`http://localhost:3000${url}`, {
-    method: method ?? "GET",
-    body: JSON.stringify(data),
-    ...options,
-  })
+  const res = await fetch(
+    `http://localhost:3000${configuration.api.baseApiURL}${url}`,
+    {
+      method: method ?? "GET",
+      ...(data && { body: JSON.stringify(data) }),
+      ...options,
+    },
+  )
 
   return await res.json()
 }
