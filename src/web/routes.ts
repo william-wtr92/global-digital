@@ -2,10 +2,10 @@ const routes = {
   home: "/",
   api: {
     areas: {
-      index: "/api/areas",
+      index: "/areas",
     },
     companies: {
-      create: "/api/companies/create",
+      create: "/companies/create",
     },
   },
 } as const

@@ -9,37 +9,17 @@ export const POST = async (req: NextRequest) => {
   const body = await req.json()
 
   try {
-    const user = await db
-      .insert(users)
-      .values({
-        firstName: body.firstName,
-        lastName: body.lastName,
-        email: body.email,
-        password: body.password,
-        avatarUrl: body.avatarUrl,
-        phoneNumber: body.phoneNumber,
-        isVerified: false,
-        createdAt: new Date(Date.now()),
-        updatedAt: new Date(Date.now()),
-      })
-      .returning()
+    const user = await db.insert(users).values(body).returning()
 
     await db.insert(freelance).values({
       userId: user[0].id,
-      jobTitle: body.jobTitle,
-      businessName: body.businessName,
-      areaId: body.areaId,
-      localisation: body.localisation,
-      registrationNumber: body.registrationNumber,
-      createdAt: new Date(Date.now()),
-      updatedAt: new Date(Date.now()),
+      ...body,
     })
 
     const jwt = signJWT(user[0].id)
 
     cookies().set("Authorization", jwt.toString(), {
       maxAge: 60 * 60 * 24,
-      httpOnly: true,
       sameSite: "strict",
     })
 

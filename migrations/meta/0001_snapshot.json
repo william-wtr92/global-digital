@@ -38,12 +38,6 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
         "business_name": {
           "name": "business_name",
           "type": "text",
@@ -68,6 +62,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "area_id": {
+          "name": "area_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -84,7 +84,17 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "Company_area_id_Area_id_fk": {
+          "name": "Company_area_id_Area_id_fk",
+          "tableFrom": "Company",
+          "tableTo": "Area",
+          "columnsFrom": ["area_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -132,12 +142,8 @@
           "name": "Employee_user_id_Users_id_fk",
           "tableFrom": "Employee",
           "tableTo": "Users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -145,12 +151,8 @@
           "name": "Employee_company_id_Company_id_fk",
           "tableFrom": "Employee",
           "tableTo": "Company",
-          "columnsFrom": [
-            "company_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["company_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -194,12 +196,8 @@
           "name": "Employee_role_employee_id_Employee_id_fk",
           "tableFrom": "Employee_role",
           "tableTo": "Employee",
-          "columnsFrom": [
-            "employee_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["employee_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -207,12 +205,8 @@
           "name": "Employee_role_role_id_Role_id_fk",
           "tableFrom": "Employee_role",
           "tableTo": "Role",
-          "columnsFrom": [
-            "role_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["role_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -220,12 +214,8 @@
           "name": "Employee_role_company_id_Company_id_fk",
           "tableFrom": "Employee_role",
           "tableTo": "Company",
-          "columnsFrom": [
-            "company_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["company_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -301,12 +291,8 @@
           "name": "Freelance_user_id_Users_id_fk",
           "tableFrom": "Freelance",
           "tableTo": "Users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -314,12 +300,8 @@
           "name": "Freelance_area_id_Area_id_fk",
           "tableFrom": "Freelance",
           "tableTo": "Area",
-          "columnsFrom": [
-            "area_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["area_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -426,9 +408,7 @@
         "Users_email_unique": {
           "name": "Users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       }
     }
