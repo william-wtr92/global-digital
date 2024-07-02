@@ -1,4 +1,12 @@
 services:
+  web:
+    image: global-digital:1.0.0
+    build: 
+      context: .
+      target: dev
+    ports:
+      - ${WEB_PORT:-3000}:3000
+
   postgres:
     image: postgres:alpine
     ports:
