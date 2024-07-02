@@ -4,21 +4,24 @@ WORKDIR /app
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
+RUN corepack enable pnpm
+RUN corepack use pnpm@latest
+
 EXPOSE 3000
 
 FROM base AS dev
 
 COPY . .
-RUN  yarn install
+RUN  pnpm install
 
-ENTRYPOINT ["yarn", "run", "dev"]
+ENTRYPOINT ["pnpm", "run", "dev"]
 
 FROM base AS builder
 
 COPY . .
-RUN  yarn install --omit=dev
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
 
-RUN yarn run build
+RUN pnpm run build
 
 FROM base AS prod
 
