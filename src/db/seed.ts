@@ -1,8 +1,8 @@
 import { drizzle } from "drizzle-orm/node-postgres"
 import { Pool } from "pg"
 
-import { hashPassword } from "./hashPassword"
 import { type InsertUser, users } from "./schema"
+import { hashPassword } from "../utils/hashPassword"
 import appConfig from "@/config/appConfig"
 
 const {
