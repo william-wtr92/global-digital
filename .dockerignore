@@ -1,6 +1,10 @@
 node_modules
 .next
 .git
-.yarn
 .github
 .vscode
+.prettierrc
+.prettierignore
+.env.example
+*.md
+.gitignore
