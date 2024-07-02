@@ -3,10 +3,14 @@ import { Client } from "pg"
 
 import * as schema from "@/db/schema"
 
-const { DB_USER, DB_PASSWORD, DB_PORT, DB_NAME } = process.env
+const { DB_USER, DB_PASSWORD, DB_PORT, DB_NAME, DB_HOST } = process.env
 
 const client = new Client({
-  connectionString: `postgresql://${DB_USER}:${DB_PASSWORD}@localhost:${DB_PORT}/${DB_NAME}`,
+  user: DB_USER,
+  password: DB_PASSWORD,
+  host: DB_HOST,
+  port: parseInt(DB_PORT!, 10),
+  database: DB_NAME,
 })
 
 await client.connect()

@@ -3,13 +3,13 @@ import { defineConfig } from "drizzle-kit"
 
 config({ path: ".env.local" })
 
-const { DB_USER, DB_PASSWORD, DB_PORT, DB_NAME } = process.env
+const { DB_USER, DB_PASSWORD, DB_PORT, DB_NAME, DB_HOST } = process.env
 
 export default defineConfig({
   schema: "./src/db/schema.ts",
   out: "./migrations",
   dialect: "postgresql",
   dbCredentials: {
-    url: `postgresql://${DB_USER}:${DB_PASSWORD}@localhost:${DB_PORT}/${DB_NAME}`,
+    url: `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
   },
 })
