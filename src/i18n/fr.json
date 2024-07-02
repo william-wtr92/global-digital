@@ -65,8 +65,8 @@
     },
     "area": {
       "label": "Sélectionner un secteur d'activité",
-      "placeholder": "Choissisez une image",
-      "description": "Entrez le logo de l'entreprise"
+      "placeholder": "Choissisez un secteur d'activité",
+      "description": "Entrez votre secteur d'activité"
     },
     "logo": {
       "label": "Logo de l'entreprise",
