@@ -9,8 +9,11 @@ export const users = pgTable("Users", {
   avatarUrl: text("avatar_url").notNull(),
   phoneNumber: text("phone_number").notNull(),
   isVerified: boolean("is_verified").default(false).notNull(),
-  createdAt: timestamp("created_at").notNull(),
-  updatedAt: timestamp("updated_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
 })
 
 export const area = pgTable("Area", {
@@ -35,8 +38,11 @@ export const freelance = pgTable("Freelance", {
     .notNull(),
   localisation: text("localisation").notNull(),
   registrationNumber: text("registration_number").notNull(),
-  createdAt: timestamp("created_at").notNull(),
-  updatedAt: timestamp("updated_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
 })
 
 export const employee = pgTable("Employee", {
@@ -47,8 +53,11 @@ export const employee = pgTable("Employee", {
   companyId: uuid("company_id")
     .references(() => company.id)
     .notNull(),
-  createdAt: timestamp("created_at").notNull(),
-  updatedAt: timestamp("updated_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
 })
 
 export const employeeRole = pgTable("Employee_role", {
@@ -66,13 +75,18 @@ export const employeeRole = pgTable("Employee_role", {
 
 export const company = pgTable("Company", {
   id: uuid("id").defaultRandom().primaryKey().notNull(),
-  name: text("name").notNull(),
   businessName: text("business_name").notNull(),
   kbisUrl: text("kbis_url").notNull(),
   headQuarter: text("head_quarter").notNull(),
   description: text("description").notNull(),
-  createdAt: timestamp("created_at").notNull(),
-  updatedAt: timestamp("updated_at").notNull(),
+  areaId: uuid("area_id")
+    .references(() => area.id)
+    .notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
 })
 
 export type InsertUser = typeof users.$inferInsert

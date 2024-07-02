@@ -8,6 +8,20 @@
       "when": 1719919253296,
       "tag": "0000_hot_shape",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1719921296060,
+      "tag": "0001_lumpy_giant_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1719924491629,
+      "tag": "0002_petite_omega_flight",
+      "breakpoints": true
     }
   ]
 }
