@@ -1,9 +1,10 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
+import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -17,18 +18,42 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { apiFetch } from "@/lib/api"
-import {
-  type CompaniesCreateValidatorType,
-  companiesCreateValidator,
-} from "@/validators/companies"
 import routes from "@/web/routes"
 
+const companiesCreateValidator = (areas: readonly [string, ...string[]]) =>
+  z.object({
+    address: z.string().min(1),
+    businessName: z.string().min(1),
+    logo: z.string(),
+    headquarters: z.string().min(1),
+    businessSector: z.string().min(1),
+    areaId: z.enum(areas),
+    kbis: z.string(),
+    descriptionCompany: z.string().min(1),
+    accept: z.string(),
+  })
+
+type CompaniesCreateValidatorType = z.infer<
+  ReturnType<typeof companiesCreateValidator>
+>
+
 const CompaniesCreatePage = () => {
+  const { data: areas } = useQuery({
+    queryKey: [routes.api.areas.index],
+    queryFn: () => apiFetch({ url: routes.api.areas.index }),
+  })
   const t = useTranslations("CompaniesCreatePage")
   const companiesCreateForm = useForm<CompaniesCreateValidatorType>({
-    resolver: zodResolver(companiesCreateValidator),
+    resolver: zodResolver(companiesCreateValidator(areas)),
   })
   const { mutateAsync } = useMutation<
     void,
@@ -36,17 +61,15 @@ const CompaniesCreatePage = () => {
     CompaniesCreateValidatorType
   >({
     mutationKey: [routes.api.companies.create],
-    mutationFn: async (data) =>
-      await apiFetch<CompaniesCreateValidatorType>({
+    mutationFn: (data) =>
+      apiFetch<CompaniesCreateValidatorType>({
         url: routes.api.companies.create,
         method: "POST",
         data,
       }),
   })
 
-  const onSubmit = async (values: CompaniesCreateValidatorType) => {
-    await mutateAsync(values)
-  }
+  const onSubmit = (values: CompaniesCreateValidatorType) => mutateAsync(values)
 
   return (
     <div className="mt-6 flex flex-col items-center gap-5">
@@ -99,6 +122,27 @@ const CompaniesCreatePage = () => {
                   <Input type="file" {...field} />
                 </FormControl>
                 <FormDescription>{t("logo.description")}</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={companiesCreateForm.control}
+            name="areaId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("area.label")}</FormLabel>
+                <FormControl>
+                  <Select {...field}>
+                    <SelectTrigger>
+                      <SelectValue placeholder={t("area.placeholder")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="apple">Apple</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormDescription>{t("area.description")}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

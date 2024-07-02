@@ -1,6 +1,6 @@
 type IApiFetch<Body> = {
   url: string
-  data: Body
+  data?: Body
 } & RequestInit
 
 export const apiFetch = async <Body>({
