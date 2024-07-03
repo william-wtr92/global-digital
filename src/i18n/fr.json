@@ -54,7 +54,10 @@
     "signup": "Inscription",
     "login": "Connexion",
     "logout": "Déconnexion",
-    "logoutSuccess": "Déconnexion réussie."
+    "logoutSuccess": "Déconnexion réussie.",
+    "search": {
+      "placeholder": "Rechercher une mission ou un freelance"
+    }
   },
   "Login": {
     "title": "Bon retour !",
@@ -126,5 +129,13 @@
     "invalidEmail": "Email invalide",
     "passwordTooShort": "Mot de passe trop court",
     "Required": "Requis"
+  },
+  "Missions": {
+    "days": "jours",
+    "form": {
+      "label": "Rechercher une mission",
+      "placeholder": "Entreprise, Mission ...",
+      "error": "Recherche invalide"
+    }
   }
 }

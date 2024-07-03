@@ -9,6 +9,7 @@ const routes = {
   freelance: {
     createProfile: "/freelance/create-profile",
   },
+  search: "/search",
   api: {
     auth: {
       user: "/auth",
@@ -26,6 +27,10 @@ const routes = {
       "create": "/companies/create",
       ":id": (id: string) => `/companies/${id}`,
     },
+    missions: {
+      list: "/missions",
+    },
+    createAccount: "/freelance/create-account",
   },
 } as const
 
