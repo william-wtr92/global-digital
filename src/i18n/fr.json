@@ -59,6 +59,7 @@
   },
   "Login": {
     "Form": {
+      "title": "Bon retour !",
       "email": {
         "label": "Email",
         "placeholder": "Entrez votre email",
@@ -133,7 +134,13 @@
       "registrationSiren": "Numéro de SIREN",
       "description": "Entrez votre {field}",
       "submit": "Valider les modifications",
-      "deleteAccount": "Supprimer mon compte"
+      "deleteAccount": "Supprimer mon compte",
+      "deleteAccountSuccess": "Votre compte a bien été supprimé.",
+      "deleteAccountError": "Une erreur est survenue lors de la suppression de votre compte.",
+      "areYouSure": "Êtes-vous sûr de vouloir supprimer votre compte ?",
+      "deleteAccountDescription": "Cette action est irréversible. En cliquant sur le bouton “Supprimer”, votre compte sera supprimé de nos serveurs.",
+      "cancel": "Annuler",
+      "continue": "Continuer"
     }
   },
   "FormMessage": {

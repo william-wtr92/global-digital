@@ -19,14 +19,13 @@ const routes = {
       index: "/areas",
     },
     freelance: {
-      createAccount: "/freelance/create-account",
       getProfile: (userId: string) => `/freelance/${userId}`,
+      updateAccount: (userId: string) => `/freelance/${userId}/account`,
+      deleteAccount: (userId: string) => `/freelance/${userId}/account`,
     },
     companies: {
       create: "/companies/create",
     },
-    createAccount: "/freelance/create-account",
-    updateAccount: (userId: string) => `/freelance/${userId}/account`,
   },
 } as const
 

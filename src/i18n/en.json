@@ -58,6 +58,7 @@
   },
   "Login": {
     "Form": {
+      "title": "Welcome back !",
       "email": {
         "label": "Email",
         "placeholder": "Enter your email",
@@ -132,7 +133,13 @@
       "registrationSiren": "SIREN number",
       "description": "Enter your {field}",
       "submit": "Validate the changes",
-      "deleteAccount": "Delete my account"
+      "deleteAccount": "Delete my account",
+      "deleteAccountSuccess": "Your account has been successfully deleted.",
+      "deleteAccountError": "An error occurred while deleting your account. Please try again later.",
+      "areYouSure": "Are you sure you want to delete your account?",
+      "deleteAccountDescription": "This action is irreversible. By clicking on the “Delete” button, your account will be deleted from our servers.",
+      "cancel": "Cancel",
+      "continue": "Continue"
     }
   },
   "FormMessage": {

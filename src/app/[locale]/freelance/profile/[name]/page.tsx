@@ -24,6 +24,12 @@ const FreelanceAccount = () => {
 
   const { isPending, data, error } = useFreelanceProfile(id || "")
 
+  if (userInfo.id !== id) {
+    router.push(routes.home)
+
+    return
+  }
+
   if (isPending) {
     return (
       <div className="flex h-full items-center justify-center">
