@@ -52,7 +52,25 @@
   "Navbar": {
     "signup": "Inscription",
     "login": "Connexion",
-    "logout": "Déconnexion"
+    "logout": "Déconnexion",
+    "logoutSuccess": "Déconnexion réussie."
+  },
+  "Login": {
+    "Form": {
+      "email": {
+        "label": "Email",
+        "placeholder": "Entrez votre email",
+        "error": "Email invalide."
+      },
+      "password": {
+        "label": "Mot de passe",
+        "placeholder": "Entrez votre mot de passe",
+        "error": "Le mot de passe doit faire plus de 8 caractères."
+      },
+      "submit": "Se connecter",
+      "success": "Connexion réussie, vous allez être redirigé dans quelques secondes.",
+      "error": "Connexion échouée, vérifiez vos identifiants."
+    }
   },
   "Registration": {
     "hello": "Bonjour !",

@@ -37,14 +37,14 @@ const PasswordProfilForm = ({
   })
   const mutation = useMutation({
     mutationFn: async () => {
-      const data = await apiFetch<Profile>({
+      const response = await apiFetch<Profile>({
         url: routes.api.createAccount,
         method: "POST",
         data: profile,
       })
 
-      if (data.error) {
-        if (data.error.constraint === "Users_email_unique") {
+      if (response.data) {
+        if (response.data.constraint === "Users_email_unique") {
           toast.error(t("Error.email_unique"))
         } else {
           toast.error(t("Error.anErrorOccurred"))

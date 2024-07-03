@@ -1,5 +1,3 @@
-import configuration from "@/config"
-
 type IApiFetch<Body> = {
   url: string
   data?: Body
@@ -11,18 +9,18 @@ export const apiFetch = async <Body>({
   data,
   ...options
 }: IApiFetch<Body>) => {
-  const res = await fetch(
-    `http://localhost:3000${configuration.api.baseApiURL}${url}`,
-    {
-      method: method ?? "GET",
-      ...(data && { body: JSON.stringify(data) }),
-      headers: {
-        "Content-Type": "application/json",
-        ...options.headers,
-      },
-      ...options,
+  const baseApiURL = process.env.NEXT_PUBLIC_BASE_API_URL || ""
+  const res = await fetch(`${baseApiURL}${url}`, {
+    method: method ?? "GET",
+    ...(data && { body: JSON.stringify(data) }),
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
     },
-  )
+  })
 
-  return await res.json()
+  const responseData = await res.json()
+
+  return { status: res.status, data: responseData }
 }

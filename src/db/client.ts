@@ -1,16 +1,19 @@
 import { drizzle } from "drizzle-orm/node-postgres"
 import { Client } from "pg"
 
+import appConfig from "@/config/appConfig"
 import * as schema from "@/db/schema"
 
-const { DB_USER, DB_PASSWORD, DB_PORT, DB_NAME, DB_HOST } = process.env
+const {
+  db: { host, user, password, port, name },
+} = appConfig
 
 const client = new Client({
-  user: DB_USER,
-  password: DB_PASSWORD,
-  host: DB_HOST,
-  port: parseInt(DB_PORT!, 10),
-  database: DB_NAME,
+  host,
+  user,
+  password,
+  port,
+  database: name,
 })
 
 await client.connect()

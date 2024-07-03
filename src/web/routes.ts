@@ -1,10 +1,16 @@
 const routes = {
   home: "/",
+  login: "/login",
   registration: "/registration",
   freelance: {
     createProfile: "/freelance/create-profile",
   },
   api: {
+    auth: {
+      user: "/auth",
+      login: "/auth/login",
+      logout: "/auth/logout",
+    },
     areas: {
       index: "/areas",
     },
