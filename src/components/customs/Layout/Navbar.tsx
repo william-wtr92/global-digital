@@ -1,7 +1,7 @@
 "use client"
 import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/outline"
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
@@ -26,7 +26,7 @@ const Navbar = (props: Props) => {
 
   const { data, isLoading, error } = useUser(token)
   const userInfo = !isLoading && !error ? data?.userConnected : null
-
+  const queryClient = useQueryClient()
   const mutation = useMutation<void, Error>({
     mutationKey: [routes.api.auth.logout],
     mutationFn: async () => {
@@ -38,6 +38,7 @@ const Navbar = (props: Props) => {
       })
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user"] })
       toast.success(t("logoutSuccess"))
       router.push(routes.login)
     },

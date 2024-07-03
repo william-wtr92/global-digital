@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
+import { useQueryState } from "nuqs"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { MdAddReaction } from "react-icons/md"
@@ -28,7 +29,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { apiFetch } from "@/lib/api"
-import { useGetAreas } from "@/lib/queries/area"
 import type { ProfileApi } from "@/types/api/profile"
 import {
   UpdateAccountFreelanceSchema,
@@ -37,14 +37,15 @@ import {
 import type { Profile } from "@/types/freelance"
 import { capitalizeFirstLetter } from "@/utils/forms"
 import { getFullName } from "@/utils/functions"
+import { useArea } from "@/web/hooks/useArea"
 import routes from "@/web/routes"
 
 type UpdateProfilFormProps = {
   profile: ProfileApi
-  id: string
 }
 
-const UpdateProfilForm = ({ profile, id }: UpdateProfilFormProps) => {
+const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
+  const [id] = useQueryState("id")
   const [updatedProfile, setUpdatedProfile] = useState<Profile>()
   const router = useRouter()
   const t = useTranslations()
@@ -81,18 +82,18 @@ const UpdateProfilForm = ({ profile, id }: UpdateProfilFormProps) => {
     }
   }, [profile, form])
 
-  const { data, error, isPending } = useGetAreas()
+  const { data, error, isPending } = useArea()
 
   const mutation = useMutation({
     mutationFn: async () => {
-      const test = await apiFetch<Profile>({
-        url: routes.api.updateAccount(id),
+      const response = await apiFetch<Profile>({
+        url: routes.api.updateAccount(id || ""),
         method: "PATCH",
         data: updatedProfile,
       })
 
-      if (test.error) {
-        if (test.error.constraint === "Users_email_unique") {
+      if (response.data.error) {
+        if (response.data.error.constraint === "Users_email_unique") {
           toast.error(t("Error.email_unique"))
         } else {
           toast.error(t("Error.anErrorOccurred"))
@@ -104,15 +105,17 @@ const UpdateProfilForm = ({ profile, id }: UpdateProfilFormProps) => {
         queryClient.invalidateQueries({
           queryKey: ["freelanceProfile"],
         })
-
+        queryClient.invalidateQueries({
+          queryKey: ["areaMoreAboutFreelance"],
+        })
         toast.success(t("Success.updtaedSuccess"))
 
         if (profile.Users && id) {
           router.push(
             routes.profile(
               getFullName(
-                profile?.Users.firstName,
-                profile?.Users.lastName,
+                profile.Users.firstName,
+                profile.Users.lastName,
               ).toLowerCase(),
               id,
             ),

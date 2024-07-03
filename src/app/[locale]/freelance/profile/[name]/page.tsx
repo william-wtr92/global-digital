@@ -1,7 +1,9 @@
-import { useQuery } from "@tanstack/react-query"
+"use client"
+
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
+import { useQueryState } from "nuqs"
 import { CiLocationOn } from "react-icons/ci"
 import { IoSettingsOutline } from "react-icons/io5"
 import { RxPerson } from "react-icons/rx"
@@ -9,28 +11,18 @@ import { toast } from "sonner"
 
 import Spinner from "@/components/customs/Utils/Spinner"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { apiFetch } from "@/lib/api"
-import type { ProfileApi } from "@/types/api/profile"
 import { getFullName } from "@/utils/functions"
 import useAppContext from "@/web/hooks/useAppContext"
+import { useFreelanceProfile } from "@/web/hooks/useProfile"
 import routes from "@/web/routes"
 
-type AccountPageProps = {
-  id: string
-}
-
-const AccountPage = ({ id }: AccountPageProps) => {
+const FreelanceAccount = () => {
   const t = useTranslations()
-  const { userInfo } = useAppContext()
   const router = useRouter()
+  const [id] = useQueryState("id")
+  const { userInfo } = useAppContext()
 
-  const { isPending, data, error } = useQuery<ProfileApi>({
-    queryKey: ["freelanceProfile"],
-    queryFn: () =>
-      apiFetch({
-        url: routes.api.freelance.getProfile(id),
-      }),
-  })
+  const { isPending, data, error } = useFreelanceProfile(id || "")
 
   if (isPending) {
     return (
@@ -78,7 +70,7 @@ const AccountPage = ({ id }: AccountPageProps) => {
               </AvatarFallback>
             </Avatar>
             <div className="flex flex-col gap-4">
-              <h1 className="text-center text-4xl font-bold">
+              <h1 className="text-center text-4xl font-bold md:text-start">
                 {data.Users.firstName} {data.Users.lastName}
               </h1>
               <p className="text-center text-xl md:text-left">
@@ -125,4 +117,4 @@ const AccountPage = ({ id }: AccountPageProps) => {
   )
 }
 
-export default AccountPage
+export default FreelanceAccount

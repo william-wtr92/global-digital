@@ -23,6 +23,7 @@ const routes = {
       user: "/auth",
       login: "/auth/login",
       logout: "/auth/logout",
+      register: { freelance: "/auth/register/freelance" },
     },
     areas: {
       "index": "/areas",
