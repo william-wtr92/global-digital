@@ -29,6 +29,13 @@
       "when": 1719998045232,
       "tag": "0003_heavy_prism",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1720010114208,
+      "tag": "0004_kind_solo",
+      "breakpoints": true
     }
   ]
 }
