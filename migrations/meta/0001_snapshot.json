@@ -408,6 +408,7 @@
         "Users_email_unique": {
           "name": "Users_email_unique",
           "nullsNotDistinct": false,
+
           "columns": ["email"]
         }
       }
