@@ -12,7 +12,9 @@ type Response = {
 }
 
 const fetchUser = async () => {
-  const response = await apiFetch({
+  const response = await apiFetch<
+    Omit<SelectUser, "passwordHash" | "passwordSalt">
+  >({
     url: routes.api.auth.user,
     method: "GET",
     credentials: "include",

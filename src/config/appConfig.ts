@@ -61,7 +61,7 @@ const appConfig = appConfigSchema.parse({
     },
     jwt: {
       secret: process.env.SECURITY_JWT_SECRET!,
-      expiresIn: "1d",
+      expiresIn: "2 days",
       algorithm: "HS512",
     },
     password: {

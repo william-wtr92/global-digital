@@ -29,9 +29,13 @@ export const GET = async (req: NextRequest) => {
       )
     }
 
-    const { email } = decoded as JwtPayload
+    const {
+      payload: {
+        user: { id },
+      },
+    } = decoded as JwtPayload
 
-    const user = await db.select().from(users).where(eq(users.email, email))
+    const user = await db.select().from(users).where(eq(users.id, id))
 
     return NextResponse.json(
       { result: true, userConnected: sanitizeUser(user[0]) },

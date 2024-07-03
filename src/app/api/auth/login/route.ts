@@ -7,7 +7,7 @@ import { db } from "@/db/client"
 import { users } from "@/db/schema"
 import { SC } from "@/def/status"
 import { hashPassword } from "@/utils/hashPassword"
-import { signJwt } from "@/utils/jwtActions"
+import { signJWT } from "@/utils/jwt"
 
 export const POST = async (req: NextRequest) => {
   const { email, password } = await req.json()
@@ -31,12 +31,9 @@ export const POST = async (req: NextRequest) => {
       )
     }
 
-    const jwt = signJwt({
-      id: user[0].id,
-      email: user[0].email,
-    })
+    const jwt = signJWT(user[0].id)
 
-    cookies().set("Authorization", jwt, {
+    cookies().set("Authorization", jwt.toString(), {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
