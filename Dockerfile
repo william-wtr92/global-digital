@@ -1,4 +1,4 @@
-FROM node:20-slim AS base
+FROM node:20-alpine AS base
 ARG APP_PORT=3000
 WORKDIR /app
 
