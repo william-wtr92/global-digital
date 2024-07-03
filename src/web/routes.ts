@@ -2,16 +2,27 @@ const routes = {
   home: "/",
   login: "/login",
   registration: "/registration",
-  freelanceCreateProfile: "/freelance/create-profile",
+  freelance: {
+    createProfile: "/freelance/create-profile",
+  },
   api: {
     auth: {
       user: "/auth",
       login: "/auth/login",
       logout: "/auth/logout",
     },
-    createAccount: "/freelance/create-account",
-    areas: "/areas",
+    areas: {
+      index: "/areas",
+    },
+    freelance: {
+      createAccount: "/freelance/create-account",
+    },
+    companies: {
+      create: "/companies/create",
+    },
   },
 } as const
+
+export type Routes = typeof routes
 
 export default routes

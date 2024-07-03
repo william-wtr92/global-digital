@@ -77,6 +77,7 @@ export const employeeRole = pgTable("Employee_role", {
 export const company = pgTable("Company", {
   id: uuid("id").defaultRandom().primaryKey().notNull(),
   businessName: text("business_name").notNull(),
+  logo: text("logo").notNull(),
   kbisUrl: text("kbis_url").notNull(),
   headQuarter: text("head_quarter").notNull(),
   description: text("description").notNull(),

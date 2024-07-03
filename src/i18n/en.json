@@ -1,4 +1,46 @@
 {
+  "CompaniesCreatePage": {
+    "button": "Validate the request",
+    "title": "Request to create a company page",
+    "address": {
+      "label": "Business address",
+      "placeholder": "Business address",
+      "description": "Enter your business address"
+    },
+    "businessName": {
+      "label": "Company name",
+      "placeholder": "Company name",
+      "description": "Enter the company name"
+    },
+    "area": {
+      "label": "Select a business sector",
+      "placeholder": "Select a business sector",
+      "description": "Enter your business sector"
+    },
+    "logo": {
+      "label": "Company logo",
+      "placeholder": "Choose a url for your image",
+      "description": "Entrez le logo de l'entreprise"
+    },
+    "headquarters": {
+      "label": "Headquarters",
+      "placeholder": "Headquarters",
+      "description": "Enter the company's registered office"
+    },
+    "kbis": {
+      "label": "Company Kbis",
+      "placeholder": "Choose a url for your image",
+      "description": "Enter the company's kbis"
+    },
+    "descriptionCompany": {
+      "label": "Description",
+      "placeholder": "Description",
+      "description": "Enter the company description"
+    },
+    "accept": {
+      "label": "I accept the terms of use"
+    }
+  },
   "Error": {
     "anErrorOccurred": "An error occurred",
     "email_unique": "This email is already used"

@@ -3,6 +3,11 @@ type IApiFetch<Body> = {
   data?: Body
 } & RequestInit
 
+export type ApiResponse<Data> = {
+  status: number
+  data: Data
+}
+
 export const apiFetch = async <Body>({
   url,
   method,
