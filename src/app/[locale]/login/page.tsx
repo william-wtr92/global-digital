@@ -2,7 +2,7 @@
 
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
@@ -27,7 +27,7 @@ import routes from "@/web/routes"
 const LoginPage = () => {
   const router = useRouter()
   const t = useTranslations("Login")
-
+  const queryClient = useQueryClient()
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
   const form = useForm<LoginType>({
@@ -60,6 +60,7 @@ const LoginPage = () => {
         return
       }
 
+      queryClient.invalidateQueries({ queryKey: ["user"] })
       toast.success(t("Form.success"))
       router.push(routes.home)
     },

@@ -1,7 +1,8 @@
+import { eq } from "drizzle-orm"
 import { drizzle } from "drizzle-orm/node-postgres"
 import { Pool } from "pg"
 
-import { type InsertUser, users } from "./schema"
+import { area, type InsertArea, type InsertUser, users } from "./schema"
 import { hashPassword } from "../utils/hashPassword"
 import appConfig from "@/config/appConfig"
 
@@ -37,12 +38,35 @@ const usersSeed = async () => {
     },
   ]
 
+  await db.delete(users).where(eq(users.email, "test@gmail.com"))
   await db.insert(users).values(usersData)
+}
+
+const areaSeed = async () => {
+  const client = new Pool({
+    host,
+    user,
+    password,
+    port,
+    database: name,
+  })
+
+  const db = drizzle(client)
+
+  const areaSeeds: InsertArea[] = [
+    { value: "IT" },
+    { value: "Marketing" },
+    { value: "Finance" },
+    { value: "Human Resources" },
+  ]
+
+  await db.insert(area).values(areaSeeds)
 }
 
 ;(async () => {
   try {
     await usersSeed()
+    await areaSeed()
     // eslint-disable-next-line no-console
     console.info("Seeds ran successfully")
   } catch (error) {

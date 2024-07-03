@@ -10,7 +10,7 @@ export const putObjectCommand = async (
   client: S3Client,
   Bucket: string,
   Key: string,
-  Body: string,
+  Body: string | Buffer,
 ) => {
   const command = new PutObjectCommand({
     Bucket,

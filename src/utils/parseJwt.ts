@@ -1,11 +1,13 @@
 export type UserToken = {
-  user: { id: string }
+  user: { id: string; firstName: string; lastName: string }
 }
 
 type Token = {
   payload: {
     user: {
       id: string
+      firstName: string
+      lastName: string
     }
   }
   iat: bigint

@@ -1,4 +1,15 @@
+export type Freelance = {
+  id: string
+  userId: string
+  jobTitle: string
+  businessName: string
+  areaId: string
+  localisation: string
+  registrationNumber: string
+}
+
 export type Profile = {
+  id?: string
   firstName: string
   lastName: string
   email: string
@@ -8,8 +19,8 @@ export type Profile = {
   areaId: string
   localisation: string
   registrationNumber: string
-  avatarUrl: string
-  password: string
+  avatarUrl?: string
+  password?: string
 }
 
 export enum ActivityArea {
