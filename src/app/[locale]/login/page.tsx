@@ -2,7 +2,7 @@
 
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
@@ -44,6 +44,8 @@ const LoginPage = () => {
     formState: { errors },
   } = form
 
+  const queryClient = useQueryClient()
+
   const { mutateAsync } = useMutation<void, Error, LoginType>({
     mutationKey: [routes.api.auth.login],
     mutationFn: async (data) => {
@@ -62,6 +64,7 @@ const LoginPage = () => {
         return
       }
 
+      await queryClient.invalidateQueries({ queryKey: ["user"] })
       toast.success(t("Form.success"))
       router.push(routes.home)
     },

@@ -3,6 +3,7 @@ import { drizzle } from "drizzle-orm/node-postgres"
 import { Pool } from "pg"
 
 import {
+  type InsertEmployee,
   type InsertArea,
   type InsertCompany,
   type InsertMission,
@@ -11,6 +12,7 @@ import {
   users,
   company,
   mission,
+  employee,
 } from "./schema"
 import { hashPassword } from "../utils/hashPassword"
 import appConfig from "@/config/appConfig"
@@ -30,10 +32,11 @@ const usersSeed = async () => {
 
   const db = drizzle(client)
 
-  await db.delete(users)
+  await db.delete(employee)
+  await db.delete(mission)
+  await db.delete(company)
   await db.delete(area)
-  /*  await db.delete(company)
-  await db.delete(mission)*/
+  await db.delete(users)
 
   const [passwordHash, passwordSalt] = await hashPassword("Password123@")
 
@@ -96,6 +99,20 @@ const usersSeed = async () => {
   ]
 
   await db.insert(mission).values(missionsData)
+
+  const selectUser = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, "test@gmail.com"))
+
+  const employeesData: InsertEmployee[] = [
+    {
+      userId: selectUser[0].id,
+      companyId: selectCompany[0].id,
+    },
+  ]
+
+  await db.insert(employee).values(employeesData)
 }
 
 ;(async () => {

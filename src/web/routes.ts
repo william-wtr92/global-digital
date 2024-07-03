@@ -3,7 +3,9 @@ const routes = {
   login: "/login",
   registration: "/registration",
   freelanceCreateProfile: "/freelance/create-profile",
-  search: "/search",
+  missions: {
+    search: "/missions/search",
+  },
   api: {
     auth: {
       user: "/auth",
@@ -11,6 +13,7 @@ const routes = {
       logout: "/auth/logout",
     },
     missions: {
+      create: "/missions",
       list: "/missions",
     },
     createAccount: "/freelance/create-account",
