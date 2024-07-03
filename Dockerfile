@@ -1,29 +1,29 @@
-FROM node:22-alpine
-
-ENV NEXT_TELEMETRY_DISABLED 1
+FROM node:20-alpine AS base
+ARG APP_PORT=3000
 WORKDIR /app
 
-RUN apk add --no-cache libc6-compat
-
-COPY package.json pnpm-lock.yaml* ./
-RUN corepack enable pnpm && pnpm i --frozen-lockfile
-
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+EXPOSE ${APP_PORT}
+RUN corepack enable
 COPY . .
 COPY .env.example .env
-RUN corepack enable pnpm && pnpm run build
 
-ENV NODE_ENV production
+FROM base AS prod-deps
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
 
+FROM base AS build
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+
+RUN pnpm run build
+
+FROM base
+COPY --from=prod-deps /app/node_modules ./node_modules
+COPY --from=build /app/.next .next
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
-
-RUN chown nextjs:nodejs .next
 RUN rm .env
+RUN chown nextjs:nodejs .next
 
-USER nextjs
-
-EXPOSE 3000
-
-ENV PORT 3000
-
-CMD HOSTNAME="0.0.0.0" node server.js
+CMD [ "pnpm", "start" ]
