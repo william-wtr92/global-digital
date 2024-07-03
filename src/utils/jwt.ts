@@ -11,15 +11,17 @@ export const signJWT = (userId: string) => {
     )
   }
 
-  return createJwt(userId)
+  return createJwt(userId, firstName, lastName)
 }
 
-export const createJwt = (userId: string) =>
+export const createJwt = (id: string, firstName: string, lastName: string) =>
   jsonwebtoken.sign(
     {
       payload: {
         user: {
-          id: userId,
+          id,
+          firstName,
+          lastName,
         },
       },
     },

@@ -26,3 +26,19 @@ export const PasswordSchema = z.object({
 })
 
 export type PasswordType = z.infer<typeof PasswordSchema>
+
+export const UpdateAccountFreelanceSchema = z.object({
+  lastName: z.string().min(1, "tooShort"),
+  firstName: z.string().min(1, "tooShort"),
+  email: z.string().email("invalidEmail"),
+  phoneNumber: z.string().min(5, "tooShort"),
+  jobTitle: z.string().min(1, "tooShort"),
+  businessName: z.string().min(1, "tooShort"),
+  areaId: z.string().refine((val) => val !== undefined),
+  localisation: z.string().min(1, "tooShort"),
+  registrationNumber: z.string().min(1, "tooShort"),
+})
+
+export type UpdateAccountFreelanceType = z.infer<
+  typeof UpdateAccountFreelanceSchema
+>

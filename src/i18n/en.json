@@ -1,10 +1,12 @@
 {
   "Error": {
     "anErrorOccurred": "An error occurred",
-    "email_unique": "This email is already used"
+    "email_unique": "This email is already used",
+    "userNotFound": "User not found"
   },
   "Success": {
-    "registrationSuccess": "Registration successful"
+    "registrationSuccess": "Registration successful",
+    "updtaedSuccess": "Profile updated successfully"
   },
   "Navbar": {
     "signup": "Registration",
@@ -73,6 +75,22 @@
       "password": "password",
       "submit": "Validate my profile",
       "passwordsDoNotMatch": "Passwords do not match"
+    },
+    "UpdateProfilForm": {
+      "lastName": "lastname",
+      "firstName": "firstname",
+      "email": "email",
+      "phoneNumber": "phone number",
+      "businessName": "social reason",
+      "jobTitle": "occupation",
+      "selectActivityArea": "Select your activity area",
+      "activityArea": "activity area",
+      "localisation": "localisation",
+      "registrationNumber": "registration",
+      "registrationSiren": "SIREN number",
+      "description": "Enter your {field}",
+      "submit": "Validate the changes",
+      "deleteAccount": "Delete my account"
     }
   },
   "FormMessage": {

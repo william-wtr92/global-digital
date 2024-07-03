@@ -16,7 +16,7 @@ export const POST = async (req: NextRequest) => {
       ...body,
     })
 
-    const jwt = signJWT(user[0].id)
+    const jwt = signJWT(user[0].id, user[0].firstName, user[0].lastName)
 
     cookies().set("Authorization", jwt.toString(), {
       maxAge: 60 * 60 * 24,
