@@ -1,10 +1,12 @@
 {
   "Error": {
     "anErrorOccurred": "Une erreur est survenue",
-    "email_unique": "Cet email est déjà utilisé"
+    "email_unique": "Cet email est déjà utilisé",
+    "userNotFound": "Utilisateur non trouvé"
   },
   "Success": {
-    "registrationSuccess": "Inscription réussie"
+    "registrationSuccess": "Inscription réussie",
+    "updtaedSuccess": "Profil mis à jour avec succès"
   },
   "Areas": {},
   "CompaniesId": {},
@@ -122,6 +124,22 @@
       "password": "mot de passe",
       "submit": "Valider mon profil",
       "passwordsDoNotMatch": "Les mots de passe ne correspondent pas"
+    },
+    "UpdateProfilForm": {
+      "lastName": "nom",
+      "firstName": "prénom",
+      "email": "email",
+      "phoneNumber": "numéro de téléphone",
+      "businessName": "raison sociale",
+      "jobTitle": "profession",
+      "selectActivityArea": "Sélectionner votre secteur d'activité",
+      "activityArea": "secteur d'activité",
+      "localisation": "localisation",
+      "registrationNumber": "immatriculation",
+      "registrationSiren": "Numéro de SIREN",
+      "description": "Entrez votre {field}",
+      "submit": "Valider les modifications",
+      "deleteAccount": "Supprimer mon compte"
     }
   },
   "FormMessage": {

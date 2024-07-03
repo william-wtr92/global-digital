@@ -13,6 +13,9 @@ const routes = {
   },
   freelance: {
     createProfile: "/freelance/create-profile",
+    updateProfile: (name: string, id: string) =>
+      `/freelance/update-profile/${name}?id=${id}`,
+    profile: (name: string, id: string) => `/freelance/${name}?id=${id}`,
   },
   search: "/search",
   api: {
@@ -27,6 +30,8 @@ const routes = {
     },
     freelance: {
       createAccount: "/freelance/create-account",
+      updateAccount: (userId: string) => `/freelance/${userId}/account`,
+      getProfile: (userId: string | null) => `/freelance/${userId}`,
     },
     companies: {
       "create": "/companies/create",

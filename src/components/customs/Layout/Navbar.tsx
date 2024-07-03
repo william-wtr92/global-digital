@@ -61,7 +61,7 @@ const Navbar = (props: Props) => {
   }, [router])
 
   return (
-    <div className="flex items-center justify-between bg-gray-300 p-3">
+    <div className="sticky top-0 z-10 flex items-center justify-between bg-gray-300 p-3">
       <Link href={routes.home}>Logo</Link>
 
       {userInfo ? (

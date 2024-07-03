@@ -19,7 +19,9 @@ export default async function LocaleLayout({
 }) {
   const messages = await getMessages()
   const tokenValue = cookies().get("Authorization")?.value
-  const userInfo = tokenValue ? parseSession(tokenValue).user : { id: "" }
+  const userInfo = tokenValue
+    ? parseSession(tokenValue).user
+    : { id: "", firstName: "", lastName: "" }
 
   return (
     <html lang={locale}>
