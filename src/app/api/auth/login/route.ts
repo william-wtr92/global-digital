@@ -5,6 +5,7 @@ import { type NextRequest, NextResponse } from "next/server"
 import appConfig from "@/config/appConfig"
 import { db } from "@/db/client"
 import { users } from "@/db/schema"
+import { SC } from "@/def/status"
 import { hashPassword } from "@/utils/hashPassword"
 import { signJwt } from "@/utils/jwtActions"
 
@@ -15,13 +16,19 @@ export const POST = async (req: NextRequest) => {
     const user = await db.select().from(users).where(eq(users.email, email))
 
     if (!user) {
-      return NextResponse.json({ message: "User not found" }, { status: 404 })
+      return NextResponse.json(
+        { message: "User not found" },
+        { status: SC.errors.NOT_FOUND },
+      )
     }
 
     const [passwordHash] = await hashPassword(password, user[0].passwordSalt)
 
     if (passwordHash !== user[0].passwordHash) {
-      return NextResponse.json({ message: "Invalid password" }, { status: 401 })
+      return NextResponse.json(
+        { message: "Invalid password" },
+        { status: SC.errors.UNAUTHORIZED },
+      )
     }
 
     const jwt = signJwt({
@@ -38,12 +45,12 @@ export const POST = async (req: NextRequest) => {
 
     return NextResponse.json(
       { result: true, message: "Logged in." },
-      { status: 200 },
+      { status: SC.success.OK },
     )
   } catch (e) {
     return NextResponse.json(
       { result: false, message: "Login Failed!" },
-      { status: 500 },
+      { status: SC.serverErrors.INTERNAL_SERVER_ERROR },
     )
   }
 }

@@ -35,6 +35,9 @@ const appConfigSchema = z
         pepper: z.string(),
       }),
     }),
+    api: z.object({
+      baseApiURL: z.string(),
+    }),
   })
   .strict()
 
@@ -68,6 +71,9 @@ const appConfig = appConfigSchema.parse({
       digest: process.env.PASSWORD_DIGEST,
       pepper: process.env.PASSWORD_PEPPER,
     },
+  },
+  api: {
+    baseApiURL: process.env.NEXT_PUBLIC_BASE_API_URL,
   },
 })
 

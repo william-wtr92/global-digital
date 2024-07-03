@@ -1,6 +1,24 @@
 {
   "Navbar": {
     "signup": "Registration",
-    "login": "Connection"
+    "login": "Login",
+    "logoutSuccess": "You have been successfully logged out."
+  },
+  "Login": {
+    "Form": {
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email",
+        "error": "Invalid email address."
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password",
+        "error": "Password must be at least 8 characters."
+      },
+      "submit": "Login",
+      "success": "Login succeeded, you will be redirected in a few seconds.",
+      "error": "Login failed, please check your credentials."
+    }
   }
 }
