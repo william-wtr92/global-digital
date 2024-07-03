@@ -81,6 +81,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@tanstack/react-query-devtools": "^5.49.2",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20",
