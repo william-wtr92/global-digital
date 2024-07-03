@@ -20,7 +20,7 @@ const routes = {
     },
     freelance: {
       createAccount: "/freelance/create-account",
-      getProfile: (userId: string | null) => `/freelance/${userId}`,
+      getProfile: (userId: string) => `/freelance/${userId}`,
     },
     companies: {
       create: "/companies/create",
