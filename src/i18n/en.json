@@ -13,6 +13,7 @@
     "logoutSuccess": "You have been successfully logged out."
   },
   "Login": {
+    "title": "Welcome back!",
     "Form": {
       "email": {
         "label": "Email",
@@ -24,6 +25,7 @@
         "placeholder": "Enter your password",
         "error": "Password must be at least 8 characters."
       },
+      "passwordForgotten": "Forgot your password?",
       "submit": "Login",
       "success": "Login succeeded, you will be redirected in a few seconds.",
       "error": "Login failed, please check your credentials."

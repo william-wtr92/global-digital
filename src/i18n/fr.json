@@ -13,6 +13,7 @@
     "logoutSuccess": "Déconnexion réussie."
   },
   "Login": {
+    "title": "Bon retour !",
     "Form": {
       "email": {
         "label": "Email",
@@ -24,6 +25,7 @@
         "placeholder": "Entrez votre mot de passe",
         "error": "Le mot de passe doit faire plus de 8 caractères."
       },
+      "passwordForgotten": "Mot de passe oublié ?",
       "submit": "Se connecter",
       "success": "Connexion réussie, vous allez être redirigé dans quelques secondes.",
       "error": "Connexion échouée, vérifiez vos identifiants."
