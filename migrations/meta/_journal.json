@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1720013586870,
-      "tag": "0000_silly_the_professor",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1720013658842,
-      "tag": "0001_redundant_thunderbolt",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1720010114208,
-      "tag": "0004_kind_solo",
+      "when": 1720012225790,
+      "tag": "0000_same_liz_osborn",
       "breakpoints": true
     }
   ]
