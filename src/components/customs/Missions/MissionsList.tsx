@@ -22,12 +22,45 @@ const MissionsList = ({ searchQuery }: Props) => {
     return missionTitle.includes(query) || companyName.includes(query)
   })
 
-  const calculateMissionTime = (mission: SelectMission) => {
-    const startDate = new Date(mission.startDate)
-    const endDate = new Date(mission.endDate)
-    const diff = endDate.getTime() - startDate.getTime()
+  // eslint-disable-next-line complexity
+  const calculateDateSincePosted = (mission: SelectMission) => {
+    const createDate = new Date(mission.createdAt)
+    const currentDate = new Date()
 
-    return Math.floor(diff / (1000 * 60 * 60 * 24))
+    const timeDifference = createDate.getTime() - currentDate.getTime()
+    const minutesDifference = timeDifference / (1000 * 60)
+    const hoursDifference = timeDifference / (1000 * 3600)
+    const daysDifference = timeDifference / (1000 * 3600 * 24)
+
+    if (daysDifference >= 365) {
+      const years = Math.floor(daysDifference / 365)
+
+      return `${years} ${years > 1 ? t("years") : t("year")}`
+    } else if (daysDifference >= 30) {
+      const months = Math.floor(daysDifference / 30)
+
+      return `${months} ${months > 1 ? t("months") : t("month")}`
+    } else if (daysDifference >= 1) {
+      const days = Math.floor(daysDifference)
+
+      return `${days} ${days > 1 ? t("days") : t("day")}`
+    } else if (hoursDifference >= 1) {
+      const hours = Math.floor(hoursDifference)
+
+      return `${hours} ${hours > 1 ? t("hours") : t("hour")}`
+    }
+
+    const minutes = Math.floor(minutesDifference)
+
+    return `${minutes} ${minutes > 1 ? t("minutes") : t("minute")}`
+  }
+
+  const startDate = (mission: SelectMission) => {
+    return new Date(mission.startDate).toLocaleDateString()
+  }
+
+  const endDate = (mission: SelectMission) => {
+    return new Date(mission.endDate).toLocaleDateString()
   }
 
   if (isLoading) {
@@ -44,12 +77,18 @@ const MissionsList = ({ searchQuery }: Props) => {
           <div className="flex flex-col gap-1">
             <div className="text-xl font-bold">
               <span>{result.Missions.title} -</span>
+              <span> {result.Company.businessName} -</span>
               <span>
                 {" "}
-                {calculateMissionTime(result.Missions)} {t("days")}
+                {startDate(result.Missions)} {t("to")}{" "}
+                {endDate(result.Missions)}
               </span>
             </div>
-            <div>
+            <div className="flex flex-col gap-2">
+              <span className="text-sm">
+                {" "}
+                {t("since")} {calculateDateSincePosted(result.Missions)}{" "}
+              </span>
               <span className="text-sm">{result.Missions.description}</span>
             </div>
           </div>

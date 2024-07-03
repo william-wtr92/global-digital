@@ -1,15 +1,18 @@
-import { faker } from "@faker-js/faker"
-import { randomUUID } from "crypto"
-import { drizzle, type NodePgDatabase } from "drizzle-orm/node-postgres"
+import { eq } from "drizzle-orm"
+import { drizzle } from "drizzle-orm/node-postgres"
 import { Pool } from "pg"
 
 import {
+  type InsertMission,
+  type InsertEmployee,
   type InsertArea,
   type InsertCompany,
   company,
   type InsertUser,
   users,
   area,
+  employee,
+  mission,
 } from "./schema"
 import { hashPassword } from "../utils/hashPassword"
 import appConfig from "@/config/appConfig"
@@ -17,53 +20,6 @@ import appConfig from "@/config/appConfig"
 const {
   db: { host, user, password, port, name },
 } = appConfig
-
-const areaId = randomUUID()
-
-const usersSeed = async (db: NodePgDatabase) => {
-  const [passwordHash, passwordSalt] = await hashPassword("Password123@")
-
-  const usersData: InsertUser[] = [
-    {
-      firstName: "John",
-      lastName: "Doe",
-      email: "test@gmail.com",
-      passwordHash,
-      passwordSalt,
-      phoneNumber: faker.phone.number(),
-      avatarUrl: faker.image.url(),
-      isVerified: true,
-    },
-  ]
-
-  await db.insert(users).values(usersData)
-}
-
-const areasSeed = async (db: NodePgDatabase) => {
-  const usersData: InsertArea[] = [
-    {
-      id: areaId,
-      value: "farmer",
-    },
-  ]
-
-  await db.insert(area).values(usersData)
-}
-
-const companiesSeed = async (db: NodePgDatabase) => {
-  const companiesData: InsertCompany[] = [
-    {
-      businessName: faker.company.name(),
-      areaId,
-      description: faker.company.catchPhrase(),
-      headQuarter: faker.location.streetAddress({ useFullAddress: true }),
-      kbisUrl: faker.image.url(),
-      logo: faker.image.url(),
-    },
-  ]
-
-  await db.insert(company).values(companiesData)
-}
 
 ;(async () => {
   const client = new Pool({
@@ -77,8 +33,91 @@ const companiesSeed = async (db: NodePgDatabase) => {
   const db = drizzle(client)
 
   try {
-    await Promise.all([usersSeed(db), areasSeed(db)])
-    await companiesSeed(db)
+    await db.delete(employee)
+    await db.delete(mission)
+    await db.delete(company)
+    await db.delete(area)
+    await db.delete(users)
+
+    const [passwordHash, passwordSalt] = await hashPassword("Password123@")
+
+    const usersData: InsertUser[] = [
+      {
+        firstName: "John",
+        lastName: "Doe",
+        email: "test@gmail.com",
+        passwordHash,
+        passwordSalt,
+        phoneNumber: "0606060606",
+        avatarUrl: "https://www.google.com",
+        isVerified: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ]
+
+    await db.insert(users).values(usersData)
+
+    const areasData: InsertArea[] = [
+      {
+        value: "Paris",
+      },
+    ]
+
+    await db.insert(area).values(areasData)
+
+    const selectArea = await db
+      .select()
+      .from(area)
+      .where(eq(area.value, "Paris"))
+
+    const companiesData: InsertCompany[] = [
+      {
+        businessName: "Test Company",
+        logo: "https://www.google.com",
+        kbisUrl: "https://www.google.com",
+        headQuarter: "Paris",
+        description: "This is a test company",
+        areaId: selectArea[0].id,
+      },
+    ]
+
+    await db.insert(company).values(companiesData)
+
+    const selectCompany = await db
+      .select()
+      .from(company)
+      .where(eq(company.businessName, "Test Company"))
+
+    const missionsData: InsertMission[] = [
+      {
+        companyId: selectCompany[0].id,
+        status: "pending",
+        title: "Test Mission",
+        description: "This is a test mission",
+        operating: "remote",
+        localisation: "Paris",
+        startDate: new Date(),
+        endDate: new Date(new Date().setDate(new Date().getDate() + 30)),
+      },
+    ]
+
+    await db.insert(mission).values(missionsData)
+
+    const selectUser = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, "test@gmail.com"))
+
+    const employeesData: InsertEmployee[] = [
+      {
+        userId: selectUser[0].id,
+        companyId: selectCompany[0].id,
+      },
+    ]
+
+    await db.insert(employee).values(employeesData)
+
     // eslint-disable-next-line no-console
     console.info("Seeds ran successfully")
   } catch (error) {

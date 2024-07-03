@@ -34,9 +34,7 @@ const SearchPage = () => {
   } = form
 
   const onSubmit = (data: SearchMissionsType) => {
-    if (data.search) {
-      setSearchQuery(data.search)
-    }
+    setSearchQuery(data.search || "")
   }
 
   return (
@@ -53,18 +51,20 @@ const SearchPage = () => {
               render={({ field }) => (
                 <FormItem className="w-4/5 xl:w-1/2">
                   <FormLabel className="relative left-1 font-bold text-neutral-800">
-                    {t("form.label")}
+                    {t("form.search.label")}
                   </FormLabel>
                   <FormControl>
                     <Input
                       className="focus-visible:outline-accent-500 mt-2 px-4 py-2 focus-visible:border-0 focus-visible:ring-0"
                       type="text"
-                      placeholder={t("form.placeholder")}
+                      placeholder={t("form.search.placeholder")}
                       {...field}
                     />
                   </FormControl>
                   <FormMessage className="relative left-2 text-destructive">
-                    {errors.search ? <span>{t("form.error")}</span> : null}
+                    {errors.search ? (
+                      <span>{t("form.search.error")}</span>
+                    ) : null}
                   </FormMessage>
                 </FormItem>
               )}

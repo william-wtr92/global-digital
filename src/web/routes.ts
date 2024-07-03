@@ -28,6 +28,7 @@ const routes = {
       ":id": (id: string) => `/companies/${id}`,
     },
     missions: {
+      create: "/missions",
       list: "/missions",
     },
     createAccount: "/freelance/create-account",

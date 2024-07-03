@@ -51,7 +51,7 @@ const Navbar = (props: Props) => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault()
-        router.push(routes.search)
+        router.push(routes.missions.search)
       }
     }
 
@@ -67,9 +67,9 @@ const Navbar = (props: Props) => {
       {userInfo ? (
         <div className="flex items-center gap-6 xl:gap-20">
           <div>
-            <Link href={routes.search}>
+            <Link href={routes.missions.search}>
               <p className="text-medium rounded-md border-2 border-gray-200 bg-gray-200 px-4 py-1 hover:shadow-xl">
-                <kbd className="flex items-center gap-8">
+                <kbd className="flex items-center gap-4 xl:gap-8">
                   <span className="hidden text-sm font-light opacity-55 xl:block">
                     {t("search.placeholder")}
                   </span>

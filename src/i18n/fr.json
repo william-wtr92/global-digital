@@ -131,11 +131,61 @@
     "Required": "Requis"
   },
   "Missions": {
+    "title": "Création d'une mission",
+    "to": "à",
+    "years": "années",
+    "year": "année",
+    "months": "mois",
+    "month": "mois",
     "days": "jours",
+    "day": "jour",
+    "hours": "heures",
+    "hour": "heure",
+    "minutes": "minutes",
+    "minute": "minute",
+    "since": "Postée il y a:",
     "form": {
-      "label": "Rechercher une mission",
-      "placeholder": "Entreprise, Mission ...",
-      "error": "Recherche invalide"
+      "search": {
+        "label": "Rechercher une mission",
+        "placeholder": "Entreprise, Mission ...",
+        "error": "Recherche invalide"
+      },
+      "create": {
+        "title": {
+          "label": "Titre de la mission",
+          "placeholder": "Entrez le titre de la mission",
+          "error": "Titre de la mission invalide"
+        },
+        "startDate": {
+          "label": "Date de début",
+          "picker": "Choisissez une date"
+        },
+        "endDate": {
+          "label": "Date de fin",
+          "picker": "Choisissez une date"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Entrez la description de la mission",
+          "error": "Description invalide"
+        },
+        "operating": {
+          "label": "Mode de fonctionnement",
+          "placeholder": "Sélectionnez le mode de fonctionnement de la mission",
+          "options": {
+            "homeWorking": "Télétravail",
+            "onSite": "Sur site",
+            "hybrid": "Hybride"
+          },
+          "error": "Mode de fonctionnement invalide"
+        },
+        "localisation": {
+          "label": "Localisation de la mission",
+          "placeholder": "Entrez la localisation de la mission",
+          "error": "Localisation invalide"
+        },
+        "submit": "Créer la mission"
+      }
     }
   }
 }

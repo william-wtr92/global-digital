@@ -130,11 +130,61 @@
     "Required": "Required"
   },
   "Missions": {
+    "title": "Create a mission",
+    "to": "to",
+    "years": "years",
+    "year": "year",
+    "months": "months",
+    "month": "month",
     "days": "days",
+    "day": "day",
+    "hours": "hours",
+    "hour": "hour",
+    "minutes": "minutes",
+    "minute": "minute",
+    "since": "Posted since:",
     "form": {
-      "label": "Search a mission",
-      "placeholder": "Company, Mission ...",
-      "error": "Search failed"
+      "search": {
+        "label": "Search a mission",
+        "placeholder": "Company, Mission ...",
+        "error": "Search failed"
+      },
+      "create": {
+        "title": {
+          "label": "Title of the mission",
+          "placeholder": "Enter the title of the mission",
+          "error": "Title is invalid"
+        },
+        "startDate": {
+          "label": "Start date",
+          "picker": "Pick a date"
+        },
+        "endDate": {
+          "label": "End date",
+          "picker": "Pick a date"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Enter the description of the mission",
+          "error": "Description is invalid"
+        },
+        "operating": {
+          "label": "Operating mode",
+          "placeholder": "Operating mode",
+          "options": {
+            "homeWorking": "Remote",
+            "onSite": "On site",
+            "hybrid": "Hybrid"
+          },
+          "error": "Operating mode is invalid"
+        },
+        "localisation": {
+          "label": "Localisation of the mission",
+          "placeholder": "Enter the localisation of the mission",
+          "error": "Localisation is invalid"
+        },
+        "submit": "Create the mission"
+      }
     }
   }
 }
