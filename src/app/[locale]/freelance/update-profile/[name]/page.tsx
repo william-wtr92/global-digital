@@ -7,8 +7,8 @@ import { toast } from "sonner"
 
 import UpdateProfilForm from "@/components/customs/Forms/UpdateProfileForm"
 import Spinner from "@/components/customs/Utils/Spinner"
-import { useGetProfile } from "@/lib/queries/profile"
 import useAppContext from "@/web/hooks/useAppContext"
+import { useFreelanceProfile } from "@/web/hooks/useProfile"
 import routes from "@/web/routes"
 
 const FreelanceUpdateProfile = () => {
@@ -17,7 +17,7 @@ const FreelanceUpdateProfile = () => {
   const { userInfo } = useAppContext()
   const [id] = useQueryState("id")
 
-  const { data, error, isPending } = useGetProfile(id)
+  const { data, error, isPending } = useFreelanceProfile(id || "")
 
   if (userInfo.id !== id) {
     router.push(routes.home)
@@ -47,7 +47,7 @@ const FreelanceUpdateProfile = () => {
     return
   }
 
-  return <UpdateProfilForm profile={data} id={id} />
+  return <UpdateProfilForm profile={data} />
 }
 
 export default FreelanceUpdateProfile

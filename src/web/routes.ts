@@ -5,14 +5,14 @@ const routes = {
   freelanceCreateProfile: "/freelance/create-profile",
   freelanceUpdateProfile: (name: string, id: string) =>
     `/freelance/update-profile/${name}?id=${id}`,
-  profile: (name: string, id: string) => `/freelance/${name}?id=${id}`,
+  profile: (name: string, id: string) => `/freelance/profile/${name}?id=${id}`,
   api: {
     auth: {
       user: "/auth",
       login: "/auth/login",
       logout: "/auth/logout",
+      register: { freelance: "/auth/register/freelance" },
     },
-    createAccount: "/freelance/create-account",
     updateAccount: (userId: string) => `/freelance/${userId}/account`,
     areas: "/areas",
     freelance: {

@@ -1,7 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import type { Dispatch, SetStateAction } from "react"
@@ -35,21 +35,26 @@ const PasswordProfilForm = ({
       confirmPassword: "",
     },
   })
+  const queryClient = useQueryClient()
   const mutation = useMutation({
     mutationFn: async () => {
       const response = await apiFetch<Profile>({
-        url: routes.api.createAccount,
+        url: routes.api.auth.register.freelance,
         method: "POST",
         data: profile,
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
 
-      if (response.data) {
-        if (response.data.constraint === "Users_email_unique") {
+      if (response.data.error) {
+        if (response.data.error.constraint === "Users_email_unique") {
           toast.error(t("Error.email_unique"))
         } else {
           toast.error(t("Error.anErrorOccurred"))
         }
       } else {
+        queryClient.invalidateQueries({ queryKey: ["user"] })
         toast.success(t("Success.registrationSuccess"))
         router.push(routes.home)
       }
@@ -58,6 +63,7 @@ const PasswordProfilForm = ({
       toast.error(t("Error.anErrorOccurred"))
     },
   })
+
   const onSubmit = (data: PasswordType) => {
     if (data.password !== data.confirmPassword) {
       toast.error(t("Form.PasswordProfilForm.passwordsDoNotMatch"))
