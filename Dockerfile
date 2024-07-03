@@ -1,25 +1,27 @@
-FROM node:20-slim AS base
-ARG APP_PORT=3000
+FROM node:22-alpine
+
+ENV NEXT_TELEMETRY_DISABLED 1
 WORKDIR /app
 
-ENV NEXT_TELEMETRY_DISABLED=1
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-EXPOSE ${APP_PORT}
-RUN corepack enable
+RUN apk add --no-cache libc6-compat
+
+COPY package.json pnpm-lock.yaml* ./
+RUN corepack enable pnpm && pnpm i --frozen-lockfile
+
 COPY . .
+RUN corepack enable pnpm && pnpm run build
 
-FROM base AS prod-deps
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+ENV NODE_ENV production
 
-FROM base AS build
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-RUN pnpm exec drizzle-kit generate
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
-RUN pnpm run build
+RUN chown nextjs:nodejs .next
 
-FROM base
-COPY --from=prod-deps /app/node_modules ./node_modules
-COPY --from=build /app/.next .next
+USER nextjs
 
-CMD [ "pnpm", "start" ]
+EXPOSE 3000
+
+ENV PORT 3000
+
+CMD HOSTNAME="0.0.0.0" node server.js
