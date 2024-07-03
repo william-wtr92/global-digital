@@ -29,7 +29,7 @@ import routes from "@/web/routes"
 const LoginPage = () => {
   const router = useRouter()
   const t = useTranslations("Login")
-
+  const queryClient = useQueryClient()
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
   const form = useForm<LoginType>({
@@ -43,8 +43,6 @@ const LoginPage = () => {
   const {
     formState: { errors },
   } = form
-
-  const queryClient = useQueryClient()
 
   const { mutateAsync } = useMutation<void, Error, LoginType>({
     mutationKey: [routes.api.auth.login],
