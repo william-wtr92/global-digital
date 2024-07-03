@@ -6,6 +6,11 @@ const routes = {
     "create": "/companies/create",
     ":id": (id: string) => `/companies/${id}`,
   },
+  missions: {
+    search: "/missions/search",
+    detailedMission: (id: string) => `/missions?id=${id}`,
+    updateMission: (missionId: string) => `/missions/update?id=${missionId}`,
+  },
   freelance: {
     createProfile: "/freelance/create-profile",
   },
@@ -30,8 +35,9 @@ const routes = {
     missions: {
       create: "/missions",
       list: "/missions",
+      detailedMission: (missionId: string) => `/missions/${missionId}`,
+      updateMission: (missionId: string) => `/missions/${missionId}`,
     },
-    createAccount: "/freelance/create-account",
   },
 } as const
 

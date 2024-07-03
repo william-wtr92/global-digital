@@ -26,12 +26,12 @@ const CreateMissionPage = () => {
       })
 
       if (response.status !== SC.success.CREATED) {
-        toast.error("Erreur lors de la création de la mission")
+        toast.error(t("form.create.error"))
 
         return
       }
 
-      toast.success("Mission créée avec succès")
+      toast.success(t("form.create.success"))
       router.push(routes.missions.search)
     },
   })
@@ -44,10 +44,13 @@ const CreateMissionPage = () => {
     <div className="flex h-full flex-col items-center justify-center gap-3">
       <RoughNotation type="underline" color="#000000" show={true} padding={10}>
         <h1 className="mt-4 text-2xl font-extrabold xl:text-4xl">
-          {t("title")}
+          {t("createTitle")}
         </h1>
       </RoughNotation>
-      <MissionForm onSubmit={handleSubmit} />
+      <MissionForm
+        onSubmit={handleSubmit}
+        submitText={t("form.create.submit")}
+      />
     </div>
   )
 }

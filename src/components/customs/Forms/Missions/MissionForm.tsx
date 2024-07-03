@@ -35,9 +35,10 @@ import { MissionOperating, missionSchema, type MissionType } from "@/types"
 type Props = {
   defaultValues?: Partial<MissionType>
   onSubmit: (data: MissionType) => void
+  submitText: string
 }
 
-const MissionForm = ({ defaultValues, onSubmit }: Props) => {
+const MissionForm = ({ defaultValues, onSubmit, submitText }: Props) => {
   const t = useTranslations("Missions")
 
   const form = useForm<MissionType>({
@@ -265,7 +266,7 @@ const MissionForm = ({ defaultValues, onSubmit }: Props) => {
             className={`mx-auto w-1/2 bg-gray-400 py-2.5 font-semibold text-white ${!form.formState.isValid ? "cursor-not-allowed opacity-50" : "bg-gray-800 hover:cursor-pointer"}`}
             type="submit"
           >
-            {t("form.create.submit")}
+            {submitText}
           </Button>
         </form>
       </Form>

@@ -130,7 +130,8 @@
     "Required": "Required"
   },
   "Missions": {
-    "title": "Create a mission",
+    "createTitle": "Create a mission",
+    "updateTitle": "Update a mission",
     "to": "to",
     "years": "years",
     "year": "year",
@@ -143,6 +144,7 @@
     "minutes": "minutes",
     "minute": "minute",
     "since": "Posted since:",
+    "duration": "Duration of the mission:",
     "form": {
       "search": {
         "label": "Search a mission",
@@ -183,7 +185,14 @@
           "placeholder": "Enter the localisation of the mission",
           "error": "Localisation is invalid"
         },
-        "submit": "Create the mission"
+        "submit": "Create the mission",
+        "success": "Mission created successfully",
+        "error": "Mission creation failed"
+      },
+      "update": {
+        "submit": "Update the mission",
+        "success": "Mission updated successfully",
+        "error": "Mission update failed"
       }
     }
   }

@@ -131,8 +131,9 @@
     "Required": "Requis"
   },
   "Missions": {
-    "title": "Création d'une mission",
-    "to": "à",
+    "createTitle": "Création d'une mission",
+    "updateTitle": "Mise à jour de la mission",
+    "to": "au",
     "years": "années",
     "year": "année",
     "months": "mois",
@@ -144,6 +145,7 @@
     "minutes": "minutes",
     "minute": "minute",
     "since": "Postée il y a:",
+    "duration": "Durée de la mission:",
     "form": {
       "search": {
         "label": "Rechercher une mission",
@@ -184,7 +186,14 @@
           "placeholder": "Entrez la localisation de la mission",
           "error": "Localisation invalide"
         },
-        "submit": "Créer la mission"
+        "submit": "Créer la mission",
+        "success": "Mission créée avec succès",
+        "error": "Création de la mission échouée"
+      },
+      "update": {
+        "submit": "Mettre à jour la mission",
+        "success": "Mission mise à jour avec succès",
+        "error": "Mise à jour de la mission échouée"
       }
     }
   }
