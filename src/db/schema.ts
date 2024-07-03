@@ -5,7 +5,8 @@ export const users = pgTable("Users", {
   firstName: text("first_name").notNull(),
   lastName: text("last_name").notNull(),
   email: text("email").notNull().unique(),
-  password: text("password").notNull(),
+  passwordHash: text("password_hash").notNull(),
+  passwordSalt: text("password_salt").notNull(),
   avatarUrl: text("avatar_url").notNull(),
   phoneNumber: text("phone_number").notNull(),
   isVerified: boolean("is_verified").default(false).notNull(),
@@ -97,15 +98,3 @@ export type SelectFreelance = typeof freelance.$inferSelect
 
 export type InsertEmployee = typeof employee.$inferInsert
 export type SelectEmployee = typeof employee.$inferSelect
-
-export type InsertCompany = typeof company.$inferInsert
-export type SelectCompany = typeof company.$inferSelect
-
-export type InsertArea = typeof area.$inferInsert
-export type SelectArea = typeof area.$inferSelect
-
-export type InsertRole = typeof role.$inferInsert
-export type SelectRole = typeof role.$inferSelect
-
-export type InsertEmployeeRole = typeof employeeRole.$inferInsert
-export type SelectEmployeeRole = typeof employeeRole.$inferSelect

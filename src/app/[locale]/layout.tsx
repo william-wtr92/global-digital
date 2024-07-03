@@ -4,6 +4,7 @@ import { getMessages } from "next-intl/server"
 import { Toaster } from "sonner"
 
 import "@/app/globals.css"
+
 import Layout from "@/components/customs/Layout/Layout"
 import TanstackProvider from "@/providers/TanstackProvider"
 import { parseSession } from "@/utils/parseJwt"

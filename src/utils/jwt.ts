@@ -1,10 +1,10 @@
 import jsonwebtoken from "jsonwebtoken"
 import { NextResponse } from "next/server"
 
-import configuration from "@/config"
+import appConfig from "@/config/appConfig"
 
 export const signJWT = (userId: string) => {
-  if (!configuration.security.jwt.secret) {
+  if (!appConfig.security.jwt.secret) {
     return NextResponse.json(
       { error: { message: "Need jwt secret" } },
       { status: 500 },
@@ -23,6 +23,6 @@ export const createJwt = (userId: string) =>
         },
       },
     },
-    configuration.security.jwt.secret,
-    { expiresIn: configuration.security.jwt.expiresIn },
+    appConfig.security.jwt.secret,
+    { expiresIn: appConfig.security.jwt.expiresIn },
   )

@@ -1,9 +1,62 @@
+/* eslint-disable complexity */
+
+import { type NextRequest, NextResponse } from "next/server"
 import createMiddleware from "next-intl/middleware"
 
-export default createMiddleware({
-  locales: ["en", "fr"],
+import routes from "@/web/routes"
+
+const locales = ["en", "fr"]
+const adminPathname = "/admin"
+const middlewareI18n = createMiddleware({
+  locales,
   defaultLocale: "en",
 })
+
+export default function middleware(request: NextRequest) {
+  const isAdminRoute = request.nextUrl.pathname.startsWith(adminPathname)
+  const token = request.cookies.get("Authorization")
+
+  if (!isAdminRoute) {
+    const res = middlewareI18n(request)
+    const [, locale] = request.nextUrl.pathname.split("/")
+    const publicAndPrivateRoutes = [`/${locale}/`, `/`]
+    const isAlwaysOk = publicAndPrivateRoutes.some(
+      (option) =>
+        request.nextUrl.pathname === option ||
+        request.nextUrl.pathname.startsWith(option),
+    )
+
+    if (isAlwaysOk) {
+      return res
+    }
+
+    const publicRoutes = [`/${locale}/login`, `/${locale}/`]
+    const isPublic = publicRoutes.some((option) =>
+      request.nextUrl.pathname.startsWith(option),
+    )
+    const redirectUrl = new URL(request.nextUrl.toString())
+
+    if (!token && !isPublic && locales.includes(locale)) {
+      redirectUrl.pathname = `/${locale}${routes.login}`
+
+      return NextResponse.redirect(redirectUrl)
+    }
+
+    if (token && isPublic) {
+      redirectUrl.pathname = `/${locale}${routes.home}`
+
+      return NextResponse.redirect(redirectUrl)
+    }
+
+    if (token && isPublic) {
+      return NextResponse.redirect(new URL(routes.home, request.nextUrl))
+    }
+
+    return res
+  }
+
+  return null
+}
 
 export const config = {
   matcher: ["/((?!api|_next|.*\\..*).*)"],

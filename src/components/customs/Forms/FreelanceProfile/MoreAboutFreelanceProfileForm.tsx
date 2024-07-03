@@ -70,10 +70,13 @@ const MoreAboutFreelanceProfileForm = ({
 
   const { isPending, data } = useQuery<Area[]>({
     queryKey: ["moreAboutFreelance"],
-    queryFn: async () =>
-      await apiFetch({
+    queryFn: async () => {
+      const response = await apiFetch({
         url: routes.api.areas,
-      }),
+      })
+
+      return response.data
+    },
   })
 
   if (isPending) {
