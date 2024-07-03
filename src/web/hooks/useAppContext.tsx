@@ -6,11 +6,11 @@ import { useCookies } from "react-cookie"
 import { parseSession } from "@/utils/parseJwt"
 
 type AppContextType = {
-  userInfo: { id: string }
+  userInfo: { id: string; firstName: string; lastName: string }
 }
 
 const AppContextProvider = (props: {
-  sessionUserInfo: { id: string }
+  sessionUserInfo: { id: string; firstName: string; lastName: string }
   children: React.ReactNode
 }) => {
   const [userInfo, setUserInfo] = useState(props.sessionUserInfo)
@@ -24,7 +24,7 @@ const AppContextProvider = (props: {
         const newSession = parseSession(jwt)
         setUserInfo(newSession.user)
       } catch (e) {
-        setUserInfo({ id: "" })
+        setUserInfo({ id: "", firstName: "", lastName: "" })
         removeCookie("Authorization")
       }
     }

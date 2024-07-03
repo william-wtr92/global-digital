@@ -72,7 +72,7 @@ const MoreAboutFreelanceProfileForm = ({
     queryKey: ["moreAboutFreelance"],
     queryFn: async () => {
       const response = await apiFetch({
-        url: routes.api.areas,
+        url: routes.api.areas.index,
       })
 
       return response.data
