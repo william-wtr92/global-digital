@@ -1,10 +1,12 @@
 import { z } from "zod"
 
 export const MissionOperating = {
-  homeWorking: "Télétravail",
-  onSite: "Sur place",
-  hybrid: "Hybride",
+  homeWorking: "remote",
+  onSite: "site",
+  hybrid: "hybrid",
 } as const
+
+export const MissionOperatingEnum = z.nativeEnum(MissionOperating)
 
 export const searchMissionsSchema = z.object({
   search: z.string().optional(),
@@ -18,7 +20,7 @@ export const missionSchema = z
     startDate: z.date().min(new Date()),
     endDate: z.date(),
     description: z.string().min(1).max(500),
-    operating: z.nativeEnum(MissionOperating),
+    operating: MissionOperatingEnum,
     localisation: z.string().optional(),
   })
   .superRefine((data, ctx) => {
@@ -32,3 +34,5 @@ export const missionSchema = z
 
 export type SearchMissionsType = z.infer<typeof searchMissionsSchema>
 export type MissionType = z.infer<typeof missionSchema>
+export type MissionOperatingType =
+  (typeof MissionOperating)[keyof typeof MissionOperating]

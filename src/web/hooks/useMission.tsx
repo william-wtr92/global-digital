@@ -1,5 +1,3 @@
-"use client"
-
 import { useQuery } from "@tanstack/react-query"
 
 import type { SelectCompany, SelectMission } from "@/db/schema"
@@ -8,15 +6,16 @@ import routes from "@/web/routes"
 
 type Response = {
   result: boolean
-  searchResults: {
+  detailedMission: {
     Missions: SelectMission
     Company: SelectCompany
-  }[]
+    isEmployee: boolean
+  }
 }
 
-const fetchMissions = async () => {
+const fetchMission = async (missionId: string) => {
   const response = await apiFetch<Response>({
-    url: routes.api.missions.list,
+    url: routes.api.missions.detailedMission(missionId),
     method: "GET",
     credentials: "include",
   })
@@ -24,10 +23,10 @@ const fetchMissions = async () => {
   return response.data
 }
 
-export const useMissions = () => {
+export const useMission = (missionId: string) => {
   const { ...query } = useQuery<Response>({
-    queryKey: ["missions"],
-    queryFn: () => fetchMissions(),
+    queryKey: ["mission", missionId],
+    queryFn: () => fetchMission(missionId),
   })
 
   return { ...query }
