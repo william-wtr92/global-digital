@@ -6,6 +6,7 @@ import type { UUID } from "crypto"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 
+import CustomFormField from "@/components/customs/Forms/CustomFormField"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -17,7 +18,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
@@ -26,17 +26,17 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { apiFetch } from "@/lib/api"
+import { apiFetch, type ApiResponse } from "@/lib/api"
 import { capitalizeFirstLetter } from "@/utils/forms"
 import type { ReadonlyArrayZod } from "@/utils/types"
 import {
   companiesCreateFormValidator,
   type CompaniesCreateValidatorType,
-} from "@/validators/companies"
+} from "@/utils/validators/companies"
 import routes from "@/web/routes"
 
 const CompaniesCreatePage = () => {
-  const { data: areas } = useQuery<{ id: UUID; value: string }[]>({
+  const { data: areas } = useQuery<ApiResponse<{ id: UUID; value: string }[]>>({
     queryKey: [routes.api.areas.index],
     queryFn: () => apiFetch({ url: routes.api.areas.index }),
   })
@@ -44,7 +44,7 @@ const CompaniesCreatePage = () => {
   const companiesCreateForm = useForm<CompaniesCreateValidatorType>({
     resolver: zodResolver(
       companiesCreateFormValidator(
-        areas?.map((area) => area.value) as unknown as ReadonlyArrayZod,
+        areas?.data.map((area) => area.value) as unknown as ReadonlyArrayZod,
       ),
     ),
   })
@@ -54,12 +54,13 @@ const CompaniesCreatePage = () => {
     CompaniesCreateValidatorType
   >({
     mutationKey: [routes.api.companies.create],
-    mutationFn: (data) =>
-      apiFetch<CompaniesCreateValidatorType>({
+    mutationFn: async (data) => {
+      await apiFetch<CompaniesCreateValidatorType>({
         url: routes.api.companies.create,
         method: "POST",
         data,
-      }),
+      })
+    },
   })
 
   const onSubmit = (values: CompaniesCreateValidatorType) => mutateAsync(values)
@@ -72,52 +73,26 @@ const CompaniesCreatePage = () => {
           onSubmit={companiesCreateForm.handleSubmit(onSubmit)}
           className="space-y-5"
         >
-          <FormField
-            control={companiesCreateForm.control}
+          <CustomFormField
+            form={companiesCreateForm}
             name="address"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("address.label")}</FormLabel>
-                <FormControl>
-                  <Input placeholder={t("address.placeholder")} {...field} />
-                </FormControl>
-                <FormDescription>{t("address.description")}</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
+            placeholder={t("address.placeholder")}
+            label={t("address.label")}
+            description={t("address.description")}
           />
-          <FormField
-            control={companiesCreateForm.control}
+          <CustomFormField
+            form={companiesCreateForm}
             name="businessName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("businessName.label")}</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder={t("businessName.placeholder")}
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  {t("businessName.description")}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
+            placeholder={t("businessName.placeholder")}
+            label={t("businessName.label")}
+            description={t("businessName.description")}
           />
-          <FormField
-            control={companiesCreateForm.control}
+          <CustomFormField
+            form={companiesCreateForm}
             name="logo"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("logo.label")}</FormLabel>
-                <FormControl>
-                  <Input placeholder={t("logo.placeholder")} {...field} />
-                </FormControl>
-                <FormDescription>{t("logo.description")}</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
+            placeholder={t("logo.placeholder")}
+            label={t("logo.label")}
+            description={t("logo.description")}
           />
           <FormField
             control={companiesCreateForm.control}
@@ -135,7 +110,7 @@ const CompaniesCreatePage = () => {
                       <SelectValue placeholder={t("area.placeholder")} />
                     </SelectTrigger>
                     <SelectContent>
-                      {areas?.map((area) => (
+                      {areas?.data.map((area) => (
                         <SelectItem value={area.value} key={area.id}>
                           {capitalizeFirstLetter(area.value)}
                         </SelectItem>
@@ -148,38 +123,19 @@ const CompaniesCreatePage = () => {
               </FormItem>
             )}
           />
-          <FormField
-            control={companiesCreateForm.control}
+          <CustomFormField
+            form={companiesCreateForm}
             name="headquarters"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("headquarters.label")}</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder={t("headquarters.placeholder")}
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  {t("headquarters.description")}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
+            placeholder={t("headquarters.placeholder")}
+            label={t("headquarters.label")}
+            description={t("headquarters.description")}
           />
-          <FormField
-            control={companiesCreateForm.control}
+          <CustomFormField
+            form={companiesCreateForm}
             name="kbis"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("kbis.label")}</FormLabel>
-                <FormControl>
-                  <Input placeholder={t("kbis.placeholder")} {...field} />
-                </FormControl>
-                <FormDescription>{t("kbis.description")}</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
+            placeholder={t("kbis.placeholder")}
+            label={t("kbis.label")}
+            description={t("kbis.description")}
           />
           <FormField
             control={companiesCreateForm.control}

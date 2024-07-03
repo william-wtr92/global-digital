@@ -2,6 +2,7 @@ import { z } from "zod"
 
 import { db } from "@/db/client"
 import { company } from "@/db/schema"
+import { SC } from "@/def/status"
 import type { ReadonlyArrayZod } from "@/utils/types"
 import { companiesCreateFormValidator } from "@/utils/validators/companies"
 
@@ -33,8 +34,11 @@ export const POST = async (req: Request) => {
 
     await db.insert(company).values(data)
 
-    return Response.json(data, { status: 201 })
+    return Response.json(data, { status: SC.success.CREATED })
   } catch (error) {
-    return Response.json({ error }, { status: 500 })
+    return Response.json(
+      { error },
+      { status: SC.serverErrors.INTERNAL_SERVER_ERROR },
+    )
   }
 }

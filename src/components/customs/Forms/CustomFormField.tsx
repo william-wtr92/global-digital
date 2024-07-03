@@ -1,5 +1,6 @@
 "use client"
 
+import type { HTMLInputTypeAttribute } from "react"
 import type { FieldValues, Path, UseFormReturn } from "react-hook-form"
 
 import {
@@ -18,7 +19,7 @@ type CustomFormFieldProps<T extends FieldValues> = {
   label?: string
   description?: string
   placeholder?: string
-  passwordField?: boolean
+  type?: HTMLInputTypeAttribute
 }
 
 const CustomFormField = <T extends FieldValues>({
@@ -27,7 +28,7 @@ const CustomFormField = <T extends FieldValues>({
   label,
   description,
   placeholder,
-  passwordField,
+  type,
 }: CustomFormFieldProps<T>) => {
   return (
     <FormField
@@ -37,11 +38,7 @@ const CustomFormField = <T extends FieldValues>({
         <FormItem className="w-96">
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input
-              type={passwordField ? "password" : "text"}
-              placeholder={placeholder}
-              {...field}
-            />
+            <Input type={type ?? "text"} placeholder={placeholder} {...field} />
           </FormControl>
           <FormDescription>{description}</FormDescription>
           <FormMessage />
