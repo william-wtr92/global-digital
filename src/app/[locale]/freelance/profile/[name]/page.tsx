@@ -50,7 +50,7 @@ const FreelanceAccount = () => {
     <div className="flex h-full flex-col">
       {userInfo.id === id && (
         <Link
-          href={routes.freelanceUpdateProfile(
+          href={routes.freelance.updateProfile(
             getFullName(data.Users.firstName, data.Users.lastName),
             id,
           )}
