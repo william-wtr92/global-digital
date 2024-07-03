@@ -8,6 +8,13 @@
       "when": 1719928339496,
       "tag": "0000_tricky_puppet_master",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1719953157114,
+      "tag": "0001_orange_molten_man",
+      "breakpoints": true
     }
   ]
 }

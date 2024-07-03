@@ -1,17 +1,40 @@
 "use client"
 
-import { createContext, useContext } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
+import { useCookies } from "react-cookie"
+
+import { parseSession } from "@/utils/parseJwt"
 
 type AppContextType = {
-  // Add your context properties here
+  userInfo: { id: string }
 }
 
-const AdminContextProvider = () => {
-  return <AdminContext.Provider value={{}} />
+const AppContextProvider = (props: {
+  sessionUserInfo: { id: string }
+  children: React.ReactNode
+}) => {
+  const [userInfo, setUserInfo] = useState(props.sessionUserInfo)
+  const [cookies, , removeCookie] = useCookies(["Authorization"])
+
+  useEffect(() => {
+    const jwt: string = cookies.Authorization as string
+
+    if (jwt) {
+      try {
+        const newSession = parseSession(jwt)
+        setUserInfo(newSession.user)
+      } catch (e) {
+        setUserInfo({ id: "" })
+        removeCookie("Authorization")
+      }
+    }
+  }, [cookies.Authorization, removeCookie])
+
+  return <AppContext.Provider {...props} value={{ userInfo }} />
 }
 
-const AdminContext = createContext<AppContextType>({} as AppContextType)
-const useAdminContext = () => useContext(AdminContext)
+const AppContext = createContext<AppContextType>({} as AppContextType)
+const useAppContext = () => useContext(AppContext)
 
-export { AdminContextProvider }
-export default useAdminContext
+export { AppContextProvider }
+export default useAppContext
