@@ -11,6 +11,7 @@ import { MdAddReaction } from "react-icons/md"
 import { toast } from "sonner"
 
 import CustomFormField from "@/components/customs/Forms/CustomFormField"
+import DeleteAccountDialog from "@/components/customs/Forms/DeleteAccountDialog"
 import Spinner from "@/components/customs/Utils/Spinner"
 import { Button } from "@/components/ui/button"
 import {
@@ -87,7 +88,7 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
   const mutation = useMutation({
     mutationFn: async () => {
       const response = await apiFetch<Profile>({
-        url: routes.api.updateAccount(id || ""),
+        url: routes.api.freelance.updateAccount(id || ""),
         method: "PATCH",
         data: updatedProfile,
       })
@@ -150,7 +151,7 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center py-6">
+    <div className="flex flex-col items-center justify-center gap-4 py-6">
       <div className="flex cursor-pointer flex-col gap-5 rounded-full bg-gray-300 p-10">
         <MdAddReaction className="text-9xl" />
       </div>
@@ -242,7 +243,7 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
               control={form.control}
               name="areaId"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="w-screen max-w-96 px-4">
                   <FormLabel>
                     {t("Form.UpdateProfilForm.selectActivityArea")}
                   </FormLabel>
@@ -303,6 +304,8 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
           <Button type="submit">{t("Form.UpdateProfilForm.submit")}</Button>
         </form>
       </Form>
+
+      <DeleteAccountDialog id={profile.Users.id} />
     </div>
   )
 }

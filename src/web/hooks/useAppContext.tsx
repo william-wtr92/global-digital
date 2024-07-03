@@ -28,7 +28,7 @@ const AppContextProvider = (props: {
         removeCookie("Authorization")
       }
     }
-  }, [cookies.Authorization, removeCookie])
+  }, [cookies.Authorization, removeCookie, userInfo.id])
 
   return <AppContext.Provider {...props} value={{ userInfo }} />
 }

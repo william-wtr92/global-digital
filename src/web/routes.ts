@@ -31,8 +31,9 @@ const routes = {
     },
     freelance: {
       createAccount: "/freelance/create-account",
+      getProfile: (userId: string) => `/freelance/${userId}`,
       updateAccount: (userId: string) => `/freelance/${userId}/account`,
-      getProfile: (userId: string | null) => `/freelance/${userId}`,
+      deleteAccount: (userId: string) => `/freelance/${userId}/account`,
     },
     companies: {
       "create": "/companies/create",

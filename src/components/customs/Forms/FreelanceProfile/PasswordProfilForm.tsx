@@ -88,7 +88,7 @@ const PasswordProfilForm = ({
             label={capitalizeFirstLetter(t("Form.PasswordProfilForm.password"))}
             placeholder="********"
             description={t("Form.PasswordProfilForm.passwordDescription")}
-            type="password"
+            passwordField
           />
           <CustomFormField
             name="confirmPassword"
@@ -97,7 +97,7 @@ const PasswordProfilForm = ({
             description={t(
               "Form.PasswordProfilForm.confirmPasswordDescription",
             )}
-            type="password"
+            passwordField
           />
         </div>
         <Button type="submit">{t("Form.PasswordProfilForm.submit")}</Button>
