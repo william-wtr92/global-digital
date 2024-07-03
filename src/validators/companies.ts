@@ -6,11 +6,10 @@ export const companiesCreateFormValidator = (areas: ReadonlyArrayZod) =>
   z.object({
     address: z.string().min(1),
     businessName: z.string().min(1),
-    logo: z.string(),
+    logo: z.string().url(),
     headquarters: z.string().min(1),
-    businessSector: z.string().min(1),
     areaId: z.enum(areas),
-    kbis: z.string(),
+    kbis: z.string().url(),
     descriptionCompany: z.string().min(1),
     accept: z.boolean(),
   })

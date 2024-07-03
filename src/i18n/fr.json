@@ -1,47 +1,4 @@
 {
-  "Areas": {},
-  "CompaniesCreatePage": {
-    "button": "Valider la demande",
-    "title": "Demande de création de page entreprise",
-    "address": {
-      "label": "Adresse professionnelle",
-      "placeholder": "Adresse professionnelle",
-      "description": "Entrez votre adresse professionnelle"
-    },
-    "businessName": {
-      "label": "Raison sociale de l'entreprise",
-      "placeholder": "Raison sociale de l'entreprise",
-      "description": "Entrez la raison sociale de l'entreprise"
-    },
-    "area": {
-      "label": "Sélectionner un secteur d'activité",
-      "placeholder": "Choissisez un secteur d'activité",
-      "description": "Entrez votre secteur d'activité"
-    },
-    "logo": {
-      "label": "Logo de l'entreprise",
-      "placeholder": "Choissisez une image",
-      "description": "Entrez le logo de l'entreprise"
-    },
-    "headquarters": {
-      "label": "Siège social",
-      "placeholder": "Siège social",
-      "description": "Entrez le siège social de l'entreprise"
-    },
-    "kbis": {
-      "label": "Kbis de l'entreprise",
-      "placeholder": "Choissisez une image",
-      "description": "Entrez le kbis de l'entreprise"
-    },
-    "descriptionCompany": {
-      "label": "Description",
-      "placeholder": "Description",
-      "description": "Entrez la description de l'entreprise"
-    },
-    "accept": {
-      "label": "J'accepte les conditions d'utilisation"
-    }
-  },
   "Error": {
     "anErrorOccurred": "Une erreur est survenue",
     "email_unique": "Cet email est déjà utilisé"
@@ -70,7 +27,7 @@
     },
     "logo": {
       "label": "Logo de l'entreprise",
-      "placeholder": "Choissisez une image",
+      "placeholder": "Choissisez un url de votre image",
       "description": "Entrez le logo de l'entreprise"
     },
     "headquarters": {
@@ -80,7 +37,7 @@
     },
     "kbis": {
       "label": "Kbis de l'entreprise",
-      "placeholder": "Choissisez une image",
+      "placeholder": "Choissisez un url de votre image",
       "description": "Entrez le kbis de l'entreprise"
     },
     "descriptionCompany": {

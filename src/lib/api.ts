@@ -16,6 +16,10 @@ export const apiFetch = async <Body>({
     {
       method: method ?? "GET",
       ...(data && { body: JSON.stringify(data) }),
+      headers: {
+        "Content-Type": "application/json",
+        ...options.headers,
+      },
       ...options,
     },
   )

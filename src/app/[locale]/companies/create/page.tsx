@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQuery } from "@tanstack/react-query"
+import type { UUID } from "crypto"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 
@@ -35,14 +36,16 @@ import {
 import routes from "@/web/routes"
 
 const CompaniesCreatePage = () => {
-  const { data: areas } = useQuery<ReadonlyArrayZod>({
+  const { data: areas } = useQuery<{ id: UUID; value: string }[]>({
     queryKey: [routes.api.areas.index],
     queryFn: () => apiFetch({ url: routes.api.areas.index }),
   })
   const t = useTranslations("CompaniesCreatePage")
   const companiesCreateForm = useForm<CompaniesCreateValidatorType>({
     resolver: zodResolver(
-      companiesCreateFormValidator(areas as ReadonlyArrayZod),
+      companiesCreateFormValidator(
+        areas?.map((area) => area.value) as unknown as ReadonlyArrayZod,
+      ),
     ),
   })
   const { mutateAsync } = useMutation<
@@ -109,7 +112,7 @@ const CompaniesCreatePage = () => {
               <FormItem>
                 <FormLabel>{t("logo.label")}</FormLabel>
                 <FormControl>
-                  <Input type="file" {...field} />
+                  <Input placeholder={t("logo.placeholder")} {...field} />
                 </FormControl>
                 <FormDescription>{t("logo.description")}</FormDescription>
                 <FormMessage />
@@ -123,14 +126,18 @@ const CompaniesCreatePage = () => {
               <FormItem>
                 <FormLabel>{t("area.label")}</FormLabel>
                 <FormControl>
-                  <Select {...field}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    name={field.name}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder={t("area.placeholder")} />
                     </SelectTrigger>
                     <SelectContent>
                       {areas?.map((area) => (
-                        <SelectItem value={area} key={area}>
-                          {capitalizeFirstLetter(area)}
+                        <SelectItem value={area.value} key={area.id}>
+                          {capitalizeFirstLetter(area.value)}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -167,7 +174,7 @@ const CompaniesCreatePage = () => {
               <FormItem>
                 <FormLabel>{t("kbis.label")}</FormLabel>
                 <FormControl>
-                  <Input type="file" {...field} />
+                  <Input placeholder={t("kbis.placeholder")} {...field} />
                 </FormControl>
                 <FormDescription>{t("kbis.description")}</FormDescription>
                 <FormMessage />

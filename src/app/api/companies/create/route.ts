@@ -16,23 +16,25 @@ const companyCreateValidator = z.object({
 
 export const POST = async (req: Request) => {
   try {
+    const json = await req.json()
     const areas = await db.query.area.findMany()
     const body = await companiesCreateFormValidator(
       areas.map((area) => area.value) as unknown as ReadonlyArrayZod,
-    ).parseAsync(await req.json())
+    ).parseAsync(json)
 
     const data = await companyCreateValidator.parseAsync({
       businessName: body.businessName,
       description: body.descriptionCompany,
-      areaId: body.areaId,
+      areaId: areas.find((area) => area.value === body.areaId)!.id,
       headQuarter: body.headquarters,
-      kbisUrl: body.kibs,
+      logo: body.logo,
+      kbisUrl: body.kbis,
     })
 
     await db.insert(company).values(data)
 
-    return Response.json({}, { status: 201 })
-  } catch (err) {
-    return Response.json({ error: "An unexpected error" }, { status: 500 })
+    return Response.json(data, { status: 201 })
+  } catch (error) {
+    return Response.json({ error }, { status: 500 })
   }
 }
