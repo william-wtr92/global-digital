@@ -3,7 +3,7 @@ import { z } from "zod"
 import { db } from "@/db/client"
 import { company } from "@/db/schema"
 import type { ReadonlyArrayZod } from "@/utils/types"
-import { companiesCreateFormValidator } from "@/validators/companies"
+import { companiesCreateFormValidator } from "@/utils/validators/companies"
 
 const companyCreateValidator = z.object({
   businessName: z.string().min(1),
