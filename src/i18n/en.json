@@ -10,7 +10,10 @@
     "signup": "Registration",
     "login": "Login",
     "logout": "Logout",
-    "logoutSuccess": "You have been successfully logged out."
+    "logoutSuccess": "You have been successfully logged out.",
+    "search" : {
+      "placeholder": "Search a mission or a freelancer"
+    }
   },
   "Login": {
     "title": "Welcome back!",
@@ -82,5 +85,13 @@
     "invalidEmail": "Invalid email",
     "passwordTooShort": "Password too short",
     "Required": "Required"
+  },
+  "Missions": {
+    "days": "days",
+    "form": {
+      "label": "Search a mission",
+      "placeholder": "Company, Mission ...",
+      "error": "Search failed"
+    }
   }
 }
