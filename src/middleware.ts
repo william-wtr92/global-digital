@@ -19,7 +19,7 @@ export default function middleware(request: NextRequest) {
   if (!isAdminRoute) {
     const res = middlewareI18n(request)
     const [, locale] = request.nextUrl.pathname.split("/")
-    const publicAndPrivateRoutes = [`/${locale}/`, `/`]
+    const publicAndPrivateRoutes = [``]
     const isAlwaysOk = publicAndPrivateRoutes.some(
       (option) =>
         request.nextUrl.pathname === option ||
@@ -30,7 +30,12 @@ export default function middleware(request: NextRequest) {
       return res
     }
 
-    const publicRoutes = [`/${locale}/login`, `/${locale}/`]
+    const publicRoutes = [
+      `/${locale}/login`,
+      `/${locale}/`,
+      `${locale}/freelance/create-profile`,
+      `/${locale}/freelance/profile`,
+    ]
     const isPublic = publicRoutes.some((option) =>
       request.nextUrl.pathname.startsWith(option),
     )
