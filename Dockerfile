@@ -1,23 +1,23 @@
-FROM node:22-alpine3.19 AS base
-
+FROM node:20-slim AS base
 ARG APP_PORT=3000
 WORKDIR /app
+
 ENV NEXT_TELEMETRY_DISABLED=1
-EXPOSE $APP_PORT
-
-FROM base AS builder
-
-RUN corepack enable pnpm
-RUN corepack use pnpm@latest
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+EXPOSE ${APP_PORT}
+RUN corepack enable
 COPY . .
+
+FROM base AS prod-deps
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
 
+FROM base AS build
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
 
-FROM base AS prod
+FROM base
+COPY --from=prod-deps /app/node_modules ./node_modules
+COPY --from=build /app/.next .next
 
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-
-ENTRYPOINT ["node", "server.js"]
+CMD [ "pnpm", "start" ]

@@ -7,7 +7,7 @@ export const emptyProfile: Profile = {
   phoneNumber: "",
   jobTitle: "",
   businessName: "",
-  areaId: 0,
+  areaId: "0",
   localisation: "",
   registrationNumber: "",
   avatarUrl: "",
