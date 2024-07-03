@@ -62,7 +62,7 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
           <Link href={routes.registration}>{t("signup")}</Link>
           <Link
-            href={routes.home}
+            href={routes.login}
             className="rounded-full bg-slate-400 px-4 py-1"
           >
             {t("login")}
