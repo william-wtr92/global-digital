@@ -107,7 +107,7 @@ export const candidate = pgTable("Candidate", {
     .notNull(),
 })
 
-export const mission = pgTable("Mission", {
+export const mission = pgTable("Missions", {
   id: uuid("id").defaultRandom().primaryKey().notNull(),
   companyId: uuid("company_id")
     .references(() => company.id)
