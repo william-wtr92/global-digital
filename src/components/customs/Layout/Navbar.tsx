@@ -154,8 +154,12 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="bg-medianBlue fixed inset-0 flex flex-col md:hidden">
           <div className="flex h-16 items-center justify-between p-3">
-            <Link href={routes.home} onClick={toggleMenu}>
-              Logo
+            <Link
+              href={routes.home}
+              onClick={toggleMenu}
+              className="text-xl font-bold"
+            >
+              CYBERLINKER
             </Link>
             <Button
               className="cursor-pointer text-3xl"
