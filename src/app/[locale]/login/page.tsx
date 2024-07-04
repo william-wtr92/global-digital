@@ -83,7 +83,7 @@ const LoginPage = () => {
               label={t("Form.password.label")}
               placeholder={t("Form.password.label")}
               description={t("Form.password.placeholder")}
-              passwordField
+              type="password"
             />
             <Link
               className="font-bold underline underline-offset-4"
