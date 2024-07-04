@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form"
 import { RoughNotation } from "react-rough-notation"
 import { toast } from "sonner"
 
+import CustomFormField from "@/components/customs/Forms/CustomFormField"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -82,29 +83,14 @@ const LoginPage = () => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="p-text-large-screen flex flex-col items-center space-y-8 rounded-md bg-white p-6"
+            className="flex flex-col items-center gap-6"
           >
-            <FormField
-              control={form.control}
+            <CustomFormField
               name="email"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel className="relative left-1 font-bold text-neutral-800">
-                    {t("Form.email.label")}
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      className="focus-visible:outline-accent-500 mt-2 px-4 py-2 focus-visible:border-0 focus-visible:ring-0"
-                      type="email"
-                      placeholder={t("Form.email.placeholder")}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage className="relative left-2 text-destructive">
-                    {errors.email ? <span>{t("Form.email.error")}</span> : null}
-                  </FormMessage>
-                </FormItem>
-              )}
+              form={form}
+              label={t("Form.email.label")}
+              placeholder={t("Form.email.label")}
+              description={t("Form.email.placeholder")}
             />
             <FormField
               control={form.control}
@@ -158,7 +144,7 @@ const LoginPage = () => {
             </Button>
           </form>
         </Form>
-      </div>
+      </>
     </div>
   )
 }

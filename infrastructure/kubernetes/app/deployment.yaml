@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: global-digital
+  name: global-digital
+  namespace: app-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: global-digital
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: global-digital
+    spec:
+      containers:
+      - image: ghcr.io/william-wtr92/global-digital:main
+        name: global-digital
+        ports:
+        - containerPort: 3000
+        resources: {}
+      restartPolicy: Always
+      imagePullSecrets:
+      - name: regcred
+status: {}

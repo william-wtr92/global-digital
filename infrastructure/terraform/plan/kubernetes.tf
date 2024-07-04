@@ -5,7 +5,7 @@ resource "scaleway_vpc_private_network" "pn" {
 
 resource "scaleway_k8s_cluster" "cluster" {
   name                = "${var.project_name}-${var.project_env}-cluster"
-  version             = "1.29.1"
+  version             = "1.29.6"
   cni                 = "cilium"
   private_network_id  = scaleway_vpc_private_network.pn.id
   project_id          = var.project_id
