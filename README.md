@@ -52,7 +52,7 @@
 
 ## ⭐️ Tech Stack
 
-- **Client & Server:** [_Next.js_](https://nextjs.org/docs) & _TypeScript_
+- **Client & Server:** [_Next.js_](https://nextjs.org/docs) / _TypeScript_ / _DrizzleORM_
 - **Database**: _PostgreSQL_
 - **Mockup**: [_Figma_](https://www.figma.com/design/18DFWDRWH35U0rZGSd9QFp/Hackathon-2024---Bold-Digital)
 - **CI/CD**: _Github Actions_

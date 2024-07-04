@@ -227,6 +227,28 @@
         "success": "Mission mise à jour avec succès",
         "error": "Mise à jour de la mission échouée"
       }
+    },
+    "Candidate": {
+      "messages": {
+        "deleteSuccess": "Votre candidature a été supprimée avec succès",
+        "sentSuccess": "Votre candidature a été envoyée avec succès",
+        "sentError": "Une erreur est survenue lors de l'envoi de votre candidature",
+        "deleteError": "Une erreur est survenue lors de la suppression de votre candidature",
+        "employeeDeleteSuccess": "La candidature a été supprimée avec succès",
+        "employeeDeleteError": "Une erreur est survenue lors de la suppression de la candidature"
+      },
+      "titles": {
+        "candidates": "Candidats"
+      },
+      "noCandidates": "Aucun candidat pour le moment !",
+      "alert": {
+        "trigger": "Supprimer ma candidature",
+        "title": "Suppression de ma candidature",
+        "content": "Cette action va supprimer votre candidature pour cette mission, si c'est une erreur vous pourrez postuler à nouveau.",
+        "cancel": "Annuler",
+        "delete": "Supprimer"
+      },
+      "apply": "Postuler"
     }
   }
 }

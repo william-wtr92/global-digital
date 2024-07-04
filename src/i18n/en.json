@@ -226,6 +226,28 @@
         "success": "Mission updated successfully",
         "error": "Mission update failed"
       }
+    },
+    "Candidate": {
+      "messages": {
+        "deleteSuccess": "You have successfully deleted your application",
+        "sentSuccess": "Your application has been sent successfully",
+        "sentError": "An error occurred while sending your application",
+        "deleteError": "An error occurred while deleting your application",
+        "employeeDeleteSuccess": "You have successfully deleted this application",
+        "employeeDeleteError": "An error occurred while deleting this application"
+      },
+      "titles": {
+        "candidates": "Candidates"
+      },
+      "noCandidates": "No candidates for the moment!",
+      "alert": {
+        "trigger": "Delete my application",
+        "title": "Delete my application",
+        "content": "This action will be suppress your application for this mission, if it's an error you can reapply later.",
+        "cancel": "Cancel",
+        "delete": "Delete"
+      },
+      "apply": "Apply"
     }
   }
 }

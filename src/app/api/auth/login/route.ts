@@ -34,7 +34,6 @@ export const POST = async (req: NextRequest) => {
     const jwt = signJWT(user[0].id)
 
     cookies().set("Authorization", jwt.toString(), {
-      httpOnly: true,
       secure: true,
       sameSite: "strict",
       maxAge: appConfig.security.cookies.authExpiration,

@@ -1,5 +1,3 @@
-"use client"
-
 import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/outline"
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
@@ -14,22 +12,18 @@ import LocaleSelect from "@/components/customs/Utils/LocalSelect"
 import { Button } from "@/components/ui/button"
 import { apiFetch } from "@/lib/api"
 import { getFullName } from "@/utils/functions"
+import useAppContext from "@/web/hooks/useAppContext"
 import { useUser } from "@/web/hooks/useUser"
 import routes from "@/web/routes"
 
-type Props = {
-  token: string | undefined
-}
-
-const Navbar = (props: Props) => {
-  const { token } = props
+const Navbar = () => {
+  const { token, userInfo, setUserInfo } = useAppContext()
+  const { data, isLoading, error } = useUser(token)
 
   const router = useRouter()
   const t = useTranslations("Navbar")
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const { data, isLoading, error } = useUser(token)
-  const userInfo = !isLoading && !error ? data?.userConnected : null
   const queryClient = useQueryClient()
   const mutation = useMutation<void, Error>({
     mutationKey: [routes.api.auth.logout],
@@ -41,8 +35,9 @@ const Navbar = (props: Props) => {
         credentials: "include",
       })
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user"] })
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["user"] })
+      setUserInfo({ id: "", firstName: "", lastName: "" })
       toast.success(t("logoutSuccess"))
       router.push(routes.login)
     },
@@ -56,6 +51,12 @@ const Navbar = (props: Props) => {
     toggleMenu()
     mutation.mutate()
   }
+
+  useEffect(() => {
+    if (data && !isLoading && !error) {
+      setUserInfo(data.userConnected)
+    }
+  }, [data, isLoading, error, setUserInfo])
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -75,7 +76,7 @@ const Navbar = (props: Props) => {
       <div className="flex h-16 items-center justify-between bg-gray-300 p-3">
         <Link href={routes.home}>Logo</Link>
 
-        {userInfo ? (
+        {userInfo.id ? (
           <div className="hidden items-center gap-6 md:flex xl:gap-20">
             <Link href={routes.missions.search}>
               <p className="text-medium rounded-md border-2 border-gray-200 bg-gray-200 px-4 py-1 hover:shadow-xl">
@@ -160,7 +161,7 @@ const Navbar = (props: Props) => {
           </div>
 
           <div className="flex flex-grow flex-col items-center justify-center">
-            {userInfo ? (
+            {userInfo.id ? (
               <div className="flex flex-col items-center gap-10">
                 <Link
                   href={routes.freelance.profile(

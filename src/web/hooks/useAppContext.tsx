@@ -6,8 +6,15 @@ import { useCookies } from "react-cookie"
 import { parseSession } from "@/utils/parseJwt"
 
 type AppContextType = {
+  token?: string
   userInfo: { id: string; firstName: string; lastName: string }
+  setUserInfo: React.Dispatch<
+    React.SetStateAction<{ id: string; firstName: string; lastName: string }>
+  >
 }
+
+const AppContext = createContext<AppContextType>({} as AppContextType)
+const useAppContext = () => useContext(AppContext)
 
 const AppContextProvider = (props: {
   sessionUserInfo: { id: string; firstName: string; lastName: string }
@@ -15,6 +22,7 @@ const AppContextProvider = (props: {
 }) => {
   const [userInfo, setUserInfo] = useState(props.sessionUserInfo)
   const [cookies, , removeCookie] = useCookies(["Authorization"])
+  const token = cookies.Authorization
 
   useEffect(() => {
     const jwt: string = cookies.Authorization as string
@@ -28,13 +36,14 @@ const AppContextProvider = (props: {
         removeCookie("Authorization")
       }
     }
-  }, [cookies.Authorization, removeCookie, userInfo.id])
+  }, [cookies.Authorization, removeCookie])
 
-  return <AppContext.Provider {...props} value={{ userInfo }} />
+  return (
+    <AppContext.Provider value={{ token, userInfo, setUserInfo }}>
+      {props.children}
+    </AppContext.Provider>
+  )
 }
-
-const AppContext = createContext<AppContextType>({} as AppContextType)
-const useAppContext = () => useContext(AppContext)
 
 export { AppContextProvider }
 export default useAppContext

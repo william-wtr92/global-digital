@@ -29,7 +29,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <AppContextProvider sessionUserInfo={userInfo}>
             <TanstackProvider>
-              <Layout token={tokenValue}>
+              <Layout>
                 {children}
                 <Toaster position="bottom-right" richColors />
               </Layout>

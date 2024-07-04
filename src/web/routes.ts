@@ -15,7 +15,8 @@ const routes = {
     createProfile: "/freelance/create-profile",
     updateProfile: (name: string, id: string) =>
       `/freelance/update-profile/${name}?id=${id}`,
-    profile: (name: string, id: string) => `/freelance/${name}?id=${id}`,
+    profile: (name: string, id: string) =>
+      `/freelance/profile/${name}?id=${id}`,
   },
   search: "/search",
   api: {
@@ -24,6 +25,20 @@ const routes = {
       login: "/auth/login",
       logout: "/auth/logout",
       register: { freelance: "/auth/register/freelance" },
+    },
+    missions: {
+      create: "/missions",
+      list: "/missions",
+      detailedMission: (missionId: string) => `/missions/${missionId}`,
+      updateMission: (missionId: string) => `/missions/${missionId}`,
+      candidate: {
+        isCandidate: (missionId: string) => `/missions/${missionId}/candidate`,
+        send: (missionId: string) => `/missions/${missionId}/candidate`,
+        delete: (missionId: string) => `/missions/${missionId}/candidate`,
+        list: (missionId: string) => `/missions/${missionId}/candidate/list`,
+        deleteByEmployee: (missionId: string, candidateId: string) =>
+          `/missions/${missionId}/candidate/list/${candidateId}`,
+      },
     },
     areas: {
       "index": "/areas",
@@ -41,12 +56,6 @@ const routes = {
         index: (id: string) => `/companies/${id}`,
         missions: (id: string) => `/companies/${id}/missions`,
       },
-    },
-    missions: {
-      create: "/missions",
-      list: "/missions",
-      detailedMission: (missionId: string) => `/missions/${missionId}`,
-      updateMission: (missionId: string) => `/missions/${missionId}`,
     },
   },
 } as const
