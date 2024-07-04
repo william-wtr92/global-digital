@@ -24,11 +24,8 @@ const fetchMissions = async () => {
   return response.data
 }
 
-export const useMissions = () => {
-  const { ...query } = useQuery<Response>({
+export const useMissions = () =>
+  useQuery<Response>({
     queryKey: ["missions"],
     queryFn: () => fetchMissions(),
   })
-
-  return { ...query }
-}
