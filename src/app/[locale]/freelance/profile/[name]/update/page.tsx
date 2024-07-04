@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl"
 import { useQueryState } from "nuqs"
 import { toast } from "sonner"
 
-import { Loading } from "@/components/customs/layout/Loading"
+import { Loading } from "@/components/layout/Loading"
 import UpdateProfilForm from "@/features/account/profil/components/UpdateProfileForm"
 import { useProfile } from "@/features/account/profil/hooks/useProfile"
 import { useAppContext } from "@/hooks/useAppContext"
