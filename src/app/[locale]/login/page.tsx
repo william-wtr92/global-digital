@@ -59,7 +59,7 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="flex h-screen flex-col items-center justify-center gap-10">
+    <div className="flex h-full flex-col items-center justify-center gap-10">
       <RoughNotation type="underline" color="#000000" show={true} padding={10}>
         <h1 className="text-4xl font-extrabold">{t("title")}</h1>
       </RoughNotation>

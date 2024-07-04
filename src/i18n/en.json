@@ -56,9 +56,13 @@
     "login": "Login",
     "logout": "Logout",
     "logoutSuccess": "You have been successfully logged out.",
+    "switchLanguage": "Switch language",
     "search": {
       "placeholder": "Search a mission or a freelancer"
     }
+  },
+  "LocaleSelect": {
+    "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 French} es {🇪🇸 Spanish} other {Unknown}}"
   },
   "Login": {
     "title": "Welcome back!",
