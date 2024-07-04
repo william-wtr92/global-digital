@@ -53,10 +53,10 @@ const CompaniesCreatePage = () => {
     Error,
     CompaniesCreateValidatorType
   >({
-    mutationKey: [routes.api.companies.create],
+    mutationKey: [routes.api.companies.index],
     mutationFn: async (data) => {
       await apiFetch<CompaniesCreateValidatorType>({
-        url: routes.api.companies.create,
+        url: routes.api.companies.index,
         method: "POST",
         data,
       })

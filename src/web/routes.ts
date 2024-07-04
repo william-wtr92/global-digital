@@ -36,7 +36,7 @@ const routes = {
       deleteAccount: (userId: string) => `/freelance/${userId}/account`,
     },
     companies: {
-      "create": "/companies/create",
+      "index": "/companies",
       ":id": (id: string) => `/companies/${id}`,
     },
     missions: {
