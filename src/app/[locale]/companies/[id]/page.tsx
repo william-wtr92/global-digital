@@ -8,7 +8,7 @@ import { useFormatter, useTranslations } from "next-intl"
 import { BsPersonGear } from "react-icons/bs"
 import { toast } from "sonner"
 
-import { Loading } from "@/components/customs/layout/Loading"
+import { Loading } from "@/components/layout/Loading"
 import type { SelectArea, SelectCompany, SelectMission } from "@/db/schema"
 import { apiFetch, type ApiResponse } from "@/lib/api"
 import { SC } from "@/utils/constants/status"

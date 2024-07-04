@@ -9,7 +9,7 @@ import { IoSettingsOutline } from "react-icons/io5"
 import { RxPerson } from "react-icons/rx"
 import { toast } from "sonner"
 
-import { Loading } from "@/components/customs/layout/Loading"
+import { Loading } from "@/components/layout/Loading"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useProfile } from "@/features/account/profil/hooks/useProfile"
 import { useAppContext } from "@/hooks/useAppContext"

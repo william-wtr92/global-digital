@@ -10,7 +10,7 @@ import { useEffect, useState } from "react"
 import { RxCross2, RxHamburgerMenu, RxPerson } from "react-icons/rx"
 import { toast } from "sonner"
 
-import LocaleSelect from "@/components/customs/utils/LocalSelect"
+import LocaleSelect from "@/components/utils/LocalSelect"
 import { Button } from "@/components/ui/button"
 import { useUser } from "@/features/account/hooks/useUser"
 import { useAppContext } from "@/hooks/useAppContext"

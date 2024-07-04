@@ -6,7 +6,7 @@ import type { UUID } from "crypto"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 
-import CustomFormField from "@/components/customs/forms/CustomFormField"
+import CustomFormField from "@/components/forms/CustomFormField"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {

@@ -1,7 +1,7 @@
 import { type ReactNode } from "react"
 
-import { Footer } from "@/components/customs/Layout/Footer"
-import { Navbar } from "@/components/customs/Layout/Navbar"
+import { Footer } from "@/components/layout/Footer"
+import { Navbar } from "@/components/layout/Navbar"
 
 type LayoutProps = {
   children?: ReactNode

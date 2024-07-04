@@ -4,7 +4,7 @@ import { useParams } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
-import { Loading } from "@/components/customs/layout/Loading"
+import { Loading } from "@/components/layout/Loading"
 import Habilitations from "@/features/companies/components/Habilitations/Habilitations"
 import { useCompany } from "@/features/companies/hooks/useCompany"
 import { useAppContext } from "@/hooks/useAppContext"

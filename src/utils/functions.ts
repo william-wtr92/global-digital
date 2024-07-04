@@ -1,4 +1,4 @@
-import type { User } from "@/types/user"
+import type { User } from "@/features/account/types/user"
 
 export const getFullNameLowerCase = (firstName: string, lastName: string) =>
   `${firstName}${lastName}`

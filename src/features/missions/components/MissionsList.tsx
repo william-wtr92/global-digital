@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { useFormatter, useTranslations } from "next-intl"
 
-import Spinner from "@/components/customs/utils/Spinner"
+import Spinner from "@/components/utils/Spinner"
 import { useMissions } from "@/features/missions/hooks/useMissions"
 import { calculateDateSincePosted } from "@/utils/date"
 import routes from "@/utils/routes"

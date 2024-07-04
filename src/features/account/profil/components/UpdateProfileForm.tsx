@@ -10,8 +10,8 @@ import { useForm } from "react-hook-form"
 import { MdAddReaction } from "react-icons/md"
 import { toast } from "sonner"
 
-import CustomFormField from "@/components/customs/forms/CustomFormField"
-import Spinner from "@/components/customs/utils/Spinner"
+import CustomFormField from "@/components/forms/CustomFormField"
+import Spinner from "@/components/utils/Spinner"
 import { Button } from "@/components/ui/button"
 import {
   Form,

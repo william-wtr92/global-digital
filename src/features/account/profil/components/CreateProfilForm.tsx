@@ -6,7 +6,7 @@ import type { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-import CustomFormField from "@/components/customs/forms/CustomFormField"
+import CustomFormField from "@/components/forms/CustomFormField"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import {

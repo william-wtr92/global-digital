@@ -4,7 +4,7 @@ import { useParams } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
-import { Loading } from "@/components/customs/layout/Loading"
+import { Loading } from "@/components/layout/Loading"
 import EmployeeList from "@/features/companies/components/Habilitations/EmployeeList"
 import SearchEmployee from "@/features/companies/components/Habilitations/SearchEmployee"
 import { useEmployees } from "@/features/companies/employee/hooks/useEmployee"

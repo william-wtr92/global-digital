@@ -1,12 +1,13 @@
 import jsonwebtoken from "jsonwebtoken"
 
 import appConfig from "@/config/appConfig"
+import { SC } from "@/utils/constants/status"
 
 export const signJWT = (userId: string) => {
   if (!appConfig.security.jwt.secret) {
     return Response.json(
       { error: { message: "Need jwt secret" } },
-      { status: 500 },
+      { status: SC.serverErrors.INTERNAL_SERVER_ERROR },
     )
   }
 

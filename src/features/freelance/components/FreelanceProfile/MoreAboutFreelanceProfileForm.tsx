@@ -7,8 +7,8 @@ import type { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-import CustomFormField from "@/components/customs/forms/CustomFormField"
-import Spinner from "@/components/customs/utils/Spinner"
+import CustomFormField from "@/components/forms/CustomFormField"
+import Spinner from "@/components/utils/Spinner"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
