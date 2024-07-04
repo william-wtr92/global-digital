@@ -11,6 +11,7 @@ import { useTranslations } from "next-intl"
 import { useQueryState } from "nuqs"
 
 import Spinner from "@/components/customs/Utils/Spinner"
+import { MissionOperating } from "@/types"
 import { endDate, startDate } from "@/utils/date"
 import { firstLetterUppercase } from "@/utils/string"
 import { useMission } from "@/web/hooks/useMission"
@@ -58,7 +59,7 @@ const DetailMissionPage = () => {
             <div className="rounded-md border-2 px-6 py-4">
               <span>{detailedCompany.businessName[0].toUpperCase()}</span>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col items-center gap-3 xl:flex-row">
               <span>{t("duration")}</span>
               <span className="font-semibold">
                 {startDate(detailedMission)} {t("to")}{" "}
@@ -73,10 +74,12 @@ const DetailMissionPage = () => {
                 <GlobeAltIcon className="size-6" />
                 <span>{firstLetterUppercase(detailedMission.operating)}</span>
               </div>
-              <div className="flex items-center gap-3 text-xl font-bold">
-                <MapPinIcon className="size-6" />
-                <span>{detailedMission.localisation}</span>
-              </div>
+              {detailedMission.operating !== MissionOperating.homeWorking && (
+                <div className="flex items-center gap-3 text-xl font-bold">
+                  <MapPinIcon className="size-6" />
+                  <span>{detailedMission.localisation}</span>
+                </div>
+              )}
             </div>
             <p className="mx-auto w-full break-all text-center xl:w-1/2">
               {detailedMission.description}

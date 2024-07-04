@@ -3,6 +3,7 @@ import { drizzle } from "drizzle-orm/node-postgres"
 import { Pool } from "pg"
 
 import {
+  type InsertFreelance,
   type InsertMission,
   type InsertEmployee,
   type InsertArea,
@@ -13,6 +14,7 @@ import {
   area,
   employee,
   mission,
+  freelance,
 } from "./schema"
 import { hashPassword } from "../utils/hashPassword"
 import appConfig from "@/config/appConfig"
@@ -33,6 +35,7 @@ const {
   const db = drizzle(client)
 
   try {
+    await db.delete(freelance)
     await db.delete(employee)
     await db.delete(mission)
     await db.delete(company)
@@ -58,18 +61,37 @@ const {
 
     await db.insert(users).values(usersData)
 
+    const selectUser = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, "test@gmail.com"))
+
     const areasData: InsertArea[] = [
-      {
-        value: "Paris",
-      },
+      { value: "IT" },
+      { value: "Marketing" },
+      { value: "Finance" },
+      { value: "Human Resources" },
     ]
 
     await db.insert(area).values(areasData)
 
-    const selectArea = await db
+    const selectITArea = await db
       .select()
       .from(area)
-      .where(eq(area.value, "Paris"))
+      .where(eq(area.value, "IT"))
+
+    const freelanceData: InsertFreelance[] = [
+      {
+        userId: selectUser[0].id,
+        jobTitle: "Software Engineer",
+        businessName: "William Business",
+        areaId: selectITArea[0].id,
+        localisation: "Paris",
+        registrationNumber: "123456789",
+      },
+    ]
+
+    await db.insert(freelance).values(freelanceData)
 
     const companiesData: InsertCompany[] = [
       {
@@ -78,7 +100,7 @@ const {
         kbisUrl: "https://www.google.com",
         headQuarter: "Paris",
         description: "This is a test company",
-        areaId: selectArea[0].id,
+        areaId: selectITArea[0].id,
       },
     ]
 
@@ -103,11 +125,6 @@ const {
     ]
 
     await db.insert(mission).values(missionsData)
-
-    const selectUser = await db
-      .select()
-      .from(users)
-      .where(eq(users.email, "test@gmail.com"))
 
     const employeesData: InsertEmployee[] = [
       {

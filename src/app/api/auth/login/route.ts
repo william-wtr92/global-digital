@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm"
 import { cookies } from "next/headers"
-import { type NextRequest, NextResponse } from "next/server"
+import { type NextRequest } from "next/server"
 
 import appConfig from "@/config/appConfig"
 import { db } from "@/db/client"
@@ -16,7 +16,7 @@ export const POST = async (req: NextRequest) => {
     const user = await db.select().from(users).where(eq(users.email, email))
 
     if (!user) {
-      return NextResponse.json(
+      return Response.json(
         { message: "User not found" },
         { status: SC.errors.NOT_FOUND },
       )
@@ -25,7 +25,7 @@ export const POST = async (req: NextRequest) => {
     const [passwordHash] = await hashPassword(password, user[0].passwordSalt)
 
     if (passwordHash !== user[0].passwordHash) {
-      return NextResponse.json(
+      return Response.json(
         { message: "Invalid password" },
         { status: SC.errors.UNAUTHORIZED },
       )
@@ -40,12 +40,12 @@ export const POST = async (req: NextRequest) => {
       maxAge: appConfig.security.cookies.authExpiration,
     })
 
-    return NextResponse.json(
+    return Response.json(
       { result: true, message: "Logged in." },
       { status: SC.success.OK },
     )
   } catch (e) {
-    return NextResponse.json(
+    return Response.json(
       { result: false, message: "Login Failed!" },
       { status: SC.serverErrors.INTERNAL_SERVER_ERROR },
     )

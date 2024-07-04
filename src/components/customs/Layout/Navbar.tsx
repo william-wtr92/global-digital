@@ -11,6 +11,7 @@ import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
 import { apiFetch } from "@/lib/api"
+import { getFullName } from "@/utils/functions"
 import { useUser } from "@/web/hooks/useUser"
 import routes from "@/web/routes"
 
@@ -87,10 +88,16 @@ const Navbar = (props: Props) => {
             </Link>
           </div>
           <div className="flex items-center gap-8">
-            <div className="flex cursor-pointer items-center gap-1.5">
+            <Link
+              href={routes.freelance.profile(
+                getFullName(userInfo.firstName, userInfo.lastName),
+                userInfo.id,
+              )}
+              className="flex cursor-pointer items-center gap-1.5"
+            >
               <RxPerson className="text-2xl" />
               <span className="font-semibold">{userInfo.firstName}</span>
-            </div>
+            </Link>
             <Button
               onClick={handleLogout}
               className="text-md cursor-pointer rounded-md bg-slate-400 px-3 py-1.5 font-normal"
