@@ -22,7 +22,7 @@ const FreelanceAccount = () => {
   const [id] = useQueryState("id")
   const { userInfo } = useAppContext()
 
-  const { isPending, data, error } = useProfile(id!)
+  const { isPending, data, error, isError } = useProfile(id!)
 
   if (userInfo.id !== id) {
     router.push(routes.home)
@@ -41,7 +41,7 @@ const FreelanceAccount = () => {
     return
   }
 
-  if (data.isError) {
+  if (isError) {
     toast.error(t(`Error.${data.message}`))
     router.push(routes.home)
 
@@ -76,7 +76,7 @@ const FreelanceAccount = () => {
                 {data.Users.firstName} {data.Users.lastName}
               </h1>
 
-              {data.Freelance && (
+              {data && (
                 <p className="text-center text-xl md:text-left">
                   {data.Freelance.jobTitle}
                 </p>
@@ -106,7 +106,7 @@ const FreelanceAccount = () => {
             </div>
           </div>
 
-          <LocalisationAndArea data={data} />
+          <LocalisationAndArea />
         </div>
       </div>
     </div>

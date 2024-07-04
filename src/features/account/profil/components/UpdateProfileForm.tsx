@@ -32,8 +32,10 @@ import DeleteAccountDialog from "@/features/account/components/DeleteAccountDial
 import type { ApiProfile } from "@/features/account/profil/types/api/profile"
 import type { UserProfile } from "@/features/account/types/user"
 import { useAreas } from "@/features/areas/hooks/useAreas"
-import {
+import type {
+  UpdateAccountUserType,
   updateAccountFreelanceSchema,
+  updateAccountUserSchema,
   type UpdateAccountFreelanceType,
 } from "@/features/auth/registration/utils/validators/form"
 import type { FreelanceProfile } from "@/features/freelance/types/freelance"

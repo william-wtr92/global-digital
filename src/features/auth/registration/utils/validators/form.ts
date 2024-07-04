@@ -51,3 +51,12 @@ export const updateAccountFreelanceSchema = z.object({
 export type UpdateAccountFreelanceType = z.infer<
   typeof updateAccountFreelanceSchema
 >
+
+export const updateAccountUserSchema = z.object({
+  lastName: z.string().min(1, "tooShort"),
+  firstName: z.string().min(1, "tooShort"),
+  email: z.string().email("invalidEmail"),
+  phoneNumber: z.string().min(5, "tooShort"),
+})
+
+export type UpdateAccountUserType = z.infer<typeof updateAccountUserSchema>
