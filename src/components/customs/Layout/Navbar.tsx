@@ -1,8 +1,11 @@
 "use client"
+import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/outline"
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
+import React, { useEffect } from "react"
 import { RxPerson } from "react-icons/rx"
 import { toast } from "sonner"
 
@@ -64,26 +67,6 @@ const Navbar = (props: Props) => {
       <Link href={routes.home}>Logo</Link>
 
       {userInfo ? (
-        <div className="flex items-center gap-10">
-          <Link
-            href={routes.profile(
-              getFullName(userInfo.firstName, userInfo.lastName),
-              userInfo.id,
-            )}
-            className="flex cursor-pointer items-center gap-1.5"
-          >
-            <RxPerson className="text-2xl" />
-            <span className="font-semibold">{userInfo.firstName}</span>
-          </Link>
-          <Button
-            onClick={handleLogout}
-            className="text-md cursor-pointer rounded-full bg-slate-400 px-4 py-1 font-normal"
-            variant="ghostNoHover"
-            size="none"
-            onClickCapture={handleLogout}
-          >
-            {t("logout")}
-          </Button>
         <div className="flex items-center gap-6 xl:gap-20">
           <div>
             <Link href={routes.missions.search}>
@@ -105,10 +88,16 @@ const Navbar = (props: Props) => {
             </Link>
           </div>
           <div className="flex items-center gap-8">
-            <div className="flex cursor-pointer items-center gap-1.5">
+            <Link
+              href={routes.profile(
+                getFullName(userInfo.firstName, userInfo.lastName),
+                userInfo.id,
+              )}
+              className="flex cursor-pointer items-center gap-1.5"
+            >
               <RxPerson className="text-2xl" />
               <span className="font-semibold">{userInfo.firstName}</span>
-            </div>
+            </Link>
             <Button
               onClick={handleLogout}
               className="text-md cursor-pointer rounded-md bg-slate-400 px-3 py-1.5 font-normal"

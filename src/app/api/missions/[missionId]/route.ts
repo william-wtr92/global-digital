@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm"
 import { type JwtPayload, verify } from "jsonwebtoken"
-import { type NextRequest, NextResponse } from "next/server"
+import { type NextRequest } from "next/server"
 
 import appConfig from "@/config/appConfig"
 import { db } from "@/db/client"
@@ -15,7 +15,7 @@ export const GET = async (
   const jwt = cookies.get("Authorization")?.value
 
   if (!jwt) {
-    return NextResponse.json(
+    return Response.json(
       { message: "No token provided" },
       { status: SC.errors.UNAUTHORIZED },
     )
@@ -25,7 +25,7 @@ export const GET = async (
     const decoded = await verify(jwt, appConfig.security.jwt.secret)
 
     if (!decoded || typeof decoded === "string") {
-      return NextResponse.json(
+      return Response.json(
         { message: "Failed to check your token" },
         { status: SC.errors.UNAUTHORIZED },
       )
@@ -52,12 +52,12 @@ export const GET = async (
     const isEmployee =
       user[0]?.Employee?.companyId === detailedMission[0].Missions.companyId
 
-    return NextResponse.json(
+    return Response.json(
       { result: true, detailedMission: { ...detailedMission[0], isEmployee } },
       { status: SC.success.OK },
     )
   } catch (e) {
-    return NextResponse.json(
+    return Response.json(
       { isError: true, message: "Error occurred during fetching of mission" },
       { status: SC.serverErrors.INTERNAL_SERVER_ERROR },
     )
@@ -72,7 +72,7 @@ export const PATCH = async (
     await req.json()
 
   if (missionId === null || "") {
-    return NextResponse.json(
+    return Response.json(
       { isError: true, message: "No missionId provided" },
       { status: SC.errors.BAD_REQUEST },
     )
@@ -91,9 +91,9 @@ export const PATCH = async (
       })
       .where(eq(mission.id, missionId))
 
-    return NextResponse.json({ result: true }, { status: SC.success.OK })
+    return Response.json({ result: true }, { status: SC.success.OK })
   } catch (e) {
-    return NextResponse.json(
+    return Response.json(
       { isError: true, message: "Error occurred during update of mission." },
       { status: SC.serverErrors.INTERNAL_SERVER_ERROR },
     )

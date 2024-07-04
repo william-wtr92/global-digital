@@ -3,6 +3,7 @@ import { drizzle } from "drizzle-orm/node-postgres"
 import { Pool } from "pg"
 
 import {
+  type InsertFreelance,
   type InsertEmployee,
   type InsertArea,
   type InsertCompany,
@@ -13,6 +14,7 @@ import {
   company,
   mission,
   employee,
+  freelance,
 } from "./schema"
 import { hashPassword } from "../utils/hashPassword"
 import appConfig from "@/config/appConfig"
@@ -32,6 +34,7 @@ const usersSeed = async () => {
 
   const db = drizzle(client)
 
+  await db.delete(freelance)
   await db.delete(employee)
   await db.delete(mission)
   await db.delete(company)
@@ -57,6 +60,11 @@ const usersSeed = async () => {
 
   await db.insert(users).values(usersData)
 
+  const selectUser = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, "test@gmail.com"))
+
   const areasData: InsertArea[] = [
     { value: "IT" },
     { value: "Marketing" },
@@ -66,7 +74,20 @@ const usersSeed = async () => {
 
   await db.insert(area).values(areasData)
 
-  const selectArea = await db.select().from(area).where(eq(area.value, "Paris"))
+  const selectITArea = await db.select().from(area).where(eq(area.value, "IT"))
+
+  const freelanceData: InsertFreelance[] = [
+    {
+      userId: selectUser[0].id,
+      jobTitle: "Software Engineer",
+      businessName: "William Business",
+      areaId: selectITArea[0].id,
+      localisation: "Paris",
+      registrationNumber: "123456789",
+    },
+  ]
+
+  await db.insert(freelance).values(freelanceData)
 
   const companiesData: InsertCompany[] = [
     {
@@ -75,7 +96,7 @@ const usersSeed = async () => {
       kbisUrl: "https://www.google.com",
       headQuarter: "Paris",
       description: "This is a test company",
-      areaId: selectArea[0].id,
+      areaId: selectITArea[0].id,
     },
   ]
 
@@ -100,11 +121,6 @@ const usersSeed = async () => {
   ]
 
   await db.insert(mission).values(missionsData)
-
-  const selectUser = await db
-    .select()
-    .from(users)
-    .where(eq(users.email, "test@gmail.com"))
 
   const employeesData: InsertEmployee[] = [
     {

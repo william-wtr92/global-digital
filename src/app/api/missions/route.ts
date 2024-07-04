@@ -1,6 +1,6 @@
 import { desc, like, and, eq } from "drizzle-orm"
 import { type JwtPayload, verify } from "jsonwebtoken"
-import { type NextRequest, NextResponse } from "next/server"
+import { type NextRequest } from "next/server"
 
 import appConfig from "@/config/appConfig"
 import { db } from "@/db/client"
@@ -30,12 +30,12 @@ export const GET = async (req: Request) => {
       )
       .orderBy(desc(mission.createdAt))
 
-    return NextResponse.json(
+    return Response.json(
       { result: true, searchResults },
       { status: SC.success.OK },
     )
   } catch (e) {
-    return NextResponse.json(
+    return Response.json(
       { error: e },
       { status: SC.serverErrors.INTERNAL_SERVER_ERROR },
     )
@@ -50,7 +50,7 @@ export const POST = async (req: NextRequest) => {
   const jwt = cookies.get("Authorization")?.value
 
   if (!jwt) {
-    return NextResponse.json(
+    return Response.json(
       { message: "No token provided" },
       { status: SC.errors.UNAUTHORIZED },
     )
@@ -60,7 +60,7 @@ export const POST = async (req: NextRequest) => {
     const decoded = await verify(jwt, appConfig.security.jwt.secret)
 
     if (!decoded || typeof decoded === "string") {
-      return NextResponse.json(
+      return Response.json(
         { message: "Failed to check your token" },
         { status: SC.errors.UNAUTHORIZED },
       )
@@ -79,7 +79,7 @@ export const POST = async (req: NextRequest) => {
       .leftJoin(employee, eq(users.id, employee.userId))
 
     if (!user) {
-      return NextResponse.json(
+      return Response.json(
         { message: "User is not an employee" },
         { status: SC.errors.NOT_FOUND },
       )
@@ -88,7 +88,7 @@ export const POST = async (req: NextRequest) => {
     const companyId = user[0]?.Employee?.companyId
 
     if (!companyId) {
-      return NextResponse.json(
+      return Response.json(
         { message: "User is not associated with a company" },
         { status: SC.errors.NOT_FOUND },
       )
@@ -107,12 +107,12 @@ export const POST = async (req: NextRequest) => {
 
     await db.insert(mission).values(missionData)
 
-    return NextResponse.json(
+    return Response.json(
       { message: "Mission created successfully." },
       { status: SC.success.CREATED },
     )
   } catch (e) {
-    return NextResponse.json(
+    return Response.json(
       { message: "Error occurred during the creation of a mission." },
       { status: SC.serverErrors.INTERNAL_SERVER_ERROR },
     )
