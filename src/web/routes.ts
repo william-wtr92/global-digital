@@ -15,7 +15,8 @@ const routes = {
     createProfile: "/freelance/create-profile",
     updateProfile: (name: string, id: string) =>
       `/freelance/update-profile/${name}?id=${id}`,
-    profile: (name: string, id: string) => `/freelance/${name}?id=${id}`,
+    profile: (name: string, id: string) =>
+      `/freelance/profile/${name}?id=${id}`,
   },
   search: "/search",
   api: {
