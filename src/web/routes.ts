@@ -44,6 +44,9 @@ const routes = {
       "index": "/areas",
       ":id": (id: string) => `/areas/${id}`,
     },
+    roles: {
+      index: "/roles",
+    },
     freelance: {
       createAccount: "/freelance/create-account",
       getProfile: (userId: string) => `/freelance/${userId}`,
@@ -56,6 +59,15 @@ const routes = {
         index: (id: string) => `/companies/${id}`,
         missions: (id: string) => `/companies/${id}/missions`,
       },
+      "employees": (id: string) => `/companies/${id}/employees`,
+      "updateHabilitation": (id: string, employeeId: string) =>
+        `/companies/${id}/employees/${employeeId}/habilitations`,
+      "deleteEmployee": (id: string, employeeId: string) =>
+        `/companies/${id}/employees/${employeeId}`,
+      "addEmployee": (id: string) => `/companies/${id}/employees`,
+    },
+    users: {
+      search: "/users/search",
     },
   },
 } as const

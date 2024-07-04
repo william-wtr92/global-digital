@@ -37,7 +37,7 @@ import {
 } from "@/types/formTypes"
 import type { Profile } from "@/types/freelance"
 import { capitalizeFirstLetter } from "@/utils/forms"
-import { getFullName } from "@/utils/functions"
+import { getFullNameLowerCase } from "@/utils/functions"
 import { useArea } from "@/web/hooks/useArea"
 import routes from "@/web/routes"
 
@@ -113,8 +113,8 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
 
         if (profile.Users && id) {
           router.push(
-            routes.freelance.profile(
-              getFullName(
+            routes.profile(
+              getFullNameLowerCase(
                 profile.Users.firstName,
                 profile.Users.lastName,
               ).toLowerCase(),

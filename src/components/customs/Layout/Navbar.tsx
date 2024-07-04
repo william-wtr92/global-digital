@@ -11,7 +11,7 @@ import { toast } from "sonner"
 import LocaleSelect from "@/components/customs/Utils/LocalSelect"
 import { Button } from "@/components/ui/button"
 import { apiFetch } from "@/lib/api"
-import { getFullName } from "@/utils/functions"
+import { getFullNameLowerCase } from "@/utils/functions"
 import useAppContext from "@/web/hooks/useAppContext"
 import { useUser } from "@/web/hooks/useUser"
 import routes from "@/web/routes"
@@ -98,8 +98,8 @@ const Navbar = () => {
 
             <div className="flex items-center gap-8">
               <Link
-                href={routes.freelance.profile(
-                  getFullName(userInfo.firstName, userInfo.lastName),
+                href={routes.profile(
+                  getFullNameLowerCase(userInfo.firstName, userInfo.lastName),
                   userInfo.id,
                 )}
                 className="flex cursor-pointer items-center gap-1.5"
@@ -107,6 +107,7 @@ const Navbar = () => {
                 <RxPerson className="text-2xl" />
                 <span className="font-semibold">{userInfo.firstName}</span>
               </Link>
+              <LocaleSelect />
               <Button
                 onClick={handleLogout}
                 className="text-md cursor-pointer rounded-md bg-slate-400 px-3 py-1.5 font-normal"
@@ -164,8 +165,8 @@ const Navbar = () => {
             {userInfo.id ? (
               <div className="flex flex-col items-center gap-10">
                 <Link
-                  href={routes.freelance.profile(
-                    getFullName(userInfo.firstName, userInfo.lastName),
+                  href={routes.profile(
+                    getFullNameLowerCase(userInfo.firstName, userInfo.lastName),
                     userInfo.id,
                   )}
                   onClick={toggleMenu}
