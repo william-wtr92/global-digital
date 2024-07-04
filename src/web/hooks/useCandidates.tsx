@@ -22,11 +22,8 @@ const fetchCandidates = async (missionId: string) => {
   return response.data
 }
 
-export const useCandidates = (missionId: string) => {
-  const { ...query } = useQuery<Response>({
+export const useCandidates = (missionId: string) =>
+  useQuery<Response>({
     queryKey: ["candidates", missionId],
     queryFn: () => fetchCandidates(missionId),
   })
-
-  return { ...query }
-}
