@@ -58,9 +58,10 @@ const usersSeed = async () => {
   await db.insert(users).values(usersData)
 
   const areasData: InsertArea[] = [
-    {
-      value: "Paris",
-    },
+    { value: "IT" },
+    { value: "Marketing" },
+    { value: "Finance" },
+    { value: "Human Resources" },
   ]
 
   await db.insert(area).values(areasData)

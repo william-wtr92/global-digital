@@ -1,6 +1,6 @@
 {
-  "id": "95a25f11-b8b4-4565-8dcf-4649c377aae3",
-  "prevId": "fd2c6268-b138-4fda-9759-79f67ab3899d",
+  "id": "ce57524b-33ff-4ec1-8b56-71d2b330fd61",
+  "prevId": "0d21fc2a-e38f-499a-987a-7867311b39bd",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -171,12 +171,8 @@
           "name": "Company_area_id_Area_id_fk",
           "tableFrom": "Company",
           "tableTo": "Area",
-          "columnsFrom": [
-            "area_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["area_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -228,12 +224,8 @@
           "name": "Employee_user_id_Users_id_fk",
           "tableFrom": "Employee",
           "tableTo": "Users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -241,12 +233,8 @@
           "name": "Employee_company_id_Company_id_fk",
           "tableFrom": "Employee",
           "tableTo": "Company",
-          "columnsFrom": [
-            "company_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["company_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -290,12 +278,8 @@
           "name": "Employee_role_employee_id_Employee_id_fk",
           "tableFrom": "Employee_role",
           "tableTo": "Employee",
-          "columnsFrom": [
-            "employee_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["employee_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -303,12 +287,8 @@
           "name": "Employee_role_role_id_Role_id_fk",
           "tableFrom": "Employee_role",
           "tableTo": "Role",
-          "columnsFrom": [
-            "role_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["role_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -316,12 +296,8 @@
           "name": "Employee_role_company_id_Company_id_fk",
           "tableFrom": "Employee_role",
           "tableTo": "Company",
-          "columnsFrom": [
-            "company_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["company_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -397,12 +373,8 @@
           "name": "Freelance_user_id_Users_id_fk",
           "tableFrom": "Freelance",
           "tableTo": "Users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -621,9 +593,7 @@
         "Users_email_unique": {
           "name": "Users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       }
     }

@@ -7,6 +7,7 @@ const {
   password,
   port,
   name,
+  host,
   migrations: { schema, out, dialect },
 } = appConfig.db
 
@@ -15,6 +16,6 @@ export default defineConfig({
   out,
   dialect,
   dbCredentials: {
-    url: `postgresql://${user}:${password}@localhost:${port}/${name}`,
+    url: `postgresql://${user}:${password}@${host}:${port}/${name}`,
   },
 })
