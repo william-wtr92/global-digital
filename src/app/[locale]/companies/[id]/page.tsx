@@ -29,7 +29,7 @@ const CompaniesIdPage = () => {
       })
 
       if (response.status !== SC.success.OK) {
-        toast.error(t("Form.error"))
+        toast.error(t("error"))
       }
 
       return response
@@ -47,7 +47,7 @@ const CompaniesIdPage = () => {
       })
 
       if (response.status !== SC.success.OK) {
-        toast.error(t("Form.error"))
+        toast.error(t("error"))
       }
 
       return response
@@ -65,7 +65,7 @@ const CompaniesIdPage = () => {
       })
 
       if (response.status !== SC.success.OK) {
-        toast.error(t("Form.error"))
+        toast.error(t("error"))
       }
 
       return response
@@ -100,7 +100,7 @@ const CompaniesIdPage = () => {
       </div>
       <p className="text-xl">{companyResult?.data.description}</p>
       <div className="flex flex-col items-center justify-center gap-6">
-        <h1 className="text-5xl font-bold">Missions disponibles</h1>
+        <h1 className="text-5xl font-bold">{t("availablesMissions")}</h1>
         <div className="flex flex-col">
           {missionsResult?.data.map((mission) => (
             <div className="flex flex-col" key={mission.id}>

@@ -9,7 +9,10 @@
     "updtaedSuccess": "Profil mis à jour avec succès"
   },
   "Areas": {},
-  "CompaniesId": {},
+  "CompaniesId": {
+    "availablesMissions": "Missions disponibles",
+    "error": "Une erreur est survenu"
+  },
   "CompaniesCreatePage": {
     "button": "Valider la demande",
     "title": "Demande de création de page entreprise",
