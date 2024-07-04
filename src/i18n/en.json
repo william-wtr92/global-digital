@@ -56,7 +56,7 @@
     "login": "Login",
     "logout": "Logout",
     "logoutSuccess": "You have been successfully logged out.",
-    "search" : {
+    "search": {
       "placeholder": "Search a mission or a freelancer"
     }
   },
