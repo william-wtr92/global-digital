@@ -54,7 +54,6 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/pg": "^8.11.6",
     "class-variance-authority": "^0.7.0",
-    "classnames": "^2.5.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",

@@ -1,6 +1,6 @@
 "use client"
 
-import classNames from "classnames"
+import { cn } from "@/lib/utils"
 import Image from "next/image"
 
 type ImageTitleProps = {
@@ -20,7 +20,7 @@ const ImageTitle = ({
 }: ImageTitleProps) => {
   return (
     <div
-      className={classNames(
+      className={cn(
         "flex h-full w-full flex-col items-center gap-4 text-center md:flex-row",
         className,
       )}
@@ -34,13 +34,13 @@ const ImageTitle = ({
       />
 
       <div
-        className={classNames(
+        className={cn(
           "flex justify-center md:w-96 md:justify-start",
           divTitleClassName,
         )}
       >
         <p
-          className={classNames(
+          className={cn(
             "w-72 text-xl font-semibold md:text-left",
             titleClassName,
           )}
