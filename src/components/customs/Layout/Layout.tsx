@@ -1,9 +1,9 @@
 "use client"
 
-import { usePathname } from "next/navigation"
 import { type ReactNode } from "react"
 
 import Navbar from "@/components/customs/Layout/Navbar"
+import { usePathname } from "@/navigation"
 
 type LayoutProps = {
   token: string | undefined

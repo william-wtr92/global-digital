@@ -77,12 +77,8 @@
           "name": "Candidate_mission_id_Missions_id_fk",
           "tableFrom": "Candidate",
           "tableTo": "Missions",
-          "columnsFrom": [
-            "mission_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["mission_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -90,12 +86,8 @@
           "name": "Candidate_user_id_Users_id_fk",
           "tableFrom": "Candidate",
           "tableTo": "Users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -171,12 +163,8 @@
           "name": "Company_area_id_Area_id_fk",
           "tableFrom": "Company",
           "tableTo": "Area",
-          "columnsFrom": [
-            "area_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["area_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -228,12 +216,8 @@
           "name": "Employee_user_id_Users_id_fk",
           "tableFrom": "Employee",
           "tableTo": "Users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -241,12 +225,8 @@
           "name": "Employee_company_id_Company_id_fk",
           "tableFrom": "Employee",
           "tableTo": "Company",
-          "columnsFrom": [
-            "company_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["company_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -290,12 +270,8 @@
           "name": "Employee_role_employee_id_Employee_id_fk",
           "tableFrom": "Employee_role",
           "tableTo": "Employee",
-          "columnsFrom": [
-            "employee_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["employee_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -303,12 +279,8 @@
           "name": "Employee_role_role_id_Role_id_fk",
           "tableFrom": "Employee_role",
           "tableTo": "Role",
-          "columnsFrom": [
-            "role_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["role_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -316,12 +288,8 @@
           "name": "Employee_role_company_id_Company_id_fk",
           "tableFrom": "Employee_role",
           "tableTo": "Company",
-          "columnsFrom": [
-            "company_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["company_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -397,12 +365,8 @@
           "name": "Freelance_user_id_Users_id_fk",
           "tableFrom": "Freelance",
           "tableTo": "Users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -410,12 +374,8 @@
           "name": "Freelance_area_id_Area_id_fk",
           "tableFrom": "Freelance",
           "tableTo": "Area",
-          "columnsFrom": [
-            "area_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["area_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -503,12 +463,8 @@
           "name": "Missions_company_id_Company_id_fk",
           "tableFrom": "Missions",
           "tableTo": "Company",
-          "columnsFrom": [
-            "company_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["company_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -621,9 +577,7 @@
         "Users_email_unique": {
           "name": "Users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       }
     }
