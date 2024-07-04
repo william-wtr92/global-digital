@@ -68,8 +68,15 @@ export const PATCH = async (
   req: NextRequest,
   { params: { missionId } }: { params: { missionId: string } },
 ) => {
-  const { title, startDate, endDate, description, operating, localisation } =
-    await req.json()
+  const {
+    title,
+    startDate,
+    endDate,
+    description,
+    operating,
+    localisation,
+    price,
+  } = await req.json()
 
   if (missionId === null || "") {
     return Response.json(
@@ -88,6 +95,7 @@ export const PATCH = async (
         description,
         operating,
         localisation,
+        price: parseFloat(price),
       })
       .where(eq(mission.id, missionId))
 

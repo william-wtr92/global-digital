@@ -218,6 +218,11 @@
           "placeholder": "Entrez la localisation de la mission",
           "error": "Localisation invalide"
         },
+        "price": {
+          "label": "Prix de la mission",
+          "placeholder": "Entrez le prix de la mission",
+          "error": "Prix invalide"
+        },
         "submit": "Créer la mission",
         "success": "Mission créée avec succès",
         "error": "Création de la mission échouée"
@@ -235,18 +240,34 @@
         "sentError": "Une erreur est survenue lors de l'envoi de votre candidature",
         "deleteError": "Une erreur est survenue lors de la suppression de votre candidature",
         "employeeDeleteSuccess": "La candidature a été supprimée avec succès",
-        "employeeDeleteError": "Une erreur est survenue lors de la suppression de la candidature"
+        "employeeDeleteError": "Une erreur est survenue lors de la suppression de la candidature",
+        "employeeAcceptSuccess": "La candidature a été acceptée avec succès",
+        "employeeAcceptError": "Une erreur est survenue lors de l'acceptation de la candidature"
       },
       "titles": {
         "candidates": "Candidats"
       },
       "noCandidates": "Aucun candidat pour le moment !",
-      "alert": {
-        "trigger": "Supprimer ma candidature",
-        "title": "Suppression de ma candidature",
-        "content": "Cette action va supprimer votre candidature pour cette mission, si c'est une erreur vous pourrez postuler à nouveau.",
-        "cancel": "Annuler",
-        "delete": "Supprimer"
+      "alerts": {
+        "cancel": {
+          "trigger": "Supprimer ma candidature",
+          "title": "Suppression de ma candidature",
+          "content": "Cette action va supprimer votre candidature pour cette mission, si c'est une erreur vous pourrez postuler à nouveau.",
+          "cancel": "Annuler",
+          "confirm": "Supprimer"
+        },
+        "delete": {
+          "title": "Voulez-vous supprimer cette candidature ?",
+          "content": "Le candidat sera supprimé de la liste des candidats pour cette mission.",
+          "cancel": "Annuler",
+          "confirm": "Supprimer la candidature"
+        },
+        "accept": {
+          "title": "Accepter cette candidature ?",
+          "content": "Le candidat sera accepté pour cette mission.",
+          "cancel": "Annuler",
+          "confirm": "Accepter la candidature"
+        }
       },
       "apply": "Postuler"
     }

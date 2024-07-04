@@ -261,6 +261,31 @@ const MissionForm = ({ defaultValues, onSubmit, submitText }: Props) => {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem className="mx-auto w-4/5 xl:w-2/3">
+                <FormLabel className="relative left-1 font-bold text-neutral-800">
+                  {t("form.create.price.label")}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    className="focus-visible:outline-accent-500 mt-2 px-4 py-2 focus-visible:border-0 focus-visible:ring-0"
+                    type="number"
+                    placeholder={t("form.create.price.placeholder")}
+                    {...field}
+                    onChange={(event) => field.onChange(+event.target.value)}
+                  />
+                </FormControl>
+                <FormMessage className="relative left-2 text-destructive">
+                  {errors.price ? (
+                    <span>{t("form.create.price.error")}</span>
+                  ) : null}
+                </FormMessage>
+              </FormItem>
+            )}
+          />
           <Button
             disabled={!form.formState.isValid}
             className={`mx-auto w-1/2 bg-gray-400 py-2.5 font-semibold text-white ${!form.formState.isValid ? "cursor-not-allowed opacity-50" : "bg-gray-800 hover:cursor-pointer"}`}

@@ -43,8 +43,15 @@ export const GET = async (req: Request) => {
 }
 
 export const POST = async (req: NextRequest) => {
-  const { title, startDate, endDate, description, operating, localisation } =
-    await req.json()
+  const {
+    title,
+    startDate,
+    endDate,
+    description,
+    operating,
+    localisation,
+    price,
+  } = await req.json()
 
   const cookies = req.cookies
   const jwt = cookies.get("Authorization")?.value
@@ -101,6 +108,7 @@ export const POST = async (req: NextRequest) => {
       description,
       operating,
       localisation,
+      price: parseFloat(price),
       startDate: new Date(startDate),
       endDate: new Date(endDate),
     }

@@ -6,6 +6,12 @@ export const MissionOperating = {
   hybrid: "hybrid",
 } as const
 
+export const MissionStatus = {
+  pending: "pending",
+  inProgress: "in progress",
+  completed: "completed",
+} as const
+
 export const MissionOperatingEnum = z.nativeEnum(MissionOperating)
 
 export const searchMissionsSchema = z.object({
@@ -22,6 +28,7 @@ export const missionSchema = z
     description: z.string().min(1).max(500),
     operating: MissionOperatingEnum,
     localisation: z.string().optional(),
+    price: z.number().multipleOf(0.01),
   })
   .superRefine((data, ctx) => {
     if (data.endDate <= data.startDate) {

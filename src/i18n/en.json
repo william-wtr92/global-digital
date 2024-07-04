@@ -217,6 +217,11 @@
           "placeholder": "Enter the localisation of the mission",
           "error": "Localisation is invalid"
         },
+        "price": {
+            "label": "Price of the mission",
+            "placeholder": "Enter the price of the mission",
+            "error": "Price is invalid"
+        },
         "submit": "Create the mission",
         "success": "Mission created successfully",
         "error": "Mission creation failed"
@@ -234,18 +239,34 @@
         "sentError": "An error occurred while sending your application",
         "deleteError": "An error occurred while deleting your application",
         "employeeDeleteSuccess": "You have successfully deleted this application",
-        "employeeDeleteError": "An error occurred while deleting this application"
+        "employeeDeleteError": "An error occurred while deleting this application",
+        "employeeAcceptSuccess": "You have successfully accepted this application",
+        "employeeAcceptError": "An error occurred while accepting this application"
       },
       "titles": {
         "candidates": "Candidates"
       },
       "noCandidates": "No candidates for the moment!",
-      "alert": {
-        "trigger": "Delete my application",
-        "title": "Delete my application",
-        "content": "This action will be suppress your application for this mission, if it's an error you can reapply later.",
-        "cancel": "Cancel",
-        "delete": "Delete"
+      "alerts": {
+        "cancel": {
+          "trigger": "Delete my application",
+          "title": "Delete my application",
+          "content": "This action will be suppress your application for this mission, if it's an error you can reapply later.",
+          "cancel": "Cancel",
+          "confirm": "Delete"
+        },
+        "delete": {
+          "title": "Do you want to delete this candidate?",
+          "content": "The candidate will be removed from the list.",
+          "cancel": "Cancel",
+          "confirm": "Delete application"
+        },
+        "accept": {
+          "title": "Do you want to accept this candidate?",
+          "content": "The candidate will be accepted for this mission.",
+          "cancel": "Cancel",
+          "confirm": "Accept application"
+        }
       },
       "apply": "Apply"
     }

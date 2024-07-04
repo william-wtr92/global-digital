@@ -77,7 +77,7 @@ const seed = async () => {
   const selectFreelanceUser = await db
     .select()
     .from(users)
-    .where(eq(users.email, "test@gmail.com"))
+    .where(eq(users.email, "test1@gmail.com"))
 
   const areasData: InsertArea[] = [
     { value: "IT" },
@@ -129,6 +129,7 @@ const seed = async () => {
       description: "This is a test mission",
       operating: "remote",
       localisation: "Paris",
+      price: 1000,
       startDate: new Date(),
       endDate: new Date(new Date().setDate(new Date().getDate() + 30)),
     },

@@ -38,6 +38,8 @@ const routes = {
         list: (missionId: string) => `/missions/${missionId}/candidate/list`,
         deleteByEmployee: (missionId: string, candidateId: string) =>
           `/missions/${missionId}/candidate/list/${candidateId}`,
+        acceptedByEmployee: (missionId: string, candidateId: string) =>
+          `/missions/${missionId}/candidate/list/${candidateId}`,
       },
     },
     areas: {
