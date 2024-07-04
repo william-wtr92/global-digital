@@ -121,7 +121,7 @@ const MoreAboutFreelanceProfileForm = ({
             control={form.control}
             name="areaId"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="w-screen max-w-96 px-4">
                 <FormLabel>
                   {t("MoreAboutFreelanceProfileForm.selectActivityArea")}
                 </FormLabel>
@@ -183,7 +183,7 @@ const MoreAboutFreelanceProfileForm = ({
             control={form.control}
             name="termOfUse"
             render={({ field }) => (
-              <FormItem className="my-4 flex flex-row items-start space-x-3 space-y-0 rounded-md">
+              <FormItem className="my-4 flex w-screen max-w-96 flex-row items-start space-x-3 space-y-0 rounded-md px-4">
                 <FormControl>
                   <Checkbox
                     checked={field.value}
