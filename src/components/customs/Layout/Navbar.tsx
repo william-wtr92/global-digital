@@ -98,7 +98,7 @@ const Navbar = () => {
 
             <div className="flex items-center gap-8">
               <Link
-                href={routes.profile(
+                href={routes.freelance.profile(
                   getFullNameLowerCase(userInfo.firstName, userInfo.lastName),
                   userInfo.id,
                 )}
@@ -165,7 +165,7 @@ const Navbar = () => {
             {userInfo.id ? (
               <div className="flex flex-col items-center gap-10">
                 <Link
-                  href={routes.profile(
+                  href={routes.freelance.profile(
                     getFullNameLowerCase(userInfo.firstName, userInfo.lastName),
                     userInfo.id,
                   )}
