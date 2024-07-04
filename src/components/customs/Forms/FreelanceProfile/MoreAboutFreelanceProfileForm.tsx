@@ -129,7 +129,7 @@ const MoreAboutFreelanceProfileForm = ({
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <FormControl>
+                  <FormControl className="border">
                     <SelectTrigger>
                       <SelectValue
                         placeholder={capitalizeFirstLetter(

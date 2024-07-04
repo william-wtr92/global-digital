@@ -2,6 +2,7 @@
 
 import { type ReactNode } from "react"
 
+import Footer from "@/components/customs/Layout/Footer"
 import Navbar from "@/components/customs/Layout/Navbar"
 
 type LayoutProps = {
@@ -13,6 +14,7 @@ const Layout = ({ children }: LayoutProps) => {
     <div className="flex h-screen flex-col">
       <Navbar />
       {children}
+      <Footer />
     </div>
   )
 }

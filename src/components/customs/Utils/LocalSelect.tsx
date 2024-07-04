@@ -45,7 +45,7 @@ const LocaleSelect = ({ title }: LocaleSelectProps) => {
             <SelectItem
               key={locale}
               value={locale}
-              className="text-dark hover:bg-light cursor-pointer"
+              className="text-dark hover:bg-skyBlue cursor-pointer"
             >
               {t("LocaleSelect.locale", { locale })}
             </SelectItem>

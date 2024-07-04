@@ -4,7 +4,10 @@ const routes = {
   registration: "/registration",
   companies: {
     "create": "/companies/create",
-    ":id": (id: string) => `/companies/${id}`,
+    ":id": {
+      index: (id: string) => `/companies/${id}`,
+      habilitations: (id: string) => `/companies/${id}/habilitations`,
+    },
   },
   missions: {
     search: "/missions/search",
@@ -20,6 +23,7 @@ const routes = {
   },
   search: "/search",
   api: {
+    home: "/home",
     auth: {
       user: "/auth",
       login: "/auth/login",

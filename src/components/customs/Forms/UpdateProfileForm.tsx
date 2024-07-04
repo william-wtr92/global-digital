@@ -113,7 +113,7 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
 
         if (profile.Users && id) {
           router.push(
-            routes.profile(
+            routes.freelance.profile(
               getFullNameLowerCase(
                 profile.Users.firstName,
                 profile.Users.lastName,

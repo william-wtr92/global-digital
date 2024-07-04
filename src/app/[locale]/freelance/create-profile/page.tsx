@@ -35,8 +35,8 @@ const FreelanceCreateProfile = () => {
   const StepComponent = steps[currentStep].component
 
   return (
-    <div className="flex h-full flex-col justify-center gap-10">
-      <h1 className="mx-4 text-center text-2xl font-bold md:text-4xl">
+    <div className="flex h-full flex-col justify-center gap-10 py-10">
+      <h1 className="text-blueText mx-4 text-center text-2xl font-bold md:text-4xl">
         {t(steps[currentStep].translationKeyTitle)}
       </h1>
       <StepComponent

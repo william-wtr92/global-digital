@@ -73,13 +73,15 @@ const Navbar = () => {
 
   return (
     <div className="sticky top-0 z-50">
-      <div className="flex h-16 items-center justify-between bg-gray-300 p-3">
-        <Link href={routes.home}>Logo</Link>
+      <div className="bg-medianBlue flex h-16 items-center justify-between p-3">
+        <Link href={routes.home} className="text-xl font-bold">
+          CYBERLINKER
+        </Link>
 
         {userInfo.id ? (
           <div className="hidden items-center gap-6 md:flex xl:gap-20">
             <Link href={routes.missions.search}>
-              <p className="text-medium rounded-md border-2 border-gray-200 bg-gray-200 px-4 py-1 hover:shadow-xl">
+              <p className="text-medium bg-medianBlue rounded-md border-2 border-black border-opacity-20 px-4 py-1 hover:shadow-xl">
                 <kbd className="flex items-center gap-4 xl:gap-8">
                   <span className="hidden text-sm font-light opacity-55 xl:block">
                     {t("search.placeholder")}
@@ -87,7 +89,7 @@ const Navbar = () => {
                   <span className="block text-sm font-light opacity-55 xl:hidden">
                     <MagnifyingGlassIcon className="size-5" />
                   </span>
-                  <span className="flex items-center gap-1 rounded-md border-2 border-gray-600 border-opacity-20 px-2 text-xs xl:text-sm">
+                  <span className="flex items-center gap-1 rounded-md border-2 border-black border-opacity-20 px-2 text-xs xl:text-sm">
                     <span>ctrl /</span>
                     <span className="text-lg">⌘ </span>
                     <span>K</span>
@@ -110,7 +112,7 @@ const Navbar = () => {
               <LocaleSelect />
               <Button
                 onClick={handleLogout}
-                className="text-md cursor-pointer rounded-md bg-slate-400 px-3 py-1.5 font-normal"
+                className="text-md bg-darkBlue cursor-pointer rounded-md px-3 py-1.5 font-normal text-white"
                 variant="ghostNoHover"
                 size="none"
                 onClickCapture={handleLogout}
@@ -121,13 +123,17 @@ const Navbar = () => {
           </div>
         ) : (
           <div className="hidden items-center gap-4 md:flex">
-            <Link href={routes.registration} onClick={toggleMenu}>
+            <Link
+              href={routes.registration}
+              onClick={toggleMenu}
+              className="text-lg font-bold"
+            >
               {t("signup")}
             </Link>
             <Link
               href={routes.login}
               onClick={toggleMenu}
-              className="rounded-full bg-slate-400 px-4 py-1"
+              className="bg-darkBlue rounded-full px-4 py-1 text-white"
             >
               {t("login")}
             </Link>
@@ -146,7 +152,7 @@ const Navbar = () => {
       </div>
 
       {isMenuOpen && (
-        <div className="fixed inset-0 flex flex-col bg-gray-300 md:hidden">
+        <div className="bg-medianBlue fixed inset-0 flex flex-col md:hidden">
           <div className="flex h-16 items-center justify-between p-3">
             <Link href={routes.home} onClick={toggleMenu}>
               Logo
@@ -179,7 +185,7 @@ const Navbar = () => {
                   variant="ghostNoHover"
                   size="none"
                   onClick={handleLogout}
-                  className="rounded-full bg-neutral-400 px-10 py-2 text-2xl font-bold text-white"
+                  className="bg-darkBlue rounded-full px-10 py-2 text-2xl font-bold text-white"
                 >
                   {t("logout")}
                 </Button>
@@ -196,7 +202,7 @@ const Navbar = () => {
                 <Link
                   href={routes.login}
                   onClick={toggleMenu}
-                  className="rounded-full bg-neutral-400 px-10 py-2 text-2xl font-bold text-white"
+                  className="bg-darkBlue rounded-full px-10 py-2 text-2xl font-bold text-white"
                 >
                   {t("login")}
                 </Link>
