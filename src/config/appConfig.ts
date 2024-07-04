@@ -34,7 +34,12 @@ const appConfigSchema = z
         digest: z.string(),
         pepper: z.string(),
       }),
+      stripe: z.object({
+        privateKey: z.string(),
+        publicKey: z.string(),
+      }),
     }),
+    baseURL: z.string(),
     api: z.object({
       baseApiURL: z.string(),
     }),
@@ -71,7 +76,12 @@ const appConfig = appConfigSchema.parse({
       digest: process.env.PASSWORD_DIGEST,
       pepper: process.env.PASSWORD_PEPPER,
     },
+    stripe: {
+      privateKey: process.env.STRIPE_SECRET_KEY,
+      publicKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+    },
   },
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   api: {
     baseApiURL: process.env.NEXT_PUBLIC_BASE_API_URL,
   },

@@ -9,6 +9,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline"
 import { CheckIcon } from "@radix-ui/react-icons"
+import { loadStripe } from "@stripe/stripe-js"
 import { useQueryClient, useMutation } from "@tanstack/react-query"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -26,11 +27,18 @@ import { MissionOperating, MissionStatus } from "@/types"
 import { endDate, startDate } from "@/utils/date"
 import { getFullName } from "@/utils/functions"
 import { firstLetterUppercase } from "@/utils/string"
-import useAppContext from "@/web/hooks/useAppContext"
 import { useCandidate } from "@/web/hooks/useCandidate"
 import { useCandidates } from "@/web/hooks/useCandidates"
 import { useMission } from "@/web/hooks/useMission"
 import routes from "@/web/routes"
+
+const stripePublicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+
+if (!stripePublicKey) {
+  throw new Error("Missing Stripe public key")
+}
+
+const stripePromise = loadStripe(stripePublicKey)
 
 // eslint-disable-next-line complexity
 const DetailMissionPage = () => {
@@ -40,9 +48,9 @@ const DetailMissionPage = () => {
 
   const [id] = useQueryState("id")
 
-  const { userInfo } = useAppContext()
   const [openDelete, setDeleteOpen] = useState<boolean>(false)
   const [openAccept, setAcceptOpen] = useState<boolean>(false)
+  const [loading, setLoading] = useState(false)
 
   const {
     data: missionData,
@@ -53,6 +61,7 @@ const DetailMissionPage = () => {
     !missionLoading && !missionError ? missionData?.detailedMission : null
   const detailedMission = resultMission?.Missions
   const detailedCompany = resultMission?.Company
+  const missionPrice = resultMission ? resultMission.Missions.price : 0
 
   const {
     data: candidateData,
@@ -146,6 +155,51 @@ const DetailMissionPage = () => {
     },
   })
 
+  const paymentMutation = useMutation({
+    mutationFn: async ({
+      price,
+      targetedUserId,
+    }: {
+      price: number
+      targetedUserId: string
+    }) => {
+      const response = await apiFetch({
+        url: routes.api.missions.payment(id!),
+        method: "POST",
+        data: { price, targetedUserId },
+      })
+
+      if (response.status !== SC.success.CREATED) {
+        toast.error(t("Candidate.payment.error"))
+      }
+
+      const session = await response.data
+
+      const stripe = await stripePromise
+      const result = await stripe?.redirectToCheckout({
+        sessionId: session.id,
+      })
+
+      if (result?.error) {
+        toast.error(t("Candidate.payment.error"))
+      }
+    },
+    onSuccess: async () => {
+      setLoading(false)
+      await queryClient.invalidateQueries({
+        queryKey: ["mission", id],
+      })
+    },
+  })
+
+  const handleCheckout = (targetedUserId: string) => {
+    setLoading(true)
+    paymentMutation.mutate({
+      price: missionPrice * 100,
+      targetedUserId,
+    })
+  }
+
   const handleCandidate = () => {
     candidateMutation.mutate()
   }
@@ -223,7 +277,7 @@ const DetailMissionPage = () => {
                     candidate.Users.firstName,
                     candidate.Users.lastName,
                   ),
-                  userInfo.id,
+                  candidate.Users.id,
                 )}
                 className="font-semibold"
               >
@@ -270,10 +324,20 @@ const DetailMissionPage = () => {
               )}
               {resultMission?.Missions.status === MissionStatus.inProgress &&
                 resultMission?.isEmployee && (
-                  <Link href={"#"} className="flex items-center gap-3">
+                  <Button
+                    onClick={() => handleCheckout(candidate.Users.id)}
+                    disabled={loading}
+                    className="flex items-center gap-3"
+                  >
                     <CreditCardIcon className="size-8" />
-                  </Link>
+                  </Button>
                 )}
+
+              {resultMission?.Missions.status === MissionStatus.completed && (
+                <span className="rounded-md bg-green-400 px-2 font-bold text-white">
+                  {t("Candidate.completed")}
+                </span>
+              )}
             </div>
           ))}
         </div>

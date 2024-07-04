@@ -247,7 +247,6 @@
       "titles": {
         "candidates": "Candidats"
       },
-      "noCandidates": "Aucun candidat pour le moment !",
       "alerts": {
         "cancel": {
           "trigger": "Supprimer ma candidature",
@@ -269,7 +268,18 @@
           "confirm": "Accepter la candidature"
         }
       },
-      "apply": "Postuler"
+      "payment": {
+        "success": "Paiement effectué avec succès",
+        "error": "Une erreur est survenue lors du paiement"
+      },
+      "noCandidates": "Aucun candidat pour le moment !",
+      "apply": "Postuler",
+      "completed": "Terminée"
+    },
+    "ConfirmPayment": {
+      "title": "Confirmation de paiement",
+      "description": "Votre paiement à {name} a bien été effectué.",
+      "finalDescription": "La mission est maintenant terminée."
     }
   }
 }

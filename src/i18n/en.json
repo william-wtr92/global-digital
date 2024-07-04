@@ -218,9 +218,9 @@
           "error": "Localisation is invalid"
         },
         "price": {
-            "label": "Price of the mission",
-            "placeholder": "Enter the price of the mission",
-            "error": "Price is invalid"
+          "label": "Price of the mission",
+          "placeholder": "Enter the price of the mission",
+          "error": "Price is invalid"
         },
         "submit": "Create the mission",
         "success": "Mission created successfully",
@@ -246,7 +246,6 @@
       "titles": {
         "candidates": "Candidates"
       },
-      "noCandidates": "No candidates for the moment!",
       "alerts": {
         "cancel": {
           "trigger": "Delete my application",
@@ -268,7 +267,18 @@
           "confirm": "Accept application"
         }
       },
-      "apply": "Apply"
+      "payment": {
+        "success": "Payment realized successfully",
+        "error": "Error during payment"
+      },
+      "noCandidates": "No candidates for the moment!",
+      "apply": "Apply",
+      "completed": "Completed"
+    },
+    "ConfirmPayment": {
+      "title": "Payment confirmation",
+      "description": "You payment to {name} has been successfully completed.",
+      "finalDescription": "The mission is now over."
     }
   }
 }
