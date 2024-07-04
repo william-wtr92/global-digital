@@ -1,4 +1,4 @@
-import type { Pathnames } from "next-intl/navigation"
+import type { Pathnames, LocalePrefix } from "next-intl/routing"
 
 export const locales = ["en", "fr"]
 
@@ -6,12 +6,10 @@ export const pathnames = {
   "/": "/",
   "/pathnames": {
     en: "/pathnames",
-    fr: "/chemin",
+    fr: "/chemins",
   },
 } satisfies Pathnames<typeof locales>
 
-// The type of locale prefix is undefined.
-// eslint-disable-next-line no-undefined
-export const localePrefix = undefined
+export const localePrefix: LocalePrefix<typeof locales> = "always"
 
 export type AppPathnames = keyof typeof pathnames
