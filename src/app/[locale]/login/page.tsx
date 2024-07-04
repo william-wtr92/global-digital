@@ -60,40 +60,42 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col items-center gap-6"
-        >
-          <h1 className="mx-4 text-center text-4xl font-bold md:text-4xl">
-            {t("Form.title")}
-          </h1>
-          <CustomFormField
-            name="email"
-            form={form}
-            label={t("Form.email.label")}
-            placeholder={t("Form.email.label")}
-            description={t("Form.email.placeholder")}
-          />
-          <CustomFormField
-            name="password"
-            form={form}
-            label={t("Form.password.label")}
-            placeholder={t("Form.password.label")}
-            description={t("Form.password.placeholder")}
-            passwordField
-          />
-
-          <Button
-            disabled={!form.formState.isValid}
-            className={`w-1/2 bg-gray-400 py-2.5 font-semibold text-white ${!form.formState.isValid ? "cursor-not-allowed opacity-50" : "bg-gray-800 hover:cursor-pointer"}`}
-            type="submit"
+    <div className="flex h-screen flex-col items-center justify-center gap-10">
+      <RoughNotation type="underline" color="#000000" show={true} padding={10}>
+        <h1 className="text-4xl font-extrabold">{t("title")}</h1>
+      </RoughNotation>
+      <>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col items-center gap-6"
           >
-            {t("Form.submit")}
-          </Button>
-        </form>
-      </Form>
+            <CustomFormField
+              name="email"
+              form={form}
+              label={t("Form.email.label")}
+              placeholder={t("Form.email.label")}
+              description={t("Form.email.placeholder")}
+            />
+            <CustomFormField
+              name="password"
+              form={form}
+              label={t("Form.password.label")}
+              placeholder={t("Form.password.label")}
+              description={t("Form.password.placeholder")}
+              passwordField
+            />
+
+            <Button
+              disabled={!form.formState.isValid}
+              className={`w-1/2 bg-gray-400 py-2.5 font-semibold text-white ${!form.formState.isValid ? "cursor-not-allowed opacity-50" : "bg-gray-800 hover:cursor-pointer"}`}
+              type="submit"
+            >
+              {t("Form.submit")}
+            </Button>
+          </form>
+        </Form>
+      </>
     </div>
   )
 }
