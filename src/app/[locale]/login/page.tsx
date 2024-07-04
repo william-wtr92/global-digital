@@ -14,6 +14,7 @@ import { SC } from "@/def/status"
 import { apiFetch } from "@/lib/api"
 import { type LoginType, LoginSchema } from "@/types"
 import routes from "@/web/routes"
+import Link from "next/link"
 
 const LoginPage = () => {
   const router = useRouter()
@@ -83,7 +84,12 @@ const LoginPage = () => {
               description={t("Form.password.placeholder")}
               passwordField
             />
-
+            <Link
+              className="font-bold underline underline-offset-4"
+              href={routes.home}
+            >
+              {t("Form.passwordForgotten")}
+            </Link>
             <Button
               disabled={!form.formState.isValid}
               className={`w-1/2 bg-gray-400 py-2.5 font-semibold text-white ${!form.formState.isValid ? "cursor-not-allowed opacity-50" : "bg-gray-800 hover:cursor-pointer"}`}
