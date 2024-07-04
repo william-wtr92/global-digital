@@ -1,6 +1,6 @@
 import { cookies } from "next/headers"
 
-import { SC } from "@/def/status"
+import { SC } from "@/utils/constants/status"
 
 export const PUT = () => {
   cookies().delete("Authorization")

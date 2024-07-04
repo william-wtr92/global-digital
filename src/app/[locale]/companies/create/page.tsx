@@ -6,7 +6,7 @@ import type { UUID } from "crypto"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 
-import CustomFormField from "@/components/customs/Forms/CustomFormField"
+import CustomFormField from "@/components/customs/forms/CustomFormField"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -26,14 +26,14 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { apiFetch, type ApiResponse } from "@/lib/api"
-import { capitalizeFirstLetter } from "@/utils/forms"
-import type { ReadonlyArrayZod } from "@/utils/types"
 import {
   companiesCreateFormValidator,
   type CompaniesCreateValidatorType,
-} from "@/utils/validators/companies"
-import routes from "@/web/routes"
+} from "@/features/companies/utils/validators/companies"
+import { apiFetch, type ApiResponse } from "@/lib/api"
+import type { ReadonlyArrayZod } from "@/types/utils"
+import routes from "@/utils/routes"
+import { firstLetterUppercase } from "@/utils/string"
 
 const CompaniesCreatePage = () => {
   const { data: areas } = useQuery<ApiResponse<{ id: UUID; value: string }[]>>({
@@ -105,7 +105,7 @@ const CompaniesCreatePage = () => {
                     <SelectContent>
                       {areas?.data.map((area) => (
                         <SelectItem value={area.value} key={area.id}>
-                          {capitalizeFirstLetter(area.value)}
+                          {firstLetterUppercase(area.value)}
                         </SelectItem>
                       ))}
                     </SelectContent>

@@ -4,15 +4,15 @@ import { useParams } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
-import Habilitations from "@/components/customs/Companies/Habilitations/Habilitations"
-import Spinner from "@/components/customs/Utils/Spinner"
-import { useRouter } from "@/navigation"
-import useAppContext from "@/web/hooks/useAppContext"
-import { useCompany } from "@/web/hooks/useCompany"
-import routes from "@/web/routes"
+import { Loading } from "@/components/customs/layout/Loading"
+import Habilitations from "@/features/companies/components/Habilitations/Habilitations"
+import { useCompany } from "@/features/companies/hooks/useCompany"
+import { useAppContext } from "@/hooks/useAppContext"
+import { useRouter } from "@/utils/navigation"
+import routes from "@/utils/routes"
 
 const CompaniesHabilitations = () => {
-  const { id } = useParams() as { id: string }
+  const { id } = useParams<{ id: string }>()
   const { userInfo } = useAppContext()
   const t = useTranslations()
   const router = useRouter()
@@ -25,11 +25,7 @@ const CompaniesHabilitations = () => {
   }
 
   if (isPending) {
-    return (
-      <div className="flex h-full items-center justify-center">
-        <Spinner />
-      </div>
-    )
+    return <Loading />
   }
 
   if (error || data.error) {

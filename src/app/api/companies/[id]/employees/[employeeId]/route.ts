@@ -2,7 +2,7 @@ import { and, eq } from "drizzle-orm"
 
 import { db } from "@/db/client"
 import { employee, employeeRole } from "@/db/schema"
-import { SC } from "@/def/status"
+import { SC } from "@/utils/constants/status"
 
 export const DELETE = async (
   req: Request,

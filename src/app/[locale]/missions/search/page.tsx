@@ -5,7 +5,6 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 
-import MissionsList from "@/components/customs/Missions/MissionsList"
 import {
   Form,
   FormControl,
@@ -15,7 +14,11 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { type SearchMissionsType, searchMissionsSchema } from "@/types"
+import MissionsList from "@/features/missions/components/MissionsList"
+import {
+  searchMissionsSchema,
+  type SearchMissionsType,
+} from "@/features/missions/types/missions"
 
 const SearchPage = () => {
   const t = useTranslations("Missions")

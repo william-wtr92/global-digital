@@ -2,7 +2,7 @@ import { and, eq, ilike, notInArray, or } from "drizzle-orm"
 
 import { db } from "@/db/client"
 import { employee, users } from "@/db/schema"
-import { SC } from "@/def/status"
+import { SC } from "@/utils/constants/status"
 
 export const POST = async (req: Request) => {
   const { searchText, id } = await req.json()

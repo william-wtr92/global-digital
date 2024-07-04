@@ -16,7 +16,7 @@ const footerItem = [
   },
 ]
 
-const Footer = () => {
+export const Footer = () => {
   const t = useTranslations("Footer")
 
   return (
@@ -33,5 +33,3 @@ const Footer = () => {
     </div>
   )
 }
-
-export default Footer

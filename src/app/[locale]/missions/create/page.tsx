@@ -6,11 +6,11 @@ import { useTranslations } from "next-intl"
 import { RoughNotation } from "react-rough-notation"
 import { toast } from "sonner"
 
-import MissionForm from "@/components/customs/Forms/Missions/MissionForm"
-import { SC } from "@/def/status"
+import MissionForm from "@/features/missions/components/MissionForm"
+import type { MissionType } from "@/features/missions/types/missions"
 import { apiFetch } from "@/lib/api"
-import type { MissionType } from "@/types"
-import routes from "@/web/routes"
+import { SC } from "@/utils/constants/status"
+import routes from "@/utils/routes"
 
 const CreateMissionPage = () => {
   const t = useTranslations("Missions")

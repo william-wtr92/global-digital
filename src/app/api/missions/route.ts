@@ -11,7 +11,7 @@ import {
   mission,
   users,
 } from "@/db/schema"
-import { SC } from "@/def/status"
+import { SC } from "@/utils/constants/status"
 
 export const GET = async (req: Request) => {
   const url = new URL(req.url)

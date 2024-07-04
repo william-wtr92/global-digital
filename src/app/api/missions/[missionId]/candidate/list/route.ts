@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server"
 
 import { db } from "@/db/client"
 import { type SelectCandidate, candidate, users } from "@/db/schema"
-import { SC } from "@/def/status"
+import { SC } from "@/utils/constants/status"
 import { sanitizeUser } from "@/utils/dto/sanitizeUser"
 
 export const GET = async (

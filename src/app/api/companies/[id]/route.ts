@@ -2,12 +2,12 @@ import { eq } from "drizzle-orm"
 
 import { db } from "@/db/client"
 import { company } from "@/db/schema"
-import { SC } from "@/def/status"
-import type { ReadonlyArrayZod } from "@/utils/types"
 import {
   companiesUpdateFormValidator,
   companyUpdateValidator,
-} from "@/utils/validators/companies"
+} from "@/features/companies/utils/validators/companies"
+import type { ReadonlyArrayZod } from "@/types/utils"
+import { SC } from "@/utils/constants/status"
 
 export const GET = async (
   req: Request,

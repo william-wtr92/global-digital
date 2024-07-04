@@ -7,12 +7,15 @@ import { useQueryState } from "nuqs"
 import { RoughNotation } from "react-rough-notation"
 import { toast } from "sonner"
 
-import MissionForm from "@/components/customs/Forms/Missions/MissionForm"
-import { SC } from "@/def/status"
+import MissionForm from "@/features/missions/components/MissionForm"
+import { useMission } from "@/features/missions/hooks/useMission"
+import type {
+  MissionOperatingType,
+  MissionType,
+} from "@/features/missions/types/missions"
 import { apiFetch } from "@/lib/api"
-import type { MissionOperatingType, MissionType } from "@/types"
-import { useMission } from "@/web/hooks/useMission"
-import routes from "@/web/routes"
+import { SC } from "@/utils/constants/status"
+import routes from "@/utils/routes"
 
 const UpdateMissionPage = () => {
   const t = useTranslations("Missions")

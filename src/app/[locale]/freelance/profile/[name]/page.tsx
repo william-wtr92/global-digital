@@ -9,12 +9,12 @@ import { IoSettingsOutline } from "react-icons/io5"
 import { RxPerson } from "react-icons/rx"
 import { toast } from "sonner"
 
-import Spinner from "@/components/customs/Utils/Spinner"
+import { Loading } from "@/components/customs/layout/Loading"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useProfile } from "@/features/account/profil/hooks/useProfile"
+import { useAppContext } from "@/hooks/useAppContext"
 import { getFullNameLowerCase } from "@/utils/functions"
-import useAppContext from "@/web/hooks/useAppContext"
-import { useFreelanceProfile } from "@/web/hooks/useProfile"
-import routes from "@/web/routes"
+import routes from "@/utils/routes"
 
 const FreelanceAccount = () => {
   const t = useTranslations()
@@ -22,7 +22,7 @@ const FreelanceAccount = () => {
   const [id] = useQueryState("id")
   const { userInfo } = useAppContext()
 
-  const { isPending, data, error } = useFreelanceProfile(id || "")
+  const { isPending, data, error } = useProfile(id!)
 
   if (userInfo.id !== id) {
     router.push(routes.home)
@@ -31,11 +31,7 @@ const FreelanceAccount = () => {
   }
 
   if (isPending) {
-    return (
-      <div className="flex h-full items-center justify-center">
-        <Spinner />
-      </div>
-    )
+    return <Loading />
   }
 
   if (error) {

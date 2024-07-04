@@ -8,26 +8,26 @@ import { useFormatter, useTranslations } from "next-intl"
 import { BsPersonGear } from "react-icons/bs"
 import { toast } from "sonner"
 
-import Spinner from "@/components/customs/Utils/Spinner"
+import { Loading } from "@/components/customs/layout/Loading"
 import type { SelectArea, SelectCompany, SelectMission } from "@/db/schema"
-import { SC } from "@/def/status"
 import { apiFetch, type ApiResponse } from "@/lib/api"
-import { capitalizeFirstLetter } from "@/utils/forms"
-import routes from "@/web/routes"
+import { SC } from "@/utils/constants/status"
+import routes from "@/utils/routes"
+import { firstLetterUppercase } from "@/utils/string"
 
 const CompaniesIdPage = () => {
-  const t = useTranslations("CompaniesId")
-  const format = useFormatter()
-  const { id } = useParams() as { id: string }
+  const t = useTranslations()
+  const formatter = useFormatter()
+  const { id } = useParams<{ id: string }>()
   const {
     data: companyResult,
     isSuccess,
     isLoading: isLoadingCompany,
   } = useQuery<ApiResponse<SelectCompany>>({
-    queryKey: [routes.api.companies[":id"].index(id as string)],
+    queryKey: [routes.api.companies[":id"].index(id)],
     queryFn: async () => {
       const response = await apiFetch({
-        url: routes.api.companies[":id"].index(id as string),
+        url: routes.api.companies[":id"].index(id),
       })
 
       if (response.status !== SC.success.OK) {
@@ -60,10 +60,10 @@ const CompaniesIdPage = () => {
     ApiResponse<SelectMission[]>
   >({
     enabled: isSuccess,
-    queryKey: [routes.api.companies[":id"].missions(id as string)],
+    queryKey: [routes.api.companies[":id"].missions(id)],
     queryFn: async () => {
       const response = await apiFetch({
-        url: routes.api.companies[":id"].missions(id as string),
+        url: routes.api.companies[":id"].missions(id),
       })
 
       if (response.status !== SC.success.OK) {
@@ -75,11 +75,7 @@ const CompaniesIdPage = () => {
   })
 
   if (isLoadingCompany || isLoadingArea || isLoadingMissions) {
-    return (
-      <div className="flex h-full items-center justify-center">
-        <Spinner />
-      </div>
-    )
+    return <Loading />
   }
 
   return (
@@ -100,22 +96,31 @@ const CompaniesIdPage = () => {
             {companyResult?.data.businessName}
           </h1>
           <h2>{companyResult?.data.headQuarter}</h2>
-          <h3>{capitalizeFirstLetter(areaResult!.data.value)}</h3>
+          <h3>{firstLetterUppercase(areaResult!.data.value)}</h3>
         </div>
       </div>
       <p className="text-xl">{companyResult?.data.description}</p>
       <div className="flex flex-col items-center justify-center gap-6">
-        <h1 className="text-5xl font-bold">{t("availablesMissions")}</h1>
+        <h1 className="text-5xl font-bold">
+          {t("CompaniesId.availablesMissions")}
+        </h1>
         <div className="flex flex-col">
           {missionsResult?.data.map((mission) => (
             <div className="flex flex-col" key={mission.id}>
               <h2>
                 <span className="text-2xl font-bold">{mission.title}</span> -{" "}
                 <span className="text-xl">
-                  {format.dateTimeRange(
-                    new Date(mission.startDate),
-                    new Date(mission.endDate),
-                  )}
+                  {formatter.dateTime(new Date(mission.startDate), {
+                    year: "2-digit",
+                    month: "2-digit",
+                    day: "2-digit",
+                  })}{" "}
+                  {t("Missions.to")}{" "}
+                  {formatter.dateTime(new Date(mission.endDate), {
+                    year: "2-digit",
+                    month: "2-digit",
+                    day: "2-digit",
+                  })}
                 </span>
               </h2>
               <p>{mission.description}</p>

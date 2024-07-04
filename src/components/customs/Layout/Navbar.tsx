@@ -1,3 +1,5 @@
+"use client"
+
 import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/outline"
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
@@ -8,23 +10,22 @@ import { useEffect, useState } from "react"
 import { RxCross2, RxHamburgerMenu, RxPerson } from "react-icons/rx"
 import { toast } from "sonner"
 
-import LocaleSelect from "@/components/customs/Utils/LocalSelect"
+import LocaleSelect from "@/components/customs/utils/LocalSelect"
 import { Button } from "@/components/ui/button"
+import { useUser } from "@/features/account/hooks/useUser"
+import { useAppContext } from "@/hooks/useAppContext"
 import { apiFetch } from "@/lib/api"
 import { getFullNameLowerCase } from "@/utils/functions"
-import useAppContext from "@/web/hooks/useAppContext"
-import { useUser } from "@/web/hooks/useUser"
-import routes from "@/web/routes"
+import routes from "@/utils/routes"
 
-const Navbar = () => {
+export const Navbar = () => {
   const { token, userInfo, setUserInfo } = useAppContext()
   const { data, isLoading, error } = useUser(token)
-
   const router = useRouter()
   const t = useTranslations("Navbar")
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-
   const queryClient = useQueryClient()
+
   const mutation = useMutation<void, Error>({
     mutationKey: [routes.api.auth.logout],
     mutationFn: async () => {
@@ -35,21 +36,19 @@ const Navbar = () => {
         credentials: "include",
       })
     },
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["user"] })
-      setUserInfo({ id: "", firstName: "", lastName: "" })
-      toast.success(t("logoutSuccess"))
-      router.push(routes.login)
-    },
   })
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
   }
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     toggleMenu()
-    mutation.mutate()
+    await mutation.mutateAsync()
+    await queryClient.invalidateQueries({ queryKey: ["user"] })
+    setUserInfo({ id: "", firstName: "", lastName: "" })
+    toast.success(t("logoutSuccess"))
+    router.push(routes.login)
   }
 
   useEffect(() => {
@@ -222,5 +221,3 @@ const Navbar = () => {
     </div>
   )
 }
-
-export default Navbar

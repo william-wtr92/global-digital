@@ -9,8 +9,8 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select"
-import { locales } from "@/config"
-import { usePathname, useRouter } from "@/navigation"
+import { locales } from "@/config/i18nConfig"
+import { usePathname, useRouter } from "@/utils/navigation"
 
 type LocaleSelectProps = {
   title?: string
