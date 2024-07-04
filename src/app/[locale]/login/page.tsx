@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
@@ -14,7 +15,6 @@ import { SC } from "@/def/status"
 import { apiFetch } from "@/lib/api"
 import { type LoginType, LoginSchema } from "@/types"
 import routes from "@/web/routes"
-import Link from "next/link"
 
 const LoginPage = () => {
   const router = useRouter()
