@@ -37,7 +37,10 @@ const routes = {
     },
     companies: {
       "index": "/companies",
-      ":id": (id: string) => `/companies/${id}`,
+      ":id": {
+        index: (id: string) => `/companies/${id}`,
+        missions: (id: string) => `/companies/${id}/missions`,
+      },
     },
     missions: {
       create: "/missions",

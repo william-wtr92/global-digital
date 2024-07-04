@@ -3,11 +3,11 @@
 import { useQuery } from "@tanstack/react-query"
 import Image from "next/image"
 import { useParams } from "next/navigation"
-import { useTranslations } from "next-intl"
+import { useFormatter, useTranslations } from "next-intl"
 import { toast } from "sonner"
 
 import Spinner from "@/components/customs/Utils/Spinner"
-import type { SelectArea, SelectCompany } from "@/db/schema"
+import type { SelectArea, SelectCompany, SelectMission } from "@/db/schema"
 import { SC } from "@/def/status"
 import { apiFetch, type ApiResponse } from "@/lib/api"
 import { capitalizeFirstLetter } from "@/utils/forms"
@@ -15,16 +15,17 @@ import routes from "@/web/routes"
 
 const CompaniesIdPage = () => {
   const t = useTranslations("CompaniesId")
+  const format = useFormatter()
   const { id } = useParams()
   const {
     data: companyResult,
     isSuccess,
     isLoading: isLoadingCompany,
   } = useQuery<ApiResponse<SelectCompany>>({
-    queryKey: [routes.api.companies[":id"](id as string)],
+    queryKey: [routes.api.companies[":id"].index(id as string)],
     queryFn: async () => {
       const response = await apiFetch({
-        url: routes.api.companies[":id"](id as string),
+        url: routes.api.companies[":id"].index(id as string),
       })
 
       if (response.status !== SC.success.OK) {
@@ -53,7 +54,25 @@ const CompaniesIdPage = () => {
     },
   })
 
-  if (isLoadingCompany || isLoadingArea) {
+  const { data: missionsResult, isLoading: isLoadingMissions } = useQuery<
+    ApiResponse<SelectMission[]>
+  >({
+    enabled: isSuccess,
+    queryKey: [routes.api.companies[":id"].missions(id as string)],
+    queryFn: async () => {
+      const response = await apiFetch({
+        url: routes.api.companies[":id"].missions(id as string),
+      })
+
+      if (response.status !== SC.success.OK) {
+        toast.error(t("Form.error"))
+      }
+
+      return response
+    },
+  })
+
+  if (isLoadingCompany || isLoadingArea || isLoadingMissions) {
     return (
       <div className="flex h-full items-center justify-center">
         <Spinner />
@@ -80,8 +99,24 @@ const CompaniesIdPage = () => {
         </div>
       </div>
       <p className="text-xl">{companyResult?.data.description}</p>
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center gap-6">
         <h1 className="text-5xl font-bold">Missions disponibles</h1>
+        <div className="flex flex-col">
+          {missionsResult?.data.map((mission) => (
+            <div className="flex flex-col" key={mission.id}>
+              <h2>
+                <span className="text-2xl font-bold">{mission.title}</span> -{" "}
+                <span className="text-xl">
+                  {format.dateTimeRange(
+                    new Date(mission.startDate),
+                    new Date(mission.endDate),
+                  )}
+                </span>
+              </h2>
+              <p>{mission.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )
