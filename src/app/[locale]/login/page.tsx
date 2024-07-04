@@ -51,9 +51,6 @@ const LoginPage = () => {
         url: routes.api.auth.login,
         method: "POST",
         data,
-        headers: {
-          "Content-Type": "application/json",
-        },
       })
 
       if (response.status !== SC.success.OK) {
@@ -81,7 +78,7 @@ const LoginPage = () => {
       <RoughNotation type="underline" color="#000000" show={true} padding={10}>
         <h1 className="text-4xl font-extrabold">{t("title")}</h1>
       </RoughNotation>
-      <div className="w-1/3">
+      <div className="w-4/5 xl:w-1/3">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}

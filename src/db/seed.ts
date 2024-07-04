@@ -15,6 +15,7 @@ import {
   mission,
   employee,
   freelance,
+  candidate,
 } from "./schema"
 import { hashPassword } from "../utils/hashPassword"
 import appConfig from "@/config/appConfig"
@@ -34,6 +35,7 @@ const usersSeed = async () => {
 
   const db = drizzle(client)
 
+  await db.delete(candidate)
   await db.delete(freelance)
   await db.delete(employee)
   await db.delete(mission)
@@ -56,11 +58,23 @@ const usersSeed = async () => {
       createdAt: new Date(),
       updatedAt: new Date(),
     },
+    {
+      firstName: "Jane",
+      lastName: "Doe",
+      email: "test1@gmail.com",
+      passwordHash,
+      passwordSalt,
+      phoneNumber: "0606060606",
+      avatarUrl: "https://www.google.com",
+      isVerified: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
   ]
 
   await db.insert(users).values(usersData)
 
-  const selectUser = await db
+  const selectFreelanceUser = await db
     .select()
     .from(users)
     .where(eq(users.email, "test@gmail.com"))
@@ -78,7 +92,7 @@ const usersSeed = async () => {
 
   const freelanceData: InsertFreelance[] = [
     {
-      userId: selectUser[0].id,
+      userId: selectFreelanceUser[0].id,
       jobTitle: "Software Engineer",
       businessName: "William Business",
       areaId: selectITArea[0].id,
@@ -122,9 +136,14 @@ const usersSeed = async () => {
 
   await db.insert(mission).values(missionsData)
 
+  const selectEmployeeUser = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, "test@gmail.com"))
+
   const employeesData: InsertEmployee[] = [
     {
-      userId: selectUser[0].id,
+      userId: selectEmployeeUser[0].id,
       companyId: selectCompany[0].id,
     },
   ]
