@@ -11,18 +11,19 @@ export const DELETE = async (
   }: { params: { id: string; employeeId: string } },
 ) => {
   try {
-    await db
-      .delete(employeeRole)
-      .where(
-        and(
-          eq(employeeRole.employeeId, employeeId),
-          eq(employeeRole.companyId, id),
-        ),
-      )
-
-    await db
-      .delete(employee)
-      .where(and(eq(employee.id, employeeId), eq(employee.companyId, id)))
+    await db.transaction(async (tx) => {
+      await tx
+        .delete(employeeRole)
+        .where(
+          and(
+            eq(employeeRole.employeeId, employeeId),
+            eq(employeeRole.companyId, id),
+          ),
+        )
+      await tx
+        .delete(employee)
+        .where(and(eq(employee.id, employeeId), eq(employee.companyId, id)))
+    })
 
     return Response.json({ result: true }, { status: SC.success.OK })
   } catch (error) {
