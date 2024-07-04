@@ -1,7 +1,7 @@
 "use client"
 
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"
-import { useState } from "react"
+import { type HTMLInputTypeAttribute, useState } from "react"
 import type { FieldValues, Path, UseFormReturn } from "react-hook-form"
 
 import {
@@ -20,7 +20,7 @@ type CustomFormFieldProps<T extends FieldValues> = {
   label?: string
   description?: string
   placeholder?: string
-  passwordField?: boolean
+  type?: HTMLInputTypeAttribute
 }
 
 const CustomFormField = <T extends FieldValues>({
@@ -29,7 +29,7 @@ const CustomFormField = <T extends FieldValues>({
   label,
   description,
   placeholder,
-  passwordField,
+  type,
 }: CustomFormFieldProps<T>) => {
   const [showPassword, setShowPassword] = useState(false)
 
@@ -48,12 +48,16 @@ const CustomFormField = <T extends FieldValues>({
             <div className="relative">
               <Input
                 type={
-                  passwordField ? (showPassword ? "text" : "password") : "text"
+                  type === "password"
+                    ? showPassword
+                      ? "text"
+                      : "password"
+                    : "text"
                 }
                 placeholder={placeholder}
                 {...field}
               />
-              {passwordField && (
+              {type === "password" && (
                 <div onClick={handleShowPassword}>
                   {showPassword ? (
                     <EyeSlashIcon className="absolute right-2 top-1/4 h-5 w-4 hover:cursor-pointer" />
