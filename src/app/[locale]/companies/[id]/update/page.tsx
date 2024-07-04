@@ -3,12 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import type { UUID } from "crypto"
+import { useParams, useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 
 import CustomFormField from "@/components/customs/Forms/CustomFormField"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
   Form,
   FormControl,
@@ -26,72 +26,93 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
+import type { SelectCompany } from "@/db/schema"
 import { apiFetch, type ApiResponse } from "@/lib/api"
 import { capitalizeFirstLetter } from "@/utils/forms"
 import type { ReadonlyArrayZod } from "@/utils/types"
 import {
-  companiesCreateFormValidator,
-  type CompaniesCreateValidatorType,
+  type CompaniesUpdateValidatorType,
+  companiesUpdateFormValidator,
 } from "@/utils/validators/companies"
 import routes from "@/web/routes"
 
-const CompaniesCreatePage = () => {
+const CompaniesUpdatePage = () => {
+  const { id } = useParams()
+  const router = useRouter()
+  const { data: company, isSuccess } = useQuery<ApiResponse<SelectCompany>>({
+    queryKey: [routes.api.companies[":id"].index(id as string)],
+    queryFn: () =>
+      apiFetch({ url: routes.api.companies[":id"].index(id as string) }),
+  })
   const { data: areas } = useQuery<ApiResponse<{ id: UUID; value: string }[]>>({
+    enabled: isSuccess,
     queryKey: [routes.api.areas.index],
     queryFn: () => apiFetch({ url: routes.api.areas.index }),
   })
-  const t = useTranslations("CompaniesCreatePage")
-  const companiesCreateForm = useForm<CompaniesCreateValidatorType>({
+
+  const t = useTranslations("CompaniesUpdatePage")
+  const companiesUpdateForm = useForm<CompaniesUpdateValidatorType>({
     resolver: zodResolver(
-      companiesCreateFormValidator(
+      companiesUpdateFormValidator(
         areas?.data.map((area) => area.value) as unknown as ReadonlyArrayZod,
       ),
     ),
+    defaultValues: {
+      headquarters: company?.data.headQuarter,
+      areaId: company?.data.areaId,
+      businessName: company?.data.businessName,
+      descriptionCompany: company?.data.description,
+      kbis: company?.data.kbisUrl,
+      logo: company?.data.logo,
+    },
   })
   const { mutateAsync } = useMutation<
     void,
     Error,
-    CompaniesCreateValidatorType
+    CompaniesUpdateValidatorType
   >({
     mutationKey: [routes.api.companies.index],
     mutationFn: async (data) => {
-      await apiFetch<CompaniesCreateValidatorType>({
-        url: routes.api.companies.index,
-        method: "POST",
+      await apiFetch<CompaniesUpdateValidatorType>({
+        url: routes.api.companies[":id"].index(id as string),
+        method: "PUT",
         data,
       })
     },
   })
 
-  const onSubmit = (values: CompaniesCreateValidatorType) => mutateAsync(values)
+  const onSubmit = async (values: CompaniesUpdateValidatorType) => {
+    await mutateAsync(values)
+    router.replace(routes.companies[":id"](id as string))
+  }
 
   return (
     <div className="mt-6 flex flex-col items-center gap-5">
       <h1 className="text-2xl">{t("title")}</h1>
-      <Form {...companiesCreateForm}>
+      <Form {...companiesUpdateForm}>
         <form
-          onSubmit={companiesCreateForm.handleSubmit(onSubmit)}
+          onSubmit={companiesUpdateForm.handleSubmit(onSubmit)}
           className="space-y-5"
         >
           <CustomFormField
-            form={companiesCreateForm}
+            form={companiesUpdateForm}
             name="businessName"
             placeholder={t("businessName.placeholder")}
             label={t("businessName.label")}
             description={t("businessName.description")}
           />
           <CustomFormField
-            form={companiesCreateForm}
+            form={companiesUpdateForm}
             name="logo"
             placeholder={t("logo.placeholder")}
             label={t("logo.label")}
             description={t("logo.description")}
           />
           <FormField
-            control={companiesCreateForm.control}
+            control={companiesUpdateForm.control}
             name="areaId"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="w-screen max-w-96 px-4">
                 <FormLabel>{t("area.label")}</FormLabel>
                 <FormControl>
                   <Select
@@ -117,24 +138,24 @@ const CompaniesCreatePage = () => {
             )}
           />
           <CustomFormField
-            form={companiesCreateForm}
+            form={companiesUpdateForm}
             name="headquarters"
             placeholder={t("headquarters.placeholder")}
             label={t("headquarters.label")}
             description={t("headquarters.description")}
           />
           <CustomFormField
-            form={companiesCreateForm}
+            form={companiesUpdateForm}
             name="kbis"
             placeholder={t("kbis.placeholder")}
             label={t("kbis.label")}
             description={t("kbis.description")}
           />
           <FormField
-            control={companiesCreateForm.control}
+            control={companiesUpdateForm.control}
             name="descriptionCompany"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="w-screen max-w-96 px-4">
                 <FormLabel>{t("descriptionCompany.label")}</FormLabel>
                 <FormControl>
                   <Textarea
@@ -149,22 +170,6 @@ const CompaniesCreatePage = () => {
               </FormItem>
             )}
           />
-          <FormField
-            control={companiesCreateForm.control}
-            name="accept"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <FormLabel>{t("accept.label")}</FormLabel>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <Button type="submit">{t("button")}</Button>
         </form>
       </Form>
@@ -172,4 +177,4 @@ const CompaniesCreatePage = () => {
   )
 }
 
-export default CompaniesCreatePage
+export default CompaniesUpdatePage
