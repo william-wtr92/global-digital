@@ -1,14 +1,16 @@
 "use client"
+
 import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/outline"
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
-import React, { useEffect } from "react"
-import { RxPerson } from "react-icons/rx"
+import React, { useEffect, useState } from "react"
+import { RxCross2, RxHamburgerMenu, RxPerson } from "react-icons/rx"
 import { toast } from "sonner"
 
+import LocaleSelect from "@/components/customs/Utils/LocalSelect"
 import { Button } from "@/components/ui/button"
 import { apiFetch } from "@/lib/api"
 import { getFullName } from "@/utils/functions"
@@ -24,6 +26,7 @@ const Navbar = (props: Props) => {
 
   const router = useRouter()
   const t = useTranslations("Navbar")
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const { data, isLoading, error } = useUser(token)
   const userInfo = !isLoading && !error ? data?.userConnected : null
@@ -45,7 +48,12 @@ const Navbar = (props: Props) => {
     },
   })
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
+  }
+
   const handleLogout = () => {
+    toggleMenu()
     mutation.mutate()
   }
 
@@ -63,12 +71,12 @@ const Navbar = (props: Props) => {
   }, [router])
 
   return (
-    <div className="sticky top-0 z-10 flex items-center justify-between bg-gray-300 p-3">
-      <Link href={routes.home}>Logo</Link>
+    <div className="sticky top-0 z-50">
+      <div className="flex h-16 items-center justify-between bg-gray-300 p-3">
+        <Link href={routes.home}>Logo</Link>
 
-      {userInfo ? (
-        <div className="flex items-center gap-6 xl:gap-20">
-          <div>
+        {userInfo ? (
+          <div className="hidden items-center gap-6 md:flex xl:gap-20">
             <Link href={routes.missions.search}>
               <p className="text-medium rounded-md border-2 border-gray-200 bg-gray-200 px-4 py-1 hover:shadow-xl">
                 <kbd className="flex items-center gap-4 xl:gap-8">
@@ -86,38 +94,117 @@ const Navbar = (props: Props) => {
                 </kbd>
               </p>
             </Link>
+
+            <div className="flex items-center gap-8">
+              <Link
+                href={routes.profile(
+                  getFullName(userInfo.firstName, userInfo.lastName),
+                  userInfo.id,
+                )}
+                className="flex cursor-pointer items-center gap-1.5"
+              >
+                <RxPerson className="text-2xl" />
+                <span className="font-semibold">{userInfo.firstName}</span>
+              </Link>
+              <Button
+                onClick={handleLogout}
+                className="text-md cursor-pointer rounded-md bg-slate-400 px-3 py-1.5 font-normal"
+                variant="ghostNoHover"
+                size="none"
+                onClickCapture={handleLogout}
+              >
+                <ArrowLeftStartOnRectangleIcon className="size-6" />
+              </Button>
+            </div>
           </div>
-          <div className="flex items-center gap-8">
+        ) : (
+          <div className="hidden items-center gap-4 md:flex">
+            <Link href={routes.registration} onClick={toggleMenu}>
+              {t("signup")}
+            </Link>
             <Link
-              href={routes.profile(
-                getFullName(userInfo.firstName, userInfo.lastName),
-                userInfo.id,
-              )}
-              className="flex cursor-pointer items-center gap-1.5"
+              href={routes.login}
+              onClick={toggleMenu}
+              className="rounded-full bg-slate-400 px-4 py-1"
             >
-              <RxPerson className="text-2xl" />
-              <span className="font-semibold">{userInfo.firstName}</span>
+              {t("login")}
+            </Link>
+            <LocaleSelect />
+          </div>
+        )}
+
+        <Button
+          className="cursor-pointer text-3xl md:hidden"
+          variant="ghostNoHover"
+          size="none"
+          onClick={toggleMenu}
+        >
+          <RxHamburgerMenu />
+        </Button>
+      </div>
+
+      {isMenuOpen && (
+        <div className="fixed inset-0 flex flex-col bg-gray-300 md:hidden">
+          <div className="flex h-16 items-center justify-between p-3">
+            <Link href={routes.home} onClick={toggleMenu}>
+              Logo
             </Link>
             <Button
-              onClick={handleLogout}
-              className="text-md cursor-pointer rounded-md bg-slate-400 px-3 py-1.5 font-normal"
+              className="cursor-pointer text-3xl"
               variant="ghostNoHover"
               size="none"
-              onClickCapture={handleLogout}
+              onClick={toggleMenu}
             >
-              <ArrowLeftStartOnRectangleIcon className="size-6" />
+              <RxCross2 />
             </Button>
           </div>
-        </div>
-      ) : (
-        <div className="flex items-center gap-4">
-          <Link href={routes.registration}>{t("signup")}</Link>
-          <Link
-            href={routes.login}
-            className="rounded-full bg-slate-400 px-4 py-1"
-          >
-            {t("login")}
-          </Link>
+
+          <div className="flex flex-grow flex-col items-center justify-center">
+            {userInfo ? (
+              <div className="flex flex-col items-center gap-10">
+                <Link
+                  href={routes.profile(
+                    getFullName(userInfo.firstName, userInfo.lastName),
+                    userInfo.id,
+                  )}
+                  onClick={toggleMenu}
+                  className="flex items-center gap-1.5 text-3xl"
+                >
+                  <RxPerson className="text-5xl" />
+                  <span className="font-semibold">{userInfo.firstName}</span>
+                </Link>
+                <Button
+                  variant="ghostNoHover"
+                  size="none"
+                  onClick={handleLogout}
+                  className="rounded-full bg-neutral-400 px-10 py-2 text-2xl font-bold text-white"
+                >
+                  {t("logout")}
+                </Button>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center gap-10">
+                <Link
+                  href={routes.registration}
+                  onClick={toggleMenu}
+                  className="text-3xl font-bold"
+                >
+                  {t("signup")}
+                </Link>
+                <Link
+                  href={routes.login}
+                  onClick={toggleMenu}
+                  className="rounded-full bg-neutral-400 px-10 py-2 text-2xl font-bold text-white"
+                >
+                  {t("login")}
+                </Link>
+              </div>
+            )}
+          </div>
+
+          <div className="flex items-center justify-center gap-2 pb-5">
+            <LocaleSelect title={t("switchLanguage")} />
+          </div>
         </div>
       )}
     </div>

@@ -56,9 +56,13 @@
     "login": "Connexion",
     "logout": "Déconnexion",
     "logoutSuccess": "Déconnexion réussie.",
+    "switchLanguage": "Changer de langue",
     "search": {
       "placeholder": "Rechercher une mission ou un freelance"
     }
+  },
+  "LocaleSelect": {
+    "locale": "{locale, select, en {🇺🇸 Anglais} fr {🇫🇷 Français} es {🇪🇸 Espagnol} other {Unknown}}"
   },
   "Login": {
     "title": "Bon retour !",
