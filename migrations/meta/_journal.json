@@ -5,29 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1719928339496,
-      "tag": "0000_tricky_puppet_master",
+      "when": 1720012225790,
+      "tag": "0000_same_liz_osborn",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1719921296060,
-      "tag": "0001_lumpy_giant_man",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1719924491629,
-      "tag": "0002_petite_omega_flight",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1719998045232,
-      "tag": "0003_heavy_prism",
+      "when": 1720089739979,
+      "tag": "0001_sudden_marauders",
       "breakpoints": true
     }
   ]

@@ -24,7 +24,7 @@ const {
   db: { host, user, password, port, name },
 } = appConfig
 
-const usersSeed = async () => {
+const seed = async () => {
   const client = new Pool({
     host,
     user,
@@ -153,7 +153,7 @@ const usersSeed = async () => {
 
 ;(async () => {
   try {
-    await usersSeed()
+    await seed()
     // eslint-disable-next-line no-console
     console.info("Seeds ran successfully")
   } catch (error) {

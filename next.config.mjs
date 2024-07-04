@@ -6,6 +6,14 @@ const withNextIntl = createNextIntlPlugin()
 const nextConfig = {
   reactStrictMode: true,
   output: "standalone",
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "www.google.com",
+      },
+    ],
+  },
 }
 
 export default withNextIntl(nextConfig)
