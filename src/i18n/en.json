@@ -1,4 +1,8 @@
 {
+  "Global": {
+    "owner": "Owner",
+    "manager": "Manager"
+  },
   "CompaniesId": {
     "availablesMissions": "Availables missions",
     "error": "Internal Server Error"
@@ -279,6 +283,22 @@
       "title": "Payment confirmation",
       "description": "You payment to {name} has been successfully completed.",
       "finalDescription": "The mission is now over."
+    }
+  },
+  "Companies": {
+    "habilitation": {
+      "title": "Authorization management",
+      "placeholder": "Add a person from the company...",
+      "noResult": "No result",
+      "suggestions": "Suggestions",
+      "updateHabilitationSuccess": "Authorization updated successfully",
+      "updateHabilitationError": "An error occurred while updating the authorization",
+      "deleteEmployeeSucess": "Employee deleted successfully",
+      "deleteEmployeeError": "An error occurred while deleting the employee",
+      "sureDeleteEmployee": "Are you sure you want to delete this employee?",
+      "deleteEmployeeDescription": "This action is irreversible. By clicking on the “Delete” button, the employee will be deleted from the company.",
+      "cancel": "Cancel",
+      "delete": "Delete"
     }
   }
 }

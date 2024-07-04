@@ -273,10 +273,7 @@ const DetailMissionPage = () => {
               <UserIcon className="size-8" />
               <Link
                 href={routes.freelance.profile(
-                  getFullName(
-                    candidate.Users.firstName,
-                    candidate.Users.lastName,
-                  ),
+                  getFullName(candidate.Users),
                   candidate.Users.id,
                 )}
                 className="font-semibold"
@@ -356,7 +353,7 @@ const DetailMissionPage = () => {
   }
 
   return (
-    <div className="relative flex h-screen items-center justify-center px-6 py-10 xl:h-screen xl:px-0">
+    <div className="relative flex h-[70vh] items-center justify-center px-6 py-10 xl:px-0">
       {detailedMission && missionData?.detailedMission.isEmployee && (
         <div className="absolute left-8 top-8">
           <Link href={routes.missions.updateMission(detailedMission.id)}>

@@ -1,4 +1,8 @@
 {
+  "Global": {
+    "owner": "Propriétaire",
+    "manager": "Gestionnaire"
+  },
   "Error": {
     "anErrorOccurred": "Une erreur est survenue",
     "email_unique": "Cet email est déjà utilisé",
@@ -280,6 +284,22 @@
       "title": "Confirmation de paiement",
       "description": "Votre paiement à {name} a bien été effectué.",
       "finalDescription": "La mission est maintenant terminée."
+    }
+  },
+  "Companies": {
+    "habilitation": {
+      "title": "Gestions des habilitations",
+      "placeholder": "Ajouter une personne de l’entreprise...",
+      "noResult": "Aucun résultat",
+      "suggestions": "Suggestions",
+      "updateHabilitationSuccess": "L'habilitation a été mise à jour avec succès",
+      "updateHabilitationError": "Une erreur est survenue lors de la mise à jour de l'habilitation",
+      "deleteEmployeeSucess": "Employé supprimé avec succès",
+      "deleteEmployeeError": "Une erreur est survenue lors de la suppression de l'employé",
+      "sureDeleteEmployee": "Êtes-vous sûr de vouloir supprimer cet employé ?",
+      "deleteEmployeeDescription": "Cette action est irréversible. En cliquant sur le bouton “Supprimer”, l'employé sera supprimé de la liste des habilitations.",
+      "cancel": "Annuler",
+      "delete": "Supprimer"
     }
   }
 }

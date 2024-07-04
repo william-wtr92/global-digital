@@ -11,7 +11,7 @@ import { toast } from "sonner"
 
 import Spinner from "@/components/customs/Utils/Spinner"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { getFullName } from "@/utils/functions"
+import { getFullNameLowerCase } from "@/utils/functions"
 import useAppContext from "@/web/hooks/useAppContext"
 import { useFreelanceProfile } from "@/web/hooks/useProfile"
 import routes from "@/web/routes"
@@ -57,7 +57,7 @@ const FreelanceAccount = () => {
       {userInfo.id === id && (
         <Link
           href={routes.freelance.updateProfile(
-            getFullName(data.Users.firstName, data.Users.lastName),
+            getFullNameLowerCase(data.Users.firstName, data.Users.lastName),
             id,
           )}
           className="cursor-pointer p-5 text-5xl"

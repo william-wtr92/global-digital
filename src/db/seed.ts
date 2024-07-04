@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm"
 import { drizzle } from "drizzle-orm/node-postgres"
 import { Pool } from "pg"
 
+import appConfig from "@/config/appConfig"
 import {
   type InsertFreelance,
   type InsertEmployee,
@@ -16,9 +17,12 @@ import {
   employee,
   freelance,
   candidate,
-} from "./schema"
-import { hashPassword } from "../utils/hashPassword"
-import appConfig from "@/config/appConfig"
+  employeeRole,
+  type InsertEmployeeRole,
+  type InsertRole,
+  role,
+} from "@/db/schema"
+import { hashPassword } from "@/utils/hashPassword"
 
 const {
   db: { host, user, password, port, name },
@@ -36,12 +40,14 @@ const seed = async () => {
   const db = drizzle(client)
 
   await db.delete(candidate)
+  await db.delete(employeeRole)
   await db.delete(freelance)
   await db.delete(employee)
   await db.delete(mission)
   await db.delete(company)
   await db.delete(area)
   await db.delete(users)
+  await db.delete(role)
 
   const [passwordHash, passwordSalt] = await hashPassword("Password123@")
 
@@ -150,6 +156,24 @@ const seed = async () => {
   ]
 
   await db.insert(employee).values(employeesData)
+
+  const selectEmployee = await db.select().from(employee)
+
+  const roleDatas: InsertRole[] = [{ value: "owner" }, { value: "manager" }]
+
+  await db.insert(role).values(roleDatas)
+
+  const selectRole = await db.select().from(role)
+
+  const employeesRole: InsertEmployeeRole[] = [
+    {
+      employeeId: selectEmployee[0].id,
+      companyId: selectCompany[0].id,
+      roleId: selectRole[0].id,
+    },
+  ]
+
+  await db.insert(employeeRole).values(employeesRole)
 }
 
 ;(async () => {
