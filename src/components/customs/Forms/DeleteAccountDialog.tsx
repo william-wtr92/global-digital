@@ -6,6 +6,7 @@ import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -73,9 +74,11 @@ const DeleteAccountDialog = ({ id }: DeleteAccountDialogProps) => {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="w-full flex-row justify-end gap-2">
-          <Button type="submit" variant="ghost" className="border">
-            {t("Form.UpdateProfilForm.cancel")}
-          </Button>
+          <DialogClose>
+            <Button type="submit" variant="ghost" className="border">
+              {t("Form.UpdateProfilForm.cancel")}
+            </Button>
+          </DialogClose>
           <Button
             type="submit"
             variant="destructive"
