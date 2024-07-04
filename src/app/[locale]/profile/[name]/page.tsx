@@ -76,7 +76,7 @@ const FreelanceAccount = () => {
                 {data.Users.firstName} {data.Users.lastName}
               </h1>
 
-              {data && (
+              {data.Freelance && (
                 <p className="text-center text-xl md:text-left">
                   {data.Freelance.jobTitle}
                 </p>
