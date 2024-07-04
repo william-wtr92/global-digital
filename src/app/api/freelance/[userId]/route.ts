@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server"
 
 import { db } from "@/db/client"
 import { area, freelance, users } from "@/db/schema"
+import { SC } from "@/def/status"
 
 export const GET = async (
   req: NextRequest,
@@ -19,7 +20,7 @@ export const GET = async (
     if (!user.length) {
       return Response.json(
         { isError: true, message: "userNotFound" },
-        { status: 404 },
+        { status: SC.errors.NOT_FOUND },
       )
     }
 
@@ -27,7 +28,7 @@ export const GET = async (
   } catch (e) {
     return Response.json(
       { isError: true, message: "anErrorOccurred" },
-      { status: 404 },
+      { status: SC.serverErrors.INTERNAL_SERVER_ERROR },
     )
   }
 }

@@ -54,9 +54,13 @@
     "signup": "Registration",
     "login": "Login",
     "logout": "Logout",
-    "logoutSuccess": "You have been successfully logged out."
+    "logoutSuccess": "You have been successfully logged out.",
+    "search": {
+      "placeholder": "Search a mission or a freelancer"
+    }
   },
   "Login": {
+    "title": "Welcome back!",
     "Form": {
       "title": "Welcome back !",
       "email": {
@@ -69,6 +73,7 @@
         "placeholder": "Enter your password",
         "error": "Password must be at least 8 characters."
       },
+      "passwordForgotten": "Forgot your password?",
       "submit": "Login",
       "success": "Login succeeded, you will be redirected in a few seconds.",
       "error": "Login failed, please check your credentials."
@@ -147,5 +152,72 @@
     "invalidEmail": "Invalid email",
     "passwordTooShort": "Password too short",
     "Required": "Required"
+  },
+  "Missions": {
+    "createTitle": "Create a mission",
+    "updateTitle": "Update a mission",
+    "to": "to",
+    "years": "years",
+    "year": "year",
+    "months": "months",
+    "month": "month",
+    "days": "days",
+    "day": "day",
+    "hours": "hours",
+    "hour": "hour",
+    "minutes": "minutes",
+    "minute": "minute",
+    "since": "Posted since:",
+    "duration": "Duration of the mission:",
+    "form": {
+      "search": {
+        "label": "Search a mission",
+        "placeholder": "Company, Mission ...",
+        "error": "Search failed"
+      },
+      "create": {
+        "title": {
+          "label": "Title of the mission",
+          "placeholder": "Enter the title of the mission",
+          "error": "Title is invalid"
+        },
+        "startDate": {
+          "label": "Start date",
+          "picker": "Pick a date"
+        },
+        "endDate": {
+          "label": "End date",
+          "picker": "Pick a date"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Enter the description of the mission",
+          "error": "Description is invalid"
+        },
+        "operating": {
+          "label": "Operating mode",
+          "placeholder": "Operating mode",
+          "options": {
+            "homeWorking": "Remote",
+            "onSite": "On site",
+            "hybrid": "Hybrid"
+          },
+          "error": "Operating mode is invalid"
+        },
+        "localisation": {
+          "label": "Localisation of the mission",
+          "placeholder": "Enter the localisation of the mission",
+          "error": "Localisation is invalid"
+        },
+        "submit": "Create the mission",
+        "success": "Mission created successfully",
+        "error": "Mission creation failed"
+      },
+      "update": {
+        "submit": "Update the mission",
+        "success": "Mission updated successfully",
+        "error": "Mission update failed"
+      }
+    }
   }
 }

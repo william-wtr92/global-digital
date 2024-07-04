@@ -17,9 +17,12 @@ export const PATCH = async (
 
     await db.update(freelance).set(body).where(eq(freelance.userId, userId))
 
-    return Response.json({ result: true })
+    return Response.json({ result: true }, { status: SC.success.OK })
   } catch (e) {
-    return Response.json({ error: e }, { status: 500 })
+    return Response.json(
+      { error: e },
+      { status: SC.serverErrors.INTERNAL_SERVER_ERROR },
+    )
   }
 }
 

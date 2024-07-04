@@ -2,9 +2,11 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
+import { RoughNotation } from "react-rough-notation"
 import { toast } from "sonner"
 
 import CustomFormField from "@/components/customs/Forms/CustomFormField"
@@ -47,7 +49,7 @@ const LoginPage = () => {
         return
       }
 
-      queryClient.invalidateQueries({ queryKey: ["user"] })
+      await queryClient.invalidateQueries({ queryKey: ["user"] })
       toast.success(t("Form.success"))
       router.push(routes.home)
     },

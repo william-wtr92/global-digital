@@ -2,7 +2,20 @@ import { eq } from "drizzle-orm"
 import { drizzle } from "drizzle-orm/node-postgres"
 import { Pool } from "pg"
 
-import { area, type InsertArea, type InsertUser, users } from "./schema"
+import {
+  type InsertFreelance,
+  type InsertEmployee,
+  type InsertArea,
+  type InsertCompany,
+  type InsertMission,
+  type InsertUser,
+  area,
+  users,
+  company,
+  mission,
+  employee,
+  freelance,
+} from "./schema"
 import { hashPassword } from "../utils/hashPassword"
 import appConfig from "@/config/appConfig"
 
@@ -21,6 +34,13 @@ const usersSeed = async () => {
 
   const db = drizzle(client)
 
+  await db.delete(freelance)
+  await db.delete(employee)
+  await db.delete(mission)
+  await db.delete(company)
+  await db.delete(area)
+  await db.delete(users)
+
   const [passwordHash, passwordSalt] = await hashPassword("Password123@")
 
   const usersData: InsertUser[] = [
@@ -38,35 +58,83 @@ const usersSeed = async () => {
     },
   ]
 
-  await db.delete(users).where(eq(users.email, "test@gmail.com"))
   await db.insert(users).values(usersData)
-}
 
-const areaSeed = async () => {
-  const client = new Pool({
-    host,
-    user,
-    password,
-    port,
-    database: name,
-  })
+  const selectUser = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, "test@gmail.com"))
 
-  const db = drizzle(client)
-
-  const areaSeeds: InsertArea[] = [
+  const areasData: InsertArea[] = [
     { value: "IT" },
     { value: "Marketing" },
     { value: "Finance" },
     { value: "Human Resources" },
   ]
 
-  await db.insert(area).values(areaSeeds)
+  await db.insert(area).values(areasData)
+
+  const selectITArea = await db.select().from(area).where(eq(area.value, "IT"))
+
+  const freelanceData: InsertFreelance[] = [
+    {
+      userId: selectUser[0].id,
+      jobTitle: "Software Engineer",
+      businessName: "William Business",
+      areaId: selectITArea[0].id,
+      localisation: "Paris",
+      registrationNumber: "123456789",
+    },
+  ]
+
+  await db.insert(freelance).values(freelanceData)
+
+  const companiesData: InsertCompany[] = [
+    {
+      businessName: "Test Company",
+      logo: "https://www.google.com",
+      kbisUrl: "https://www.google.com",
+      headQuarter: "Paris",
+      description: "This is a test company",
+      areaId: selectITArea[0].id,
+    },
+  ]
+
+  await db.insert(company).values(companiesData)
+
+  const selectCompany = await db
+    .select()
+    .from(company)
+    .where(eq(company.businessName, "Test Company"))
+
+  const missionsData: InsertMission[] = [
+    {
+      companyId: selectCompany[0].id,
+      status: "pending",
+      title: "Test Mission",
+      description: "This is a test mission",
+      operating: "remote",
+      localisation: "Paris",
+      startDate: new Date(),
+      endDate: new Date(new Date().setDate(new Date().getDate() + 30)),
+    },
+  ]
+
+  await db.insert(mission).values(missionsData)
+
+  const employeesData: InsertEmployee[] = [
+    {
+      userId: selectUser[0].id,
+      companyId: selectCompany[0].id,
+    },
+  ]
+
+  await db.insert(employee).values(employeesData)
 }
 
 ;(async () => {
   try {
     await usersSeed()
-    await areaSeed()
     // eslint-disable-next-line no-console
     console.info("Seeds ran successfully")
   } catch (error) {

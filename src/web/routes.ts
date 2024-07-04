@@ -2,6 +2,12 @@ const routes = {
   home: "/",
   login: "/login",
   registration: "/registration",
+  freelanceCreateProfile: "/freelance/create-profile",
+  missions: {
+    search: "/missions/search",
+    detailedMission: (id: string) => `/missions?id=${id}`,
+    updateMission: (missionId: string) => `/missions/update?id=${missionId}`,
+  },
   freelance: {
     createProfile: "/freelance/create-profile",
     updateProfile: (name: string, id: string) =>
@@ -14,6 +20,12 @@ const routes = {
       login: "/auth/login",
       logout: "/auth/logout",
       register: { freelance: "/auth/register/freelance" },
+    },
+    missions: {
+      create: "/missions",
+      list: "/missions",
+      detailedMission: (missionId: string) => `/missions/${missionId}`,
+      updateMission: (missionId: string) => `/missions/${missionId}`,
     },
     areas: {
       index: "/areas",

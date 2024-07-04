@@ -16,6 +16,10 @@ const client = new Client({
   database: name,
 })
 
-await client.connect()
+try {
+  await client.connect()
+} catch (error) {
+  process.stderr.write((error as Error).message)
+}
 
 export const db = drizzle(client, { schema })

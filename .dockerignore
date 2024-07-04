@@ -5,6 +5,7 @@ node_modules
 .vscode
 .prettierrc
 .prettierignore
-.env.example
 *.md
 .gitignore
+!.env.example
+.env

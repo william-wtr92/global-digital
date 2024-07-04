@@ -23,10 +23,11 @@ const fetchUser = async () => {
   return response.data
 }
 
-export const useUser = () => {
+export const useUser = (token: string | undefined) => {
   const { ...query } = useQuery<Response>({
     queryKey: ["user"],
     queryFn: fetchUser,
+    enabled: !!token,
   })
 
   return query
