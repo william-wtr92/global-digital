@@ -1,11 +1,10 @@
 import jsonwebtoken from "jsonwebtoken"
-import { NextResponse } from "next/server"
 
 import appConfig from "@/config/appConfig"
 
 export const signJWT = (userId: string) => {
   if (!appConfig.security.jwt.secret) {
-    return NextResponse.json(
+    return Response.json(
       { error: { message: "Need jwt secret" } },
       { status: 500 },
     )

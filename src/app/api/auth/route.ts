@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm"
 import { type JwtPayload, verify } from "jsonwebtoken"
-import { type NextRequest, NextResponse } from "next/server"
+import { type NextRequest } from "next/server"
 
 import appConfig from "@/config/appConfig"
 import { db } from "@/db/client"
@@ -13,7 +13,7 @@ export const GET = async (req: NextRequest) => {
   const jwt = cookies.get("Authorization")?.value
 
   if (!jwt) {
-    return NextResponse.json(
+    return Response.json(
       { message: "No token provided" },
       { status: SC.errors.UNAUTHORIZED },
     )
@@ -23,7 +23,7 @@ export const GET = async (req: NextRequest) => {
     const decoded = await verify(jwt, appConfig.security.jwt.secret)
 
     if (!decoded || typeof decoded === "string") {
-      return NextResponse.json(
+      return Response.json(
         { message: "Failed to check your token" },
         { status: SC.errors.UNAUTHORIZED },
       )
@@ -37,12 +37,12 @@ export const GET = async (req: NextRequest) => {
 
     const user = await db.select().from(users).where(eq(users.id, id))
 
-    return NextResponse.json(
+    return Response.json(
       { result: true, userConnected: sanitizeUser(user[0]) },
       { status: SC.success.OK },
     )
   } catch (e) {
-    return NextResponse.json(
+    return Response.json(
       { message: "User is not logged in" },
       { status: SC.serverErrors.INTERNAL_SERVER_ERROR },
     )

@@ -8,7 +8,7 @@ import routes from "@/web/routes"
 
 const fetchArea = async () => {
   const response = await apiFetch({
-    url: routes.api.areas,
+    url: routes.api.areas.index,
   })
 
   return response.data

@@ -55,9 +55,13 @@
     "signup": "Inscription",
     "login": "Connexion",
     "logout": "Déconnexion",
-    "logoutSuccess": "Déconnexion réussie."
+    "logoutSuccess": "Déconnexion réussie.",
+    "search": {
+      "placeholder": "Rechercher une mission ou un freelance"
+    }
   },
   "Login": {
+    "title": "Bon retour !",
     "Form": {
       "email": {
         "label": "Email",
@@ -69,6 +73,7 @@
         "placeholder": "Entrez votre mot de passe",
         "error": "Le mot de passe doit faire plus de 8 caractères."
       },
+      "passwordForgotten": "Mot de passe oublié ?",
       "submit": "Se connecter",
       "success": "Connexion réussie, vous allez être redirigé dans quelques secondes.",
       "error": "Connexion échouée, vérifiez vos identifiants."
@@ -141,5 +146,72 @@
     "invalidEmail": "Email invalide",
     "passwordTooShort": "Mot de passe trop court",
     "Required": "Requis"
+  },
+  "Missions": {
+    "createTitle": "Création d'une mission",
+    "updateTitle": "Mise à jour de la mission",
+    "to": "au",
+    "years": "années",
+    "year": "année",
+    "months": "mois",
+    "month": "mois",
+    "days": "jours",
+    "day": "jour",
+    "hours": "heures",
+    "hour": "heure",
+    "minutes": "minutes",
+    "minute": "minute",
+    "since": "Postée il y a:",
+    "duration": "Durée de la mission:",
+    "form": {
+      "search": {
+        "label": "Rechercher une mission",
+        "placeholder": "Entreprise, Mission ...",
+        "error": "Recherche invalide"
+      },
+      "create": {
+        "title": {
+          "label": "Titre de la mission",
+          "placeholder": "Entrez le titre de la mission",
+          "error": "Titre de la mission invalide"
+        },
+        "startDate": {
+          "label": "Date de début",
+          "picker": "Choisissez une date"
+        },
+        "endDate": {
+          "label": "Date de fin",
+          "picker": "Choisissez une date"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Entrez la description de la mission",
+          "error": "Description invalide"
+        },
+        "operating": {
+          "label": "Mode de fonctionnement",
+          "placeholder": "Sélectionnez le mode de fonctionnement de la mission",
+          "options": {
+            "homeWorking": "Télétravail",
+            "onSite": "Sur site",
+            "hybrid": "Hybride"
+          },
+          "error": "Mode de fonctionnement invalide"
+        },
+        "localisation": {
+          "label": "Localisation de la mission",
+          "placeholder": "Entrez la localisation de la mission",
+          "error": "Localisation invalide"
+        },
+        "submit": "Créer la mission",
+        "success": "Mission créée avec succès",
+        "error": "Création de la mission échouée"
+      },
+      "update": {
+        "submit": "Mettre à jour la mission",
+        "success": "Mission mise à jour avec succès",
+        "error": "Mise à jour de la mission échouée"
+      }
+    }
   }
 }
