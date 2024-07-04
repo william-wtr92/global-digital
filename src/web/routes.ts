@@ -2,7 +2,10 @@ const routes = {
   home: "/",
   login: "/login",
   registration: "/registration",
-  freelanceCreateProfile: "/freelance/create-profile",
+  companies: {
+    "create": "/companies/create",
+    ":id": (id: string) => `/companies/${id}`,
+  },
   missions: {
     search: "/missions/search",
     detailedMission: (id: string) => `/missions?id=${id}`,
@@ -12,8 +15,9 @@ const routes = {
     createProfile: "/freelance/create-profile",
     updateProfile: (name: string, id: string) =>
       `/freelance/update-profile/${name}?id=${id}`,
+    profile: (name: string, id: string) => `/freelance/${name}?id=${id}`,
   },
-  profile: (name: string, id: string) => `/freelance/profile/${name}?id=${id}`,
+  search: "/search",
   api: {
     auth: {
       user: "/auth",
@@ -21,22 +25,28 @@ const routes = {
       logout: "/auth/logout",
       register: { freelance: "/auth/register/freelance" },
     },
-    missions: {
-      create: "/missions",
-      list: "/missions",
-      detailedMission: (missionId: string) => `/missions/${missionId}`,
-      updateMission: (missionId: string) => `/missions/${missionId}`,
-    },
     areas: {
-      index: "/areas",
+      "index": "/areas",
+      ":id": (id: string) => `/areas/${id}`,
     },
     freelance: {
+      createAccount: "/freelance/create-account",
       getProfile: (userId: string) => `/freelance/${userId}`,
       updateAccount: (userId: string) => `/freelance/${userId}/account`,
       deleteAccount: (userId: string) => `/freelance/${userId}/account`,
     },
     companies: {
-      create: "/companies/create",
+      "index": "/companies",
+      ":id": {
+        index: (id: string) => `/companies/${id}`,
+        missions: (id: string) => `/companies/${id}/missions`,
+      },
+    },
+    missions: {
+      create: "/missions",
+      list: "/missions",
+      detailedMission: (missionId: string) => `/missions/${missionId}`,
+      updateMission: (missionId: string) => `/missions/${missionId}`,
     },
   },
 } as const

@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { RxCross2, RxHamburgerMenu, RxPerson } from "react-icons/rx"
 import { toast } from "sonner"
 
@@ -97,7 +97,7 @@ const Navbar = (props: Props) => {
 
             <div className="flex items-center gap-8">
               <Link
-                href={routes.profile(
+                href={routes.freelance.profile(
                   getFullName(userInfo.firstName, userInfo.lastName),
                   userInfo.id,
                 )}
@@ -163,7 +163,7 @@ const Navbar = (props: Props) => {
             {userInfo ? (
               <div className="flex flex-col items-center gap-10">
                 <Link
-                  href={routes.profile(
+                  href={routes.freelance.profile(
                     getFullName(userInfo.firstName, userInfo.lastName),
                     userInfo.id,
                   )}
