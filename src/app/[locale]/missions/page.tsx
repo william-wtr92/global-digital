@@ -203,10 +203,7 @@ const DetailMissionPage = () => {
             <UserIcon className="size-8" />
             <Link
               href={routes.freelance.profile(
-                getFullName(
-                  candidate.Users.firstName,
-                  candidate.Users.lastName,
-                ),
+                getFullName(candidate.Users),
                 userInfo.id,
               )}
               className="font-semibold"

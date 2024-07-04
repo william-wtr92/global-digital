@@ -13,9 +13,10 @@ export const PATCH = async (
   const body = await req.json()
 
   try {
-    await db.update(users).set(body).where(eq(users.id, userId))
-
-    await db.update(freelance).set(body).where(eq(freelance.userId, userId))
+    await db.transaction(async (tx) => {
+      await tx.update(users).set(body).where(eq(users.id, userId))
+      await tx.update(freelance).set(body).where(eq(freelance.userId, userId))
+    })
 
     return Response.json({ result: true }, { status: SC.success.OK })
   } catch (e) {
