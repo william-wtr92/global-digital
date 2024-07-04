@@ -1,9 +1,9 @@
 "use client"
 
+import { useFormatter, useTranslations } from "next-intl"
 import Image from "next/image"
 import Link from "next/link"
 import { useParams } from "next/navigation"
-import { useFormatter, useTranslations } from "next-intl"
 import { BsPersonGear } from "react-icons/bs"
 
 import { Loading } from "@/components/layout/Loading"

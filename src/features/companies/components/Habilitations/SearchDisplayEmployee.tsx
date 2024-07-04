@@ -1,8 +1,8 @@
 "use client"
 
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useParams } from "next/navigation"
 import { useTranslations } from "next-intl"
+import { useParams } from "next/navigation"
 import type { Dispatch, SetStateAction } from "react"
 import { toast } from "sonner"
 

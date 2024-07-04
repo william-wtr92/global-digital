@@ -1,7 +1,7 @@
 "use client"
 
-import { useParams } from "next/navigation"
 import { useTranslations } from "next-intl"
+import { useParams } from "next/navigation"
 import { toast } from "sonner"
 
 import { Loading } from "@/components/layout/Loading"

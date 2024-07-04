@@ -1,8 +1,8 @@
 "use client"
 
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useParams } from "next/navigation"
 import { useTranslations } from "next-intl"
+import { useParams } from "next/navigation"
 import { RxPerson } from "react-icons/rx"
 import { toast } from "sonner"
 

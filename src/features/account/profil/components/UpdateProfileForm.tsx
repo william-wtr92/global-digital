@@ -2,8 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import { useQueryState } from "nuqs"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
@@ -33,10 +33,10 @@ import type { ApiProfile } from "@/features/account/profil/types/api/profile"
 import type { UserProfile } from "@/features/account/types/user"
 import { useAreas } from "@/features/areas/hooks/useAreas"
 import {
-  type UpdateAccountUserType,
   updateAccountFreelanceSchema,
   updateAccountUserSchema,
   type UpdateAccountFreelanceType,
+  type UpdateAccountUserType,
 } from "@/features/auth/register/utils/validators/form"
 import type { FreelanceProfile } from "@/features/freelance/types/freelance"
 import { apiFetch } from "@/lib/api"

@@ -1,8 +1,8 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useTranslations } from "next-intl"
 import { useQueryState } from "nuqs"
 import { IoSettingsOutline } from "react-icons/io5"
 import { RxPerson } from "react-icons/rx"
@@ -58,21 +58,19 @@ const FreelanceAccount = () => {
         <div>
           <div className="flex flex-col items-center gap-10 py-10 md:flex-row md:gap-20">
             <Avatar className="h-40 w-40 md:h-52 md:w-52">
-              <AvatarImage src={data.Users.avatarUrl} alt="User Avatar" />
+              <AvatarImage src={data.avatarUrl} alt="User Avatar" />
               <AvatarFallback>
                 <RxPerson className="text-6xl" />
               </AvatarFallback>
             </Avatar>
             <div className="flex flex-col gap-4">
               <h1 className="text-center text-4xl font-bold text-blueText md:text-start">
-                {data.Users.firstName} {data.Users.lastName}
+                {data.firstName} {data.lastName}
               </h1>
 
-              {data.Freelance && (
-                <p className="text-center text-xl md:text-left">
-                  {data.Freelance.jobTitle}
-                </p>
-              )}
+              <p className="text-center text-xl md:text-left">
+                {data.jobTitle}
+              </p>
 
               <div className="g mt-2 flex items-center justify-center gap-1 md:justify-start">
                 {[...Array(4)].map((_, i) => (

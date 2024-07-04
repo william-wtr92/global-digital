@@ -1,5 +1,5 @@
-import Link from "next/link"
 import { useFormatter, useTranslations } from "next-intl"
+import Link from "next/link"
 
 import Spinner from "@/components/utils/Spinner"
 import { useMissions } from "@/features/missions/hooks/useMissions"
