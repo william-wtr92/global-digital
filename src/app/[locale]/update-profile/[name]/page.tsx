@@ -1,6 +1,5 @@
 "use client"
 
-import { useRouter } from "next/router"
 import { useTranslations } from "next-intl"
 import { useQueryState } from "nuqs"
 import { toast } from "sonner"
@@ -9,6 +8,7 @@ import { Loading } from "@/components/layout/Loading"
 import UpdateProfilForm from "@/features/account/profil/components/UpdateProfileForm"
 import { useProfile } from "@/features/account/profil/hooks/useProfile"
 import { useAppContext } from "@/hooks/useAppContext"
+import { useRouter } from "@/utils/navigation"
 import routes from "@/utils/routes"
 
 const FreelanceUpdateProfile = () => {
@@ -16,6 +16,7 @@ const FreelanceUpdateProfile = () => {
   const t = useTranslations()
   const { userInfo } = useAppContext()
   const [id] = useQueryState("id")
+
   const { data, error, isPending } = useProfile(id!)
 
   if (userInfo.id !== id) {

@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useRouter } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import type { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
@@ -15,14 +15,14 @@ import {
   passwordSchema,
   type PasswordType,
 } from "@/features/auth/registration/utils/validators/form"
-import type { Profile } from "@/features/freelance/types/freelance"
+import type { FreelanceProfile } from "@/features/freelance/types/freelance"
 import { apiFetch } from "@/lib/api"
 import routes from "@/utils/routes"
 import { firstLetterUppercase } from "@/utils/string"
 
 type PasswordProfilFormProps = {
-  profile: Profile
-  setProfile: Dispatch<SetStateAction<Profile>>
+  profile: FreelanceProfile
+  setProfile: Dispatch<SetStateAction<FreelanceProfile>>
 }
 
 const PasswordProfilForm = ({
@@ -30,6 +30,7 @@ const PasswordProfilForm = ({
   setProfile,
 }: PasswordProfilFormProps) => {
   const router = useRouter()
+  const { role } = useParams() as { role: string }
   const t = useTranslations()
   const form = useForm<PasswordType>({
     resolver: zodResolver(passwordSchema),
@@ -41,26 +42,28 @@ const PasswordProfilForm = ({
   const queryClient = useQueryClient()
   const mutation = useMutation({
     mutationFn: async () => {
-      const response = await apiFetch<Profile>({
-        url: routes.api.auth.register.freelance,
+      const response = await apiFetch({
+        url: routes.api.auth.register,
         method: "POST",
-        data: profile,
-        headers: {
-          "Content-Type": "application/json",
-        },
+        data: { profile, role },
       })
 
       if (response.data.error) {
-        if (response.data.error.constraint === "Users_email_unique") {
+        if (
+          response.data.error.constraint === "Users_email_unique" ||
+          response.data.error.constraint_name === "Users_email_unique"
+        ) {
           toast.error(t("Error.email_unique"))
         } else {
           toast.error(t("Error.anErrorOccurred"))
         }
       } else {
-        queryClient.invalidateQueries({ queryKey: ["user"] })
         toast.success(t("Success.registrationSuccess"))
         router.push(routes.home)
       }
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["user"] })
     },
     onError: () => {
       toast.error(t("Error.anErrorOccurred"))

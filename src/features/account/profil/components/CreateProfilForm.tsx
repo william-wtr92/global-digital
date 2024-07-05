@@ -13,14 +13,14 @@ import {
   signupFormSchema,
   type SignupType,
 } from "@/features/auth/registration/utils/validators/form"
-import type { Profile } from "@/features/freelance/types/freelance"
+import type { FreelanceProfile } from "@/features/freelance/types/freelance"
 import { firstLetterUppercase } from "@/utils/string"
 
 type CreateProfilFormProps = {
   currentStep: number
   setCurrentStep: Dispatch<SetStateAction<number>>
-  profile: Profile
-  setProfile: Dispatch<SetStateAction<Profile>>
+  profile: FreelanceProfile
+  setProfile: Dispatch<SetStateAction<FreelanceProfile>>
 }
 
 const fields = ["firstName", "lastName", "email", "phoneNumber"] as const

@@ -4,6 +4,7 @@ const routes = {
   register: {
     index: "/register",
     freelance: "/register/freelance",
+    recruiter: "/register/recruiter",
   },
   companies: {
     "create": "/companies/create",
@@ -31,7 +32,7 @@ const routes = {
       user: "/auth",
       login: "/auth/login",
       logout: "/auth/logout",
-      register: { freelance: "/auth/register/freelance" },
+      register: "/auth/register",
     },
     missions: {
       create: "/missions",
@@ -57,12 +58,10 @@ const routes = {
     roles: {
       index: "/roles",
     },
-    freelance: {
-      createAccount: "/freelance/create-account",
-      getProfile: (userId: string) => `/freelance/${userId}`,
-      updateAccount: (userId: string) => `/freelance/${userId}/account`,
-      deleteAccount: (userId: string) => `/freelance/${userId}/account`,
-    },
+    createAccount: "/create-account",
+    getProfile: (userId: string) => `/users/${userId}`,
+    updateAccount: (userId: string) => `/users/${userId}/account`,
+    deleteAccount: (userId: string) => `/users/${userId}/account`,
     companies: {
       "index": "/companies",
       ":id": {

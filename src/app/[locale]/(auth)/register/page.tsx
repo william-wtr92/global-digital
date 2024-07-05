@@ -18,7 +18,10 @@ const RegistrationPage = () => {
         >
           {t("freeLance")}
         </Link>
-        <Link href={"/"} className="bg-skyBlue p-16 font-semibold uppercase">
+        <Link
+          href={routes.register.recruiter}
+          className="bg-skyBlue p-16 font-semibold uppercase"
+        >
           {t("recruiter")}
         </Link>
       </div>

@@ -29,7 +29,7 @@ const DeleteAccountDialog = ({ id }: DeleteAccountDialogProps) => {
   const mutation = useMutation({
     mutationFn: async () => {
       const result = await apiFetch({
-        url: routes.api.freelance.deleteAccount(id),
+        url: routes.api.deleteAccount(id),
         method: "DELETE",
       })
 

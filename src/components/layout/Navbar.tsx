@@ -76,7 +76,7 @@ export const Navbar = () => {
           CYBERLINKER
         </Link>
 
-        {userInfo.id ? (
+        {userInfo && userInfo.id ? (
           <div className="hidden items-center gap-6 md:flex xl:gap-20">
             <Link href={routes.missions.search}>
               <p className="text-medium rounded-md border-2 border-black border-opacity-20 bg-medianBlue px-4 py-1 hover:shadow-xl">
@@ -98,7 +98,7 @@ export const Navbar = () => {
 
             <div className="flex items-center gap-8">
               <Link
-                href={routes.freelance.profile(
+                href={routes.profile(
                   getFullNameLowerCase(userInfo.firstName, userInfo.lastName),
                   userInfo.id,
                 )}
@@ -170,10 +170,10 @@ export const Navbar = () => {
           </div>
 
           <div className="flex flex-grow flex-col items-center justify-center">
-            {userInfo.id ? (
+            {userInfo && userInfo.id ? (
               <div className="flex flex-col items-center gap-10">
                 <Link
-                  href={routes.freelance.profile(
+                  href={routes.profile(
                     getFullNameLowerCase(userInfo.firstName, userInfo.lastName),
                     userInfo.id,
                   )}

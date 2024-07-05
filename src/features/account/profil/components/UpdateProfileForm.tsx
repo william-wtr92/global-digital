@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useQueryState } from "nuqs"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { MdAddReaction } from "react-icons/md"
 import { toast } from "sonner"
@@ -30,12 +30,13 @@ import {
 } from "@/components/ui/select"
 import DeleteAccountDialog from "@/features/account/components/DeleteAccountDialog"
 import type { ApiProfile } from "@/features/account/profil/types/api/profile"
+import type { UserProfile } from "@/features/account/types/user"
 import { useAreas } from "@/features/areas/hooks/useAreas"
 import {
   updateAccountFreelanceSchema,
   type UpdateAccountFreelanceType,
 } from "@/features/auth/registration/utils/validators/form"
-import type { Profile } from "@/features/freelance/types/freelance"
+import type { FreelanceProfile } from "@/features/freelance/types/freelance"
 import { apiFetch } from "@/lib/api"
 import { getFullNameLowerCase } from "@/utils/functions"
 import routes from "@/utils/routes"
@@ -47,48 +48,41 @@ type UpdateProfilFormProps = {
 
 const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
   const [id] = useQueryState("id")
-  const [updatedProfile, setUpdatedProfile] = useState<Profile>()
+  const [updatedProfile, setUpdatedProfile] = useState<
+    FreelanceProfile | UserProfile
+  >()
   const router = useRouter()
   const t = useTranslations()
   const queryClient = useQueryClient()
+  const isFreelance = profile.Freelance
+  const defaultValues = {
+    lastName: profile.Users.lastName,
+    firstName: profile.Users.firstName,
+    email: profile.Users.email,
+    phoneNumber: profile.Users.phoneNumber,
+    ...(isFreelance && {
+      jobTitle: profile.Freelance.jobTitle,
+      businessName: profile.Freelance.businessName,
+      areaId: profile.Freelance.areaId,
+      localisation: profile.Freelance.localisation,
+      registrationNumber: profile.Freelance.registrationNumber,
+    }),
+  }
+  const schema = isFreelance
+    ? updateAccountFreelanceSchema
+    : updateAccountUserSchema
 
-  const form = useForm<UpdateAccountFreelanceType>({
-    resolver: zodResolver(updateAccountFreelanceSchema),
-    defaultValues: {
-      lastName: "",
-      firstName: "",
-      email: "",
-      phoneNumber: "",
-      jobTitle: "",
-      businessName: "",
-      areaId: undefined,
-      localisation: "",
-      registrationNumber: "",
-    },
+  const form = useForm<UpdateAccountFreelanceType | UpdateAccountUserType>({
+    resolver: zodResolver(schema),
+    defaultValues,
   })
-
-  useEffect(() => {
-    if (profile) {
-      form.reset({
-        lastName: profile.Users.lastName,
-        firstName: profile.Users.firstName,
-        email: profile.Users.email,
-        phoneNumber: profile.Users.phoneNumber,
-        jobTitle: profile.Freelance.jobTitle,
-        businessName: profile.Freelance.businessName,
-        areaId: profile.Freelance.areaId,
-        localisation: profile.Freelance.localisation,
-        registrationNumber: profile.Freelance.registrationNumber,
-      })
-    }
-  }, [profile, form])
 
   const { data, error, isPending } = useAreas()
 
   const mutation = useMutation({
     mutationFn: async () => {
-      const response = await apiFetch<Profile>({
-        url: routes.api.freelance.updateAccount(id || ""),
+      const response = await apiFetch<FreelanceProfile | UserProfile>({
+        url: routes.api.updateAccount(id || ""),
         method: "PATCH",
         data: updatedProfile,
       })
@@ -129,7 +123,9 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
     },
   })
 
-  const onSubmit = (data: UpdateAccountFreelanceType) => {
+  const onSubmit = (
+    data: UpdateAccountFreelanceType | UpdateAccountUserType,
+  ) => {
     setUpdatedProfile(data)
 
     mutation.mutate()

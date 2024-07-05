@@ -8,7 +8,7 @@ import routes from "@/utils/routes"
 
 const fetchProfile = async (id: string) => {
   const response = await apiFetch({
-    url: routes.api.freelance.getProfile(id),
+    url: routes.api.getProfile(id),
   })
 
   return response.data
