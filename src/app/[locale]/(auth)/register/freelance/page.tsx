@@ -56,7 +56,7 @@ const FreelanceCreateProfile = () => {
   const [profile, setProfile] = useState(emptyProfile)
 
   if (role !== "freelance" && role !== "recruiter") {
-    router.push(routes.registration)
+    router.push(routes.register.index)
 
     return
   }
