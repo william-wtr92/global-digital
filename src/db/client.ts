@@ -8,18 +8,24 @@ const {
   db: { host, user, password, port, name },
 } = appConfig
 
-const client = new Client({
-  host,
-  user,
-  password,
-  port,
-  database: name,
-})
+let db: ReturnType<typeof drizzle>
 
-try {
-  await client.connect()
-} catch (error) {
-  process.stderr.write((error as Error).message)
+if (process.env.IS_BUILD === "false") {
+  const client = new Client({
+    host,
+    user,
+    password,
+    port,
+    database: name,
+  })
+
+  try {
+    await client.connect()
+  } catch (error) {
+    process.stderr.write((error as Error).message)
+  }
+
+  db = drizzle(client, { schema })
 }
 
-export const db = drizzle(client, { schema })
+export { db }

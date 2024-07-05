@@ -8,6 +8,8 @@ ENV PATH="$PNPM_HOME:$PATH"
 EXPOSE ${APP_PORT}
 RUN corepack enable
 
+ENV IS_BUILD=true
+
 FROM base AS prod-deps
 COPY package.json .
 COPY pnpm-lock.yaml .
@@ -25,13 +27,19 @@ RUN pnpm run build
 
 RUN rm .env
 
-FROM base
+FROM base AS prod
+
+ENV IS_BUILD=false
+
 COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=build /app/.next/standalone .
 COPY --from=build /app/public public
 COPY --from=build /app/.next/static .next/static
+
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 RUN chown nextjs:nodejs .next
+
+USER nextjs
 
 CMD [ "pnpm", "start" ]
