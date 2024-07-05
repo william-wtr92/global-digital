@@ -1,17 +1,15 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query"
 import Image from "next/image"
 import Link from "next/link"
 import { useParams } from "next/navigation"
 import { useFormatter, useTranslations } from "next-intl"
 import { BsPersonGear } from "react-icons/bs"
-import { toast } from "sonner"
 
 import { Loading } from "@/components/layout/Loading"
-import type { SelectArea, SelectCompany, SelectMission } from "@/db/schema"
-import { apiFetch, type ApiResponse } from "@/lib/api"
-import { SC } from "@/utils/constants/status"
+import { useArea } from "@/features/areas/hooks/useArea"
+import { useCompany } from "@/features/companies/hooks/useCompany"
+import { useCompanyMissions } from "@/features/companies/missions/hooks/useCompanyMissions"
 import routes from "@/utils/routes"
 import { firstLetterUppercase } from "@/utils/string"
 
@@ -23,56 +21,12 @@ const CompaniesIdPage = () => {
     data: companyResult,
     isSuccess,
     isLoading: isLoadingCompany,
-  } = useQuery<ApiResponse<SelectCompany>>({
-    queryKey: [routes.api.companies[":id"].index(id)],
-    queryFn: async () => {
-      const response = await apiFetch({
-        url: routes.api.companies[":id"].index(id),
-      })
-
-      if (response.status !== SC.success.OK) {
-        toast.error(t("error"))
-      }
-
-      return response
-    },
-  })
-
-  const { data: areaResult, isLoading: isLoadingArea } = useQuery<
-    ApiResponse<SelectArea>
-  >({
-    enabled: isSuccess,
-    queryKey: [routes.api.areas[":id"](companyResult?.data.areaId as string)],
-    queryFn: async () => {
-      const response = await apiFetch({
-        url: routes.api.areas[":id"](companyResult?.data.areaId as string),
-      })
-
-      if (response.status !== SC.success.OK) {
-        toast.error(t("error"))
-      }
-
-      return response
-    },
-  })
-
-  const { data: missionsResult, isLoading: isLoadingMissions } = useQuery<
-    ApiResponse<SelectMission[]>
-  >({
-    enabled: isSuccess,
-    queryKey: [routes.api.companies[":id"].missions(id)],
-    queryFn: async () => {
-      const response = await apiFetch({
-        url: routes.api.companies[":id"].missions(id),
-      })
-
-      if (response.status !== SC.success.OK) {
-        toast.error(t("error"))
-      }
-
-      return response
-    },
-  })
+  } = useCompany(id)
+  const { data: areaResult, isLoading: isLoadingArea } = useArea(
+    companyResult?.areaId as string,
+  )
+  const { data: missionsResult, isLoading: isLoadingMissions } =
+    useCompanyMissions(id, { isSuccess })
 
   if (isLoadingCompany || isLoadingArea || isLoadingMissions) {
     return <Loading />
@@ -85,27 +39,25 @@ const CompaniesIdPage = () => {
           <BsPersonGear className="text-5xl" />
         </Link>
         <Image
-          src={companyResult!.data.logo}
-          alt={`Logo of the company ${companyResult!.data.businessName}`}
+          src={companyResult!.logo}
+          alt={`Logo of the company ${companyResult!.businessName}`}
           width={360}
           height={360}
           className="rounded-md"
         />
         <div className="flex flex-col items-center gap-3">
-          <h1 className="text-5xl font-bold">
-            {companyResult?.data.businessName}
-          </h1>
-          <h2>{companyResult?.data.headQuarter}</h2>
-          <h3>{firstLetterUppercase(areaResult!.data.value)}</h3>
+          <h1 className="text-5xl font-bold">{companyResult?.businessName}</h1>
+          <h2>{companyResult?.headQuarter}</h2>
+          <h3>{firstLetterUppercase(areaResult!.value)}</h3>
         </div>
       </div>
-      <p className="text-xl">{companyResult?.data.description}</p>
+      <p className="text-xl">{companyResult?.description}</p>
       <div className="flex flex-col items-center justify-center gap-6">
         <h1 className="text-5xl font-bold">
           {t("CompaniesId.availablesMissions")}
         </h1>
         <div className="flex flex-col">
-          {missionsResult?.data.map((mission) => (
+          {missionsResult?.map((mission) => (
             <div className="flex flex-col" key={mission.id}>
               <h2>
                 <span className="text-2xl font-bold">{mission.title}</span> -{" "}

@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query"
 
+import type { SelectCompany } from "@/db/schema"
 import { apiFetch } from "@/lib/api"
 import routes from "@/utils/routes"
 
@@ -14,7 +15,7 @@ const fetchCompany = async (id: string) => {
 }
 
 export const useCompany = (id: string) =>
-  useQuery({
+  useQuery<SelectCompany>({
     queryKey: ["company", id],
     queryFn: () => fetchCompany(id),
   })

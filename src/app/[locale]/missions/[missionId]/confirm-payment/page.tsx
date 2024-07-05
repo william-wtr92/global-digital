@@ -8,10 +8,9 @@ import { useProfile } from "@/features/account/profil/hooks/useProfile"
 
 const ConfirmPaymentPage = () => {
   const t = useTranslations("Missions")
-
   const [id] = useQueryState("id")
-
   const { data, isLoading, isError } = useProfile(id!)
+
   const resultProfile = !isLoading && !isError ? data?.Users : null
   const resultFreelance = !isLoading && !isError ? data?.Freelance : null
 

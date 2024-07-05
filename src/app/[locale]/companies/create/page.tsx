@@ -1,8 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation, useQuery } from "@tanstack/react-query"
-import type { UUID } from "crypto"
+import { useMutation } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 
@@ -19,25 +18,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useAreas } from "@/features/areas/hooks/useAreas"
 import {
   companiesCreateFormValidator,
   type CompaniesCreateValidatorType,
 } from "@/features/companies/utils/validators/companies"
-import { apiFetch, type ApiResponse } from "@/lib/api"
+import { apiFetch } from "@/lib/api"
 import type { ReadonlyArrayZod } from "@/types/utils"
 import routes from "@/utils/routes"
 import { firstLetterUppercase } from "@/utils/string"
 
 const CompaniesCreatePage = () => {
-  const { data: areas } = useQuery<ApiResponse<{ id: UUID; value: string }[]>>({
-    queryKey: [routes.api.areas.index],
-    queryFn: () => apiFetch({ url: routes.api.areas.index }),
-  })
+  const { data: areas } = useAreas()
   const t = useTranslations("CompaniesCreatePage")
   const companiesCreateForm = useForm<CompaniesCreateValidatorType>({
     resolver: zodResolver(
       companiesCreateFormValidator(
-        areas?.data.map((area) => area.value) as unknown as ReadonlyArrayZod,
+        areas?.map((area) => area.value) as unknown as ReadonlyArrayZod,
       ),
     ),
   })
@@ -96,7 +93,7 @@ const CompaniesCreatePage = () => {
                   <SelectValue placeholder={t("area.placeholder")} />
                 </SelectTrigger>
                 <SelectContent>
-                  {areas?.data.map((area) => (
+                  {areas?.map((area) => (
                     <SelectItem value={area.value} key={area.id}>
                       {firstLetterUppercase(area.value)}
                     </SelectItem>

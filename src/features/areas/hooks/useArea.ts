@@ -6,16 +6,16 @@ import type { Area } from "@/features/areas/types/area"
 import { apiFetch } from "@/lib/api"
 import routes from "@/utils/routes"
 
-const fetchArea = async () => {
+const fetchArea = async (id: string) => {
   const response = await apiFetch({
-    url: routes.api.areas.index,
+    url: routes.api.areas[":id"](id),
   })
 
   return response.data
 }
 
-export const useAreas = () =>
-  useQuery<Area[]>({
-    queryKey: [routes.api.areas.index],
-    queryFn: fetchArea,
+export const useArea = (id: string) =>
+  useQuery<Area>({
+    queryKey: [routes.api.areas[":id"](id)],
+    queryFn: () => fetchArea(id),
   })

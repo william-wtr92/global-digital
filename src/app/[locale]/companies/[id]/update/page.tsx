@@ -1,8 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation, useQuery } from "@tanstack/react-query"
-import type { UUID } from "crypto"
+import { useMutation } from "@tanstack/react-query"
 import { useParams, useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
@@ -19,44 +18,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import type { SelectCompany } from "@/db/schema"
+import { useAreas } from "@/features/areas/hooks/useAreas"
+import { useCompany } from "@/features/companies/hooks/useCompany"
 import {
   companiesUpdateFormValidator,
   type CompaniesUpdateValidatorType,
 } from "@/features/companies/utils/validators/companies"
-import { apiFetch, type ApiResponse } from "@/lib/api"
+import { apiFetch } from "@/lib/api"
 import type { ReadonlyArrayZod } from "@/types/utils"
 import routes from "@/utils/routes"
 import { firstLetterUppercase } from "@/utils/string"
 
 const CompaniesUpdatePage = () => {
-  const { id } = useParams()
+  const { id } = useParams<{ id: string }>()
   const router = useRouter()
-  const { data: company, isSuccess } = useQuery<ApiResponse<SelectCompany>>({
-    queryKey: [routes.api.companies[":id"].index(id as string)],
-    queryFn: () =>
-      apiFetch({ url: routes.api.companies[":id"].index(id as string) }),
-  })
-  const { data: areas } = useQuery<ApiResponse<{ id: UUID; value: string }[]>>({
-    enabled: isSuccess,
-    queryKey: [routes.api.areas.index],
-    queryFn: () => apiFetch({ url: routes.api.areas.index }),
-  })
-
+  const { data: company, isSuccess } = useCompany(id)
+  const { data: areas } = useAreas()
   const t = useTranslations("CompaniesUpdatePage")
   const companiesUpdateForm = useForm<CompaniesUpdateValidatorType>({
+    disabled: !isSuccess,
     resolver: zodResolver(
       companiesUpdateFormValidator(
-        areas?.data.map((area) => area.value) as unknown as ReadonlyArrayZod,
+        areas?.map((area) => area.value) as unknown as ReadonlyArrayZod,
       ),
     ),
     defaultValues: {
-      headquarters: company?.data.headQuarter,
-      areaId: company?.data.areaId,
-      businessName: company?.data.businessName,
-      descriptionCompany: company?.data.description,
-      kbis: company?.data.kbisUrl,
-      logo: company?.data.logo,
+      headquarters: company?.headQuarter,
+      areaId: company?.areaId,
+      businessName: company?.businessName,
+      descriptionCompany: company?.description,
+      kbis: company?.kbisUrl,
+      logo: company?.logo,
     },
   })
   const { mutateAsync } = useMutation<
@@ -117,7 +109,7 @@ const CompaniesUpdatePage = () => {
                   <SelectValue placeholder={t("area.placeholder")} />
                 </SelectTrigger>
                 <SelectContent>
-                  {areas?.data.map((area) => (
+                  {areas?.map((area) => (
                     <SelectItem value={area.value} key={area.id}>
                       {firstLetterUppercase(area.value)}
                     </SelectItem>

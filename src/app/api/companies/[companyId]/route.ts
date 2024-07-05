@@ -17,7 +17,14 @@ export const GET = async (
     const companyData = await db
       .select()
       .from(company)
-      .where(eq(company.id, companyId!))
+      .where(eq(company.id, companyId))
+
+    if (companyData.length === 0) {
+      return Response.json(
+        { error: "Not found" },
+        { status: SC.errors.NOT_FOUND },
+      )
+    }
 
     return Response.json(companyData[0])
   } catch (error) {

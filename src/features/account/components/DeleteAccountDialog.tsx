@@ -47,7 +47,7 @@ const DeleteAccountDialog = ({ id }: DeleteAccountDialogProps) => {
         queryKey: ["freelanceProfile"],
       })
       queryClient.invalidateQueries({
-        queryKey: ["areaMoreAboutFreelance"],
+        queryKey: [routes.api.areas.index],
       })
       toast.success(t("Form.UpdateProfilForm.deleteAccountSuccess"))
       router.push(routes.home)

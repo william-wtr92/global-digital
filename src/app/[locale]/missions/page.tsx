@@ -79,7 +79,7 @@ const DetailMissionPage = () => {
     data: candidatesData,
     isLoading: candidatesLoading,
     isError: candidatesError,
-  } = useCandidates(id || "")
+  } = useCandidates(id!)
   const resultCandidates =
     !candidatesLoading && !candidatesError ? candidatesData?.candidates : null
 

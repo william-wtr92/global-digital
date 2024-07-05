@@ -107,7 +107,7 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
           queryKey: ["freelanceProfile"],
         })
         queryClient.invalidateQueries({
-          queryKey: ["areaMoreAboutFreelance"],
+          queryKey: [routes.api.areas.index],
         })
         toast.success(t("Success.updtaedSuccess"))
 
