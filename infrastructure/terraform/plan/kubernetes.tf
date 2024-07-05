@@ -26,7 +26,11 @@ resource "scaleway_k8s_pool" "pool" {
 
 resource "local_file" "kubeconfig" {
   content  = scaleway_k8s_cluster.cluster.kubeconfig[0].config_file
-  filename = "${path.module}/kubeconfig"
+  filename = "./kubeconfig"
+}
+
+output "kubeconfig_file_path" {
+  value = local_file.kubeconfig.filename
 }
 
 output "cluster_url" {
