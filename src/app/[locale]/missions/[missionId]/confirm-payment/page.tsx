@@ -4,14 +4,14 @@ import { useTranslations } from "next-intl"
 import { useQueryState } from "nuqs"
 import { RoughNotation } from "react-rough-notation"
 
-import { useFreelanceProfile } from "@/web/hooks/useProfile"
+import { useProfile } from "@/web/hooks/useProfile"
 
 const ConfirmPaymentPage = () => {
   const t = useTranslations("Missions")
 
   const [id] = useQueryState("id")
 
-  const { data, isLoading, isError } = useFreelanceProfile(id!)
+  const { data, isLoading, isError } = useProfile(id!)
   const resultProfile = !isLoading && !isError ? data?.Users : null
   const resultFreelance = !isLoading && !isError ? data?.Freelance : null
 

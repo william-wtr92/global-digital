@@ -58,9 +58,7 @@ export const employee = pgTable("Employee", {
   userId: uuid("user_id")
     .references(() => users.id)
     .notNull(),
-  companyId: uuid("company_id")
-    .references(() => company.id)
-    .notNull(),
+  companyId: uuid("company_id").references(() => company.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()

@@ -8,15 +8,15 @@ import routes from "@/web/routes"
 
 const fetchProfile = async (id: string) => {
   const response = await apiFetch({
-    url: routes.api.freelance.getProfile(id),
+    url: routes.api.getProfile(id),
   })
 
   return response.data
 }
 
-export const useFreelanceProfile = (id: string) => {
+export const useProfile = (id: string) => {
   const { ...query } = useQuery<ProfileApi>({
-    queryKey: ["freelanceProfile"],
+    queryKey: ["profile"],
     queryFn: () => fetchProfile(id),
   })
 

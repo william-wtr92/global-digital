@@ -6,3 +6,10 @@ export type User = {
   avatarUrl: string
   phoneNumber: string
 }
+
+export type UserProfile = {
+  firstName: string
+  lastName: string
+  email: string
+  phoneNumber: string
+}

@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useQueryState } from "nuqs"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { MdAddReaction } from "react-icons/md"
 import { toast } from "sonner"
@@ -33,9 +33,12 @@ import { apiFetch } from "@/lib/api"
 import type { ProfileApi } from "@/types/api/profile"
 import {
   UpdateAccountFreelanceSchema,
+  UpdateAccountUserSchema,
+  type UpdateAccountUserType,
   type UpdateAccountFreelanceType,
 } from "@/types/formTypes"
-import type { Profile } from "@/types/freelance"
+import type { FreelanceProfile } from "@/types/freelance"
+import type { UserProfile } from "@/types/user"
 import { capitalizeFirstLetter } from "@/utils/forms"
 import { getFullNameLowerCase } from "@/utils/functions"
 import { useArea } from "@/web/hooks/useArea"
@@ -47,48 +50,41 @@ type UpdateProfilFormProps = {
 
 const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
   const [id] = useQueryState("id")
-  const [updatedProfile, setUpdatedProfile] = useState<Profile>()
+  const [updatedProfile, setUpdatedProfile] = useState<
+    FreelanceProfile | UserProfile
+  >()
   const router = useRouter()
   const t = useTranslations()
   const queryClient = useQueryClient()
+  const isFreelance = profile.Freelance
+  const defaultValues = {
+    lastName: profile.Users.lastName,
+    firstName: profile.Users.firstName,
+    email: profile.Users.email,
+    phoneNumber: profile.Users.phoneNumber,
+    ...(isFreelance && {
+      jobTitle: profile.Freelance.jobTitle,
+      businessName: profile.Freelance.businessName,
+      areaId: profile.Freelance.areaId,
+      localisation: profile.Freelance.localisation,
+      registrationNumber: profile.Freelance.registrationNumber,
+    }),
+  }
+  const schema = isFreelance
+    ? UpdateAccountFreelanceSchema
+    : UpdateAccountUserSchema
 
-  const form = useForm<UpdateAccountFreelanceType>({
-    resolver: zodResolver(UpdateAccountFreelanceSchema),
-    defaultValues: {
-      lastName: "",
-      firstName: "",
-      email: "",
-      phoneNumber: "",
-      jobTitle: "",
-      businessName: "",
-      areaId: undefined,
-      localisation: "",
-      registrationNumber: "",
-    },
+  const form = useForm<UpdateAccountFreelanceType | UpdateAccountUserType>({
+    resolver: zodResolver(schema),
+    defaultValues,
   })
-
-  useEffect(() => {
-    if (profile) {
-      form.reset({
-        lastName: profile.Users.lastName,
-        firstName: profile.Users.firstName,
-        email: profile.Users.email,
-        phoneNumber: profile.Users.phoneNumber,
-        jobTitle: profile.Freelance.jobTitle,
-        businessName: profile.Freelance.businessName,
-        areaId: profile.Freelance.areaId,
-        localisation: profile.Freelance.localisation,
-        registrationNumber: profile.Freelance.registrationNumber,
-      })
-    }
-  }, [profile, form])
 
   const { data, error, isPending } = useArea()
 
   const mutation = useMutation({
     mutationFn: async () => {
-      const response = await apiFetch<Profile>({
-        url: routes.api.freelance.updateAccount(id || ""),
+      const response = await apiFetch<FreelanceProfile | UserProfile>({
+        url: routes.api.updateAccount(id || ""),
         method: "PATCH",
         data: updatedProfile,
       })
@@ -113,7 +109,7 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
 
         if (profile.Users && id) {
           router.push(
-            routes.freelance.profile(
+            routes.profile(
               getFullNameLowerCase(
                 profile.Users.firstName,
                 profile.Users.lastName,
@@ -129,7 +125,9 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
     },
   })
 
-  const onSubmit = (data: UpdateAccountFreelanceType) => {
+  const onSubmit = (
+    data: UpdateAccountFreelanceType | UpdateAccountUserType,
+  ) => {
     setUpdatedProfile(data)
 
     mutation.mutate()
@@ -213,93 +211,98 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
               })}
             />
 
-            <CustomFormField
-              name="businessName"
-              form={form}
-              label={capitalizeFirstLetter(
-                t("Form.UpdateProfilForm.businessName"),
-              )}
-              placeholder={capitalizeFirstLetter(
-                t("Form.UpdateProfilForm.businessName"),
-              )}
-              description={t("Form.UpdateProfilForm.description", {
-                field: t("Form.UpdateProfilForm.businessName"),
-              })}
-            />
+            {isFreelance && (
+              <>
+                <CustomFormField
+                  name="businessName"
+                  form={form}
+                  label={capitalizeFirstLetter(
+                    t("Form.UpdateProfilForm.businessName"),
+                  )}
+                  placeholder={capitalizeFirstLetter(
+                    t("Form.UpdateProfilForm.businessName"),
+                  )}
+                  description={t("Form.UpdateProfilForm.description", {
+                    field: t("Form.UpdateProfilForm.businessName"),
+                  })}
+                />
 
-            <CustomFormField
-              name="jobTitle"
-              form={form}
-              label={capitalizeFirstLetter(t("Form.UpdateProfilForm.jobTitle"))}
-              placeholder={capitalizeFirstLetter(
-                t("Form.UpdateProfilForm.jobTitle"),
-              )}
-              description={t("Form.UpdateProfilForm.description", {
-                field: t("Form.UpdateProfilForm.jobTitle"),
-              })}
-            />
+                <CustomFormField
+                  name="jobTitle"
+                  form={form}
+                  label={capitalizeFirstLetter(
+                    t("Form.UpdateProfilForm.jobTitle"),
+                  )}
+                  placeholder={capitalizeFirstLetter(
+                    t("Form.UpdateProfilForm.jobTitle"),
+                  )}
+                  description={t("Form.UpdateProfilForm.description", {
+                    field: t("Form.UpdateProfilForm.jobTitle"),
+                  })}
+                />
+                <FormField
+                  control={form.control}
+                  name="areaId"
+                  render={({ field }) => (
+                    <FormItem className="w-screen max-w-96 px-4">
+                      <FormLabel>
+                        {t("Form.UpdateProfilForm.selectActivityArea")}
+                      </FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={profile.Freelance.areaId}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue
+                              placeholder={capitalizeFirstLetter(
+                                t("Form.UpdateProfilForm.activityArea"),
+                              )}
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {data.map((area) => (
+                            <SelectItem key={area.id} value={area.id}>
+                              {area.value}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="areaId"
-              render={({ field }) => (
-                <FormItem className="w-screen max-w-96 px-4">
-                  <FormLabel>
-                    {t("Form.UpdateProfilForm.selectActivityArea")}
-                  </FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={profile.Freelance.areaId}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          placeholder={capitalizeFirstLetter(
-                            t("Form.UpdateProfilForm.activityArea"),
-                          )}
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {data.map((area) => (
-                        <SelectItem key={area.id} value={area.id}>
-                          {area.value}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <CustomFormField
+                  name="localisation"
+                  form={form}
+                  label={capitalizeFirstLetter(
+                    t("Form.UpdateProfilForm.localisation"),
+                  )}
+                  placeholder={capitalizeFirstLetter(
+                    t("Form.UpdateProfilForm.localisation"),
+                  )}
+                  description={t("Form.UpdateProfilForm.description", {
+                    field: t("Form.UpdateProfilForm.localisation"),
+                  })}
+                />
 
-            <CustomFormField
-              name="localisation"
-              form={form}
-              label={capitalizeFirstLetter(
-                t("Form.UpdateProfilForm.localisation"),
-              )}
-              placeholder={capitalizeFirstLetter(
-                t("Form.UpdateProfilForm.localisation"),
-              )}
-              description={t("Form.UpdateProfilForm.description", {
-                field: t("Form.UpdateProfilForm.localisation"),
-              })}
-            />
-
-            <CustomFormField
-              name="registrationNumber"
-              form={form}
-              label={capitalizeFirstLetter(
-                t("Form.UpdateProfilForm.registrationSiren"),
-              )}
-              placeholder={capitalizeFirstLetter(
-                t("Form.UpdateProfilForm.registrationSiren"),
-              )}
-              description={t("Form.UpdateProfilForm.description", {
-                field: t("Form.UpdateProfilForm.registrationNumber"),
-              })}
-            />
+                <CustomFormField
+                  name="registrationNumber"
+                  form={form}
+                  label={capitalizeFirstLetter(
+                    t("Form.UpdateProfilForm.registrationSiren"),
+                  )}
+                  placeholder={capitalizeFirstLetter(
+                    t("Form.UpdateProfilForm.registrationSiren"),
+                  )}
+                  description={t("Form.UpdateProfilForm.description", {
+                    field: t("Form.UpdateProfilForm.registrationNumber"),
+                  })}
+                />
+              </>
+            )}
           </div>
           <Button type="submit">{t("Form.UpdateProfilForm.submit")}</Button>
         </form>

@@ -2,6 +2,7 @@ const routes = {
   home: "/",
   login: "/login",
   registration: "/registration",
+  createProfile: (role: string) => `/create-profile/${role}`,
   companies: {
     "create": "/companies/create",
     ":id": {
@@ -16,13 +17,9 @@ const routes = {
     confirmPayment: (missionId: string, userId: string) =>
       `/missions/${missionId}/confirm-payment?id=${userId}`,
   },
-  freelance: {
-    createProfile: "/freelance/create-profile",
-    updateProfile: (name: string, id: string) =>
-      `/freelance/update-profile/${name}?id=${id}`,
-    profile: (name: string, id: string) =>
-      `/freelance/profile/${name}?id=${id}`,
-  },
+  updateProfile: (name: string, id: string) =>
+    `/update-profile/${name}?id=${id}`,
+  profile: (name: string, id: string) => `/profile/${name}?id=${id}`,
   search: "/search",
   api: {
     home: "/home",
@@ -30,7 +27,7 @@ const routes = {
       user: "/auth",
       login: "/auth/login",
       logout: "/auth/logout",
-      register: { freelance: "/auth/register/freelance" },
+      register: "/auth/register",
     },
     missions: {
       create: "/missions",
@@ -56,12 +53,10 @@ const routes = {
     roles: {
       index: "/roles",
     },
-    freelance: {
-      createAccount: "/freelance/create-account",
-      getProfile: (userId: string) => `/freelance/${userId}`,
-      updateAccount: (userId: string) => `/freelance/${userId}/account`,
-      deleteAccount: (userId: string) => `/freelance/${userId}/account`,
-    },
+    createAccount: "/create-account",
+    getProfile: (userId: string) => `/users/${userId}`,
+    updateAccount: (userId: string) => `/users/${userId}/account`,
+    deleteAccount: (userId: string) => `/users/${userId}/account`,
     companies: {
       "index": "/companies",
       ":id": {

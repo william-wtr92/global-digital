@@ -33,8 +33,7 @@ export default function middleware(request: NextRequest) {
     const publicRoutes = [
       `/${locale}/login`,
       `/${locale}/`,
-      `${locale}/freelance/create-profile`,
-      `/${locale}/freelance/profile`,
+      `${locale}/create-profile`,
     ]
     const isPublic = publicRoutes.some((option) =>
       request.nextUrl.pathname.startsWith(option),
@@ -51,10 +50,6 @@ export default function middleware(request: NextRequest) {
       redirectUrl.pathname = `/${locale}${routes.home}`
 
       return NextResponse.redirect(redirectUrl)
-    }
-
-    if (token && isPublic) {
-      return NextResponse.redirect(new URL(routes.home, request.nextUrl))
     }
 
     return res
