@@ -17,7 +17,7 @@ export const MissionOperatingEnum = z.nativeEnum(MissionOperating, {
 })
 
 export const searchMissionsSchema = z.object({
-  search: z.string().min(1, "searchInvalid").optional(),
+  search: z.string().min(0, "searchInvalid").optional(),
   offset: z.number().optional(),
   limit: z.number().optional(),
 })
@@ -29,7 +29,11 @@ export const missionSchema = z
     endDate: z.date(),
     description: z.string().min(1, "missionDescriptionInvalid").max(500),
     operating: MissionOperatingEnum,
-    localisation: z.string().min(1, "missionLocalisationInvalid").optional(),
+    localisation: z
+      .string()
+      .min(0, "missionLocalisationInvalid")
+      .optional()
+      .nullable(),
     price: z.number().multipleOf(0.01, "missionPriceInvalid"),
   })
   .superRefine((data, ctx) => {
