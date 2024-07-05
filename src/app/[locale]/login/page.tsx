@@ -40,9 +40,6 @@ const LoginPage = () => {
       password: "",
     },
   })
-  const {
-    formState: { errors },
-  } = form
 
   const { mutateAsync } = useMutation<void, Error, LoginType>({
     mutationKey: [routes.api.auth.login],
@@ -102,9 +99,7 @@ const LoginPage = () => {
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage className="relative left-2 text-destructive">
-                    {errors.email ? <span>{t("Form.email.error")}</span> : null}
-                  </FormMessage>
+                  <FormMessage className="relative left-2 text-destructive" />
                 </FormItem>
               )}
             />
@@ -137,11 +132,7 @@ const LoginPage = () => {
                       )}
                     </div>
                   </FormControl>
-                  <FormMessage className="relative left-2 text-destructive">
-                    {errors.password ? (
-                      <span>{t("Form.password.error")}</span>
-                    ) : null}
-                  </FormMessage>
+                  <FormMessage className="relative left-2 text-destructive" />
                 </FormItem>
               )}
             />

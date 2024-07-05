@@ -46,11 +46,7 @@ const MissionForm = ({ defaultValues, onSubmit, submitText }: Props) => {
     defaultValues,
   })
 
-  const {
-    setValue,
-    control,
-    formState: { errors },
-  } = form
+  const { setValue, control } = form
 
   const startDate = useWatch({
     control,
@@ -91,11 +87,7 @@ const MissionForm = ({ defaultValues, onSubmit, submitText }: Props) => {
                     {...field}
                   />
                 </FormControl>
-                <FormMessage className="relative left-2 text-destructive">
-                  {errors.title ? (
-                    <span>{t("form.create.title.error")}</span>
-                  ) : null}
-                </FormMessage>
+                <FormMessage className="relative left-2 text-destructive" />
               </FormItem>
             )}
           />
@@ -189,11 +181,7 @@ const MissionForm = ({ defaultValues, onSubmit, submitText }: Props) => {
                     {...field}
                   />
                 </FormControl>
-                <FormMessage className="relative left-2 text-destructive">
-                  {errors.description ? (
-                    <span>{t("form.create.description.error")}</span>
-                  ) : null}
-                </FormMessage>
+                <FormMessage className="relative left-2 text-destructive" />
               </FormItem>
             )}
           />
@@ -226,11 +214,7 @@ const MissionForm = ({ defaultValues, onSubmit, submitText }: Props) => {
                     </SelectItem>
                   </SelectContent>
                 </Select>
-                <FormMessage className="relative left-2 text-destructive">
-                  {errors.operating ? (
-                    <span>{t("form.create.operating.error")}</span>
-                  ) : null}
-                </FormMessage>
+                <FormMessage className="relative left-2 text-destructive" />
               </FormItem>
             )}
           />
@@ -253,11 +237,7 @@ const MissionForm = ({ defaultValues, onSubmit, submitText }: Props) => {
                     }
                   />
                 </FormControl>
-                <FormMessage className="relative left-2 text-destructive">
-                  {errors.localisation ? (
-                    <span>{t("form.create.localisation.error")}</span>
-                  ) : null}
-                </FormMessage>
+                <FormMessage className="relative left-2 text-destructive" />
               </FormItem>
             )}
           />
@@ -278,11 +258,7 @@ const MissionForm = ({ defaultValues, onSubmit, submitText }: Props) => {
                     onChange={(event) => field.onChange(+event.target.value)}
                   />
                 </FormControl>
-                <FormMessage className="relative left-2 text-destructive">
-                  {errors.price ? (
-                    <span>{t("form.create.price.error")}</span>
-                  ) : null}
-                </FormMessage>
+                <FormMessage className="relative left-2 text-destructive" />
               </FormItem>
             )}
           />
