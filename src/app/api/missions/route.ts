@@ -26,6 +26,7 @@ export const GET = async (req: Request) => {
         and(
           like(mission.title, `%${searchQuery}%`),
           like(company.businessName, `%${searchQuery}%`),
+          eq(mission.status, "pending"),
         ),
       )
       .orderBy(desc(mission.createdAt))

@@ -353,7 +353,7 @@ const DetailMissionPage = () => {
   }
 
   return (
-    <div className="relative flex h-[70vh] items-center justify-center px-6 py-10 xl:px-0">
+    <div className="relative flex h-screen items-center justify-center px-6 py-10 xl:px-0">
       {detailedMission && missionData?.detailedMission.isEmployee && (
         <div className="absolute left-8 top-8">
           <Link href={routes.missions.updateMission(detailedMission.id)}>
