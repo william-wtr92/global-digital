@@ -134,13 +134,11 @@
       "title": "Bon retour !",
       "email": {
         "label": "Email",
-        "placeholder": "Entrez votre email",
-        "error": "Email invalide."
+        "placeholder": "Entrez votre email"
       },
       "password": {
         "label": "Mot de passe",
-        "placeholder": "Entrez votre mot de passe",
-        "error": "Le mot de passe doit faire plus de 8 caractères."
+        "placeholder": "Entrez votre mot de passe"
       },
       "passwordForgotten": "Mot de passe oublié ?",
       "submit": "Se connecter",
@@ -220,7 +218,15 @@
     "tooShort": "Trop court",
     "invalidEmail": "Email invalide",
     "passwordTooShort": "Mot de passe trop court",
-    "Required": "Requis"
+    "Required": "Requis",
+    "emailInvalid": "Email invalide.",
+    "passwordInvalid": "Le mot de passe doit faire plus de 8 caractères.",
+    "searchInvalid": "Recherche invalide",
+    "missionTitleInvalid": "Titre de la mission invalide",
+    "missionDescriptionInvalid": "Description de la mission invalide",
+    "missionOperatingInvalid": "Mode de fonctionnement de la mission invalide",
+    "missionLocalisationInvalid": "Localisation de la mission invalide",
+    "missionPriceInvalid": "Prix de la mission invalide"
   },
   "Missions": {
     "createTitle": "Création d'une mission",
@@ -241,14 +247,12 @@
     "form": {
       "search": {
         "label": "Rechercher une mission",
-        "placeholder": "Entreprise, Mission ...",
-        "error": "Recherche invalide"
+        "placeholder": "Entreprise, Mission ..."
       },
       "create": {
         "title": {
           "label": "Titre de la mission",
-          "placeholder": "Entrez le titre de la mission",
-          "error": "Titre de la mission invalide"
+          "placeholder": "Entrez le titre de la mission"
         },
         "startDate": {
           "label": "Date de début",
@@ -260,8 +264,7 @@
         },
         "description": {
           "label": "Description",
-          "placeholder": "Entrez la description de la mission",
-          "error": "Description invalide"
+          "placeholder": "Entrez la description de la mission"
         },
         "operating": {
           "label": "Mode de fonctionnement",
@@ -270,18 +273,15 @@
             "homeWorking": "Télétravail",
             "onSite": "Sur site",
             "hybrid": "Hybride"
-          },
-          "error": "Mode de fonctionnement invalide"
+          }
         },
         "localisation": {
           "label": "Localisation de la mission",
-          "placeholder": "Entrez la localisation de la mission",
-          "error": "Localisation invalide"
+          "placeholder": "Entrez la localisation de la mission"
         },
         "price": {
           "label": "Prix de la mission",
-          "placeholder": "Entrez le prix de la mission",
-          "error": "Prix invalide"
+          "placeholder": "Entrez le prix de la mission"
         },
         "submit": "Créer la mission",
         "success": "Mission créée avec succès",

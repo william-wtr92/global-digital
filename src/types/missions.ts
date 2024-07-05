@@ -12,23 +12,25 @@ export const MissionStatus = {
   completed: "completed",
 } as const
 
-export const MissionOperatingEnum = z.nativeEnum(MissionOperating)
+export const MissionOperatingEnum = z.nativeEnum(MissionOperating, {
+  message: "missionOperatingInvalid",
+})
 
 export const searchMissionsSchema = z.object({
-  search: z.string().optional(),
+  search: z.string().min(1, "searchInvalid").optional(),
   offset: z.number().optional(),
   limit: z.number().optional(),
 })
 
 export const missionSchema = z
   .object({
-    title: z.string().min(1),
+    title: z.string().min(1, "missionTitleInvalid").min(1),
     startDate: z.date().min(new Date()),
     endDate: z.date(),
-    description: z.string().min(1).max(500),
+    description: z.string().min(1, "missionDescriptionInvalid").max(500),
     operating: MissionOperatingEnum,
-    localisation: z.string().optional(),
-    price: z.number().multipleOf(0.01),
+    localisation: z.string().min(1, "missionLocalisationInvalid").optional(),
+    price: z.number().multipleOf(0.01, "missionPriceInvalid"),
   })
   .superRefine((data, ctx) => {
     if (data.endDate <= data.startDate) {
