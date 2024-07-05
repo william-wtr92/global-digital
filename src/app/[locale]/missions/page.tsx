@@ -1,44 +1,44 @@
 "use client"
 
 import {
-  ChatBubbleLeftIcon,
+  CreditCardIcon,
   GlobeAltIcon,
   MapPinIcon,
   PencilSquareIcon,
   UserIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline"
+import { CheckIcon } from "@radix-ui/react-icons"
+import { loadStripe } from "@stripe/stripe-js"
 import { useQueryClient, useMutation } from "@tanstack/react-query"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useQueryState } from "nuqs"
+import { useState } from "react"
 import { toast } from "sonner"
 
+import CustomAlertDialog from "@/components/customs/Utils/CustomAlertDialog"
 import Spinner from "@/components/customs/Utils/Spinner"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import { SC } from "@/def/status"
 import { apiFetch } from "@/lib/api"
-import { MissionOperating } from "@/types"
+import { MissionOperating, MissionStatus } from "@/types"
 import { endDate, startDate } from "@/utils/date"
 import { getFullName } from "@/utils/functions"
 import { firstLetterUppercase } from "@/utils/string"
-import useAppContext from "@/web/hooks/useAppContext"
 import { useCandidate } from "@/web/hooks/useCandidate"
 import { useCandidates } from "@/web/hooks/useCandidates"
 import { useMission } from "@/web/hooks/useMission"
 import routes from "@/web/routes"
+
+const stripePublicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+
+if (!stripePublicKey) {
+  throw new Error("Missing Stripe public key")
+}
+
+const stripePromise = loadStripe(stripePublicKey)
 
 // eslint-disable-next-line complexity
 const DetailMissionPage = () => {
@@ -48,7 +48,9 @@ const DetailMissionPage = () => {
 
   const [id] = useQueryState("id")
 
-  const { userInfo } = useAppContext()
+  const [openDelete, setDeleteOpen] = useState<boolean>(false)
+  const [openAccept, setAcceptOpen] = useState<boolean>(false)
+  const [loading, setLoading] = useState(false)
 
   const {
     data: missionData,
@@ -59,6 +61,7 @@ const DetailMissionPage = () => {
     !missionLoading && !missionError ? missionData?.detailedMission : null
   const detailedMission = resultMission?.Missions
   const detailedCompany = resultMission?.Company
+  const missionPrice = resultMission ? resultMission.Missions.price : 0
 
   const {
     data: candidateData,
@@ -128,46 +131,112 @@ const DetailMissionPage = () => {
     },
   })
 
+  const acceptCandidateMutation = useMutation({
+    mutationFn: async (candidateId: string) => {
+      const response = await apiFetch({
+        url: routes.api.missions.candidate.acceptedByEmployee(id!, candidateId),
+        method: "PATCH",
+        data: {},
+        credentials: "include",
+      })
+
+      if (response.status !== SC.success.OK) {
+        toast.error(t("Candidate.messages.employeeAcceptError"))
+
+        return
+      }
+
+      toast.success(t("Candidate.messages.employeeAcceptSuccess"))
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["mission", id],
+      })
+    },
+  })
+
+  const paymentMutation = useMutation({
+    mutationFn: async ({
+      price,
+      targetedUserId,
+    }: {
+      price: number
+      targetedUserId: string
+    }) => {
+      const response = await apiFetch({
+        url: routes.api.missions.payment(id!),
+        method: "POST",
+        data: { price, targetedUserId },
+      })
+
+      if (response.status !== SC.success.CREATED) {
+        toast.error(t("Candidate.payment.error"))
+      }
+
+      const session = await response.data
+
+      const stripe = await stripePromise
+      const result = await stripe?.redirectToCheckout({
+        sessionId: session.id,
+      })
+
+      if (result?.error) {
+        toast.error(t("Candidate.payment.error"))
+      }
+    },
+    onSuccess: async () => {
+      setLoading(false)
+      await queryClient.invalidateQueries({
+        queryKey: ["mission", id],
+      })
+    },
+  })
+
+  const handleCheckout = (targetedUserId: string) => {
+    setLoading(true)
+    paymentMutation.mutate({
+      price: missionPrice * 100,
+      targetedUserId,
+    })
+  }
+
   const handleCandidate = () => {
     candidateMutation.mutate()
+  }
+
+  const handleTriggerAcceptAlert = () => {
+    setAcceptOpen((prev) => !prev)
+  }
+
+  const handleTriggerDeleteAlert = () => {
+    setDeleteOpen((prev) => !prev)
   }
 
   const handleDeleteCandidate = (candidateId: string) => {
     deleteCandidateMutation.mutate(candidateId)
   }
 
+  const handleAcceptCandidate = (candidateId: string) => {
+    acceptCandidateMutation.mutate(candidateId)
+  }
+
   const renderContent = () => {
-    if (!resultMission?.isEmployee) {
+    if (
+      !resultMission?.isEmployee &&
+      resultMission?.Missions.status === MissionStatus.pending
+    ) {
       if (resultCandidate) {
         return (
-          <AlertDialog>
-            <AlertDialogTrigger>
-              <Button className="relative left-6 w-80 bg-destructive xl:left-0">
-                {t("Candidate.alert.trigger")}
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>
-                  {t("Candidate.alert.title")}
-                </AlertDialogTitle>
-                <AlertDialogDescription>
-                  {t("Candidate.alert.content")}
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>
-                  {t("Candidate.alert.cancel")}
-                </AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={handleCandidate}
-                  className="bg-destructive"
-                >
-                  {t("Candidate.alert.delete")}
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+          <CustomAlertDialog
+            variant={"destructive"}
+            trigger={t("Candidate.alerts.cancel.trigger")}
+            title={t("Candidate.alerts.cancel.title")}
+            content={t("Candidate.alerts.cancel.content")}
+            cancel={t("Candidate.alerts.cancel.cancel")}
+            confirm={t("Candidate.alerts.cancel.confirm")}
+            onSubmit={handleCandidate}
+            withTrigger={true}
+          />
         )
       }
 
@@ -195,32 +264,80 @@ const DetailMissionPage = () => {
           </div>
         )}
 
-        {resultCandidates?.map((candidate) => (
-          <div
-            key={candidate.Candidate.id}
-            className="mt-4 flex items-center justify-center gap-14"
-          >
-            <UserIcon className="size-8" />
-            <Link
-              href={routes.freelance.profile(
-                getFullName(candidate.Users),
-                userInfo.id,
-              )}
-              className="font-semibold"
+        <div className="h-80 overflow-y-auto p-4 xl:h-96">
+          {resultCandidates?.map((candidate) => (
+            <div
+              key={candidate.Candidate.id}
+              className={`mt-4 flex items-center ${resultMission?.Missions.status === MissionStatus.pending ? "justify-between" : "justify-center"} gap-14`}
             >
-              <span>
-                {candidate.Users.firstName} {candidate.Users.lastName}
-              </span>
-            </Link>
-            <div className="flex items-center gap-3">
-              <ChatBubbleLeftIcon className="size-8 cursor-pointer" />
-              <XMarkIcon
-                className="size-8 cursor-pointer text-destructive"
-                onClick={() => handleDeleteCandidate(candidate.Candidate.id)}
-              />
+              <UserIcon className="size-8" />
+              <Link
+                href={routes.freelance.profile(
+                  getFullName(candidate.Users),
+                  candidate.Users.id,
+                )}
+                className="font-semibold"
+              >
+                <span>
+                  {candidate.Users.firstName} {candidate.Users.lastName}
+                </span>
+              </Link>
+              {resultMission?.Missions.status === MissionStatus.pending && (
+                <div className="flex items-center gap-3">
+                  <CheckIcon
+                    className="size-8 cursor-pointer text-green-500 hover:scale-105"
+                    onClick={handleTriggerAcceptAlert}
+                  />
+                  <XMarkIcon
+                    className="size-8 cursor-pointer text-destructive hover:scale-105"
+                    onClick={handleTriggerDeleteAlert}
+                  />
+                  <CustomAlertDialog
+                    variant={"destructive"}
+                    open={openDelete}
+                    close={handleTriggerDeleteAlert}
+                    title={t("Candidate.alerts.delete.title")}
+                    content={t("Candidate.alerts.delete.content")}
+                    cancel={t("Candidate.alerts.delete.cancel")}
+                    confirm={t("Candidate.alerts.delete.confirm")}
+                    onSubmit={() =>
+                      handleDeleteCandidate(candidate.Candidate.id)
+                    }
+                  />
+                  <CustomAlertDialog
+                    variant={"success"}
+                    open={openAccept}
+                    close={handleTriggerAcceptAlert}
+                    title={t("Candidate.alerts.accept.title")}
+                    content={t("Candidate.alerts.accept.content")}
+                    cancel={t("Candidate.alerts.accept.cancel")}
+                    confirm={t("Candidate.alerts.accept.confirm")}
+                    onSubmit={() => {
+                      handleAcceptCandidate(candidate.Candidate.id)
+                      handleTriggerAcceptAlert()
+                    }}
+                  />
+                </div>
+              )}
+              {resultMission?.Missions.status === MissionStatus.inProgress &&
+                resultMission?.isEmployee && (
+                  <Button
+                    onClick={() => handleCheckout(candidate.Users.id)}
+                    disabled={loading}
+                    className="flex items-center gap-3"
+                  >
+                    <CreditCardIcon className="size-8" />
+                  </Button>
+                )}
+
+              {resultMission?.Missions.status === MissionStatus.completed && (
+                <span className="rounded-md bg-green-400 px-2 font-bold text-white">
+                  {t("Candidate.completed")}
+                </span>
+              )}
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     )
   }
@@ -236,7 +353,7 @@ const DetailMissionPage = () => {
   }
 
   return (
-    <div className="relative flex h-[70vh] items-center justify-center px-6 py-10 xl:px-0">
+    <div className="relative flex h-screen items-center justify-center px-6 py-10 xl:px-0">
       {detailedMission && missionData?.detailedMission.isEmployee && (
         <div className="absolute left-8 top-8">
           <Link href={routes.missions.updateMission(detailedMission.id)}>

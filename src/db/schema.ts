@@ -1,4 +1,11 @@
-import { boolean, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core"
+import {
+  boolean,
+  pgTable,
+  real,
+  text,
+  timestamp,
+  uuid,
+} from "drizzle-orm/pg-core"
 
 export const users = pgTable("Users", {
   id: uuid("id").defaultRandom().primaryKey().notNull(),
@@ -117,6 +124,7 @@ export const mission = pgTable("Missions", {
   description: text("description").notNull(),
   operating: text("operating").notNull(),
   localisation: text("localisation").notNull(),
+  price: real("price").notNull(),
   startDate: timestamp("start_date").notNull(),
   endDate: timestamp("end_date").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),

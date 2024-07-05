@@ -41,7 +41,7 @@ const CreateMissionPage = () => {
   }
 
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-3">
+    <div className="mt-14 flex h-full flex-col items-center justify-center gap-3 xl:mt-6">
       <RoughNotation type="underline" color="#000000" show={true} padding={10}>
         <h1 className="mt-4 text-2xl font-extrabold xl:text-4xl">
           {t("createTitle")}

@@ -10,6 +10,8 @@ const routes = {
     search: "/missions/search",
     detailedMission: (id: string) => `/missions?id=${id}`,
     updateMission: (missionId: string) => `/missions/update?id=${missionId}`,
+    confirmPayment: (missionId: string, userId: string) =>
+      `/missions/${missionId}/confirm-payment?id=${userId}`,
   },
   freelance: {
     createProfile: "/freelance/create-profile",
@@ -31,12 +33,15 @@ const routes = {
       list: "/missions",
       detailedMission: (missionId: string) => `/missions/${missionId}`,
       updateMission: (missionId: string) => `/missions/${missionId}`,
+      payment: (missionId: string) => `/missions/${missionId}/payment`,
       candidate: {
         isCandidate: (missionId: string) => `/missions/${missionId}/candidate`,
         send: (missionId: string) => `/missions/${missionId}/candidate`,
         delete: (missionId: string) => `/missions/${missionId}/candidate`,
         list: (missionId: string) => `/missions/${missionId}/candidate/list`,
         deleteByEmployee: (missionId: string, candidateId: string) =>
+          `/missions/${missionId}/candidate/list/${candidateId}`,
+        acceptedByEmployee: (missionId: string, candidateId: string) =>
           `/missions/${missionId}/candidate/list/${candidateId}`,
       },
     },

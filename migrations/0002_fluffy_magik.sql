@@ -1,0 +1,1 @@
+ALTER TABLE "Missions" ADD COLUMN "price" real NOT NULL;
