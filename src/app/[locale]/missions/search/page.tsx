@@ -32,9 +32,6 @@ const SearchPage = () => {
       search: "",
     },
   })
-  const {
-    formState: { errors },
-  } = form
 
   const onSubmit = (data: SearchMissionsType) => {
     setSearchQuery(data.search || "")
@@ -64,11 +61,7 @@ const SearchPage = () => {
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage className="relative left-2 text-destructive">
-                    {errors.search ? (
-                      <span>{t("form.search.error")}</span>
-                    ) : null}
-                  </FormMessage>
+                  <FormMessage className="relative left-2 text-destructive" />
                 </FormItem>
               )}
             />
