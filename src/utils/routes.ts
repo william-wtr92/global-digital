@@ -14,8 +14,8 @@ const routes = {
   },
   missions: {
     search: "/missions/search",
-    detailedMission: (id: string) => `/missions?id=${id}`,
-    updateMission: (missionId: string) => `/missions/update?id=${missionId}`,
+    detailedMission: (id: string) => `/missions/${id}`,
+    updateMission: (missionId: string) => `/missions/${missionId}/update`,
     confirmPayment: (missionId: string, userId: string) =>
       `/missions/${missionId}/confirm-payment?id=${userId}`,
   },

@@ -1,9 +1,8 @@
 "use client"
 
 import { useMutation } from "@tanstack/react-query"
-import { useRouter } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
-import { useQueryState } from "nuqs"
 import { RoughNotation } from "react-rough-notation"
 import { toast } from "sonner"
 
@@ -20,10 +19,8 @@ import routes from "@/utils/routes"
 const UpdateMissionPage = () => {
   const t = useTranslations("Missions")
   const router = useRouter()
-
-  const [id] = useQueryState("id")
-
-  const { data, isLoading, isError } = useMission(id || "")
+  const { missionId } = useParams<{ missionId: string }>()
+  const { data, isLoading, isError } = useMission(missionId)
   const resultMission =
     !isLoading && !isError ? data?.detailedMission.Missions : null
 
@@ -47,7 +44,7 @@ const UpdateMissionPage = () => {
   const mutation = useMutation({
     mutationFn: async (data: MissionType) => {
       const response = await apiFetch({
-        url: routes.api.missions.updateMission(id!),
+        url: routes.api.missions.updateMission(missionId),
         method: "PATCH",
         data,
         credentials: "include",
@@ -60,7 +57,7 @@ const UpdateMissionPage = () => {
       }
 
       toast.success(t("form.update.success"))
-      router.push(routes.missions.detailedMission(id!))
+      router.push(routes.missions.detailedMission(missionId))
     },
   })
 
@@ -68,7 +65,7 @@ const UpdateMissionPage = () => {
     mutation.mutate(data)
   }
 
-  if (!id || !data?.detailedMission.isEmployee) {
+  if (!data?.detailedMission.isEmployee) {
     router.push(routes.missions.search)
 
     return null

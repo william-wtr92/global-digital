@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1720012225790,
-      "tag": "0000_same_liz_osborn",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1720089739979,
-      "tag": "0001_sudden_marauders",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1720106200962,
-      "tag": "0002_fluffy_magik",
+      "when": 1720170547718,
+      "tag": "0000_same_cammi",
       "breakpoints": true
     }
   ]

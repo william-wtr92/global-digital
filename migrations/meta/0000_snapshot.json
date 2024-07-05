@@ -1,5 +1,5 @@
 {
-  "id": "fd2c6268-b138-4fda-9759-79f67ab3899d",
+  "id": "a842342f-af0f-4bd0-9308-dad975fad455",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -73,12 +73,16 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "Candidate_mission_id_Mission_id_fk": {
-          "name": "Candidate_mission_id_Mission_id_fk",
+        "Candidate_mission_id_Missions_id_fk": {
+          "name": "Candidate_mission_id_Missions_id_fk",
           "tableFrom": "Candidate",
-          "tableTo": "Mission",
-          "columnsFrom": ["mission_id"],
-          "columnsTo": ["id"],
+          "tableTo": "Missions",
+          "columnsFrom": [
+            "mission_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -86,8 +90,12 @@
           "name": "Candidate_user_id_Users_id_fk",
           "tableFrom": "Candidate",
           "tableTo": "Users",
-          "columnsFrom": ["user_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -163,8 +171,12 @@
           "name": "Company_area_id_Area_id_fk",
           "tableFrom": "Company",
           "tableTo": "Area",
-          "columnsFrom": ["area_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "area_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -216,8 +228,12 @@
           "name": "Employee_user_id_Users_id_fk",
           "tableFrom": "Employee",
           "tableTo": "Users",
-          "columnsFrom": ["user_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -225,8 +241,12 @@
           "name": "Employee_company_id_Company_id_fk",
           "tableFrom": "Employee",
           "tableTo": "Company",
-          "columnsFrom": ["company_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "company_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -270,8 +290,12 @@
           "name": "Employee_role_employee_id_Employee_id_fk",
           "tableFrom": "Employee_role",
           "tableTo": "Employee",
-          "columnsFrom": ["employee_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "employee_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -279,8 +303,12 @@
           "name": "Employee_role_role_id_Role_id_fk",
           "tableFrom": "Employee_role",
           "tableTo": "Role",
-          "columnsFrom": ["role_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "role_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -288,8 +316,12 @@
           "name": "Employee_role_company_id_Company_id_fk",
           "tableFrom": "Employee_role",
           "tableTo": "Company",
-          "columnsFrom": ["company_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "company_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -365,8 +397,12 @@
           "name": "Freelance_user_id_Users_id_fk",
           "tableFrom": "Freelance",
           "tableTo": "Users",
-          "columnsFrom": ["user_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -374,8 +410,12 @@
           "name": "Freelance_area_id_Area_id_fk",
           "tableFrom": "Freelance",
           "tableTo": "Area",
-          "columnsFrom": ["area_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "area_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -383,8 +423,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.Mission": {
-      "name": "Mission",
+    "public.Missions": {
+      "name": "Missions",
       "schema": "",
       "columns": {
         "id": {
@@ -430,92 +470,9 @@
           "primaryKey": false,
           "notNull": true
         },
-        "start_date": {
-          "name": "start_date",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "end_date": {
-          "name": "end_date",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "Mission_company_id_Company_id_fk": {
-          "name": "Mission_company_id_Company_id_fk",
-          "tableFrom": "Mission",
-          "tableTo": "Company",
-          "columnsFrom": ["company_id"],
-          "columnsTo": ["id"],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "public.Mission": {
-      "name": "Mission",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "company_id": {
-          "name": "company_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "status": {
-          "name": "status",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "title": {
-          "name": "title",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "description": {
-          "name": "description",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "operating": {
-          "name": "operating",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "localisation": {
-          "name": "localisation",
-          "type": "text",
+        "price": {
+          "name": "price",
+          "type": "real",
           "primaryKey": false,
           "notNull": true
         },
@@ -548,12 +505,16 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "Mission_company_id_Company_id_fk": {
-          "name": "Mission_company_id_Company_id_fk",
-          "tableFrom": "Mission",
+        "Missions_company_id_Company_id_fk": {
+          "name": "Missions_company_id_Company_id_fk",
+          "tableFrom": "Missions",
           "tableTo": "Company",
-          "columnsFrom": ["company_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "company_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -666,7 +627,9 @@
         "Users_email_unique": {
           "name": "Users_email_unique",
           "nullsNotDistinct": false,
-          "columns": ["email"]
+          "columns": [
+            "email"
+          ]
         }
       }
     }

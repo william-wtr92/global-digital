@@ -7,17 +7,11 @@ import { useParams, useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 
+import { CustomFormField } from "@/components/forms/CustomFormField"
 import { CustomFormInput } from "@/components/forms/CustomFormInput"
+import { CustomFormTextarea } from "@/components/forms/CustomFormTextarea"
 import { Button } from "@/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
+import { Form } from "@/components/ui/form"
 import {
   Select,
   SelectContent,
@@ -25,7 +19,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
 import type { SelectCompany } from "@/db/schema"
 import {
   companiesUpdateFormValidator,
@@ -108,35 +101,31 @@ const CompaniesUpdatePage = () => {
             label={t("logo.label")}
             description={t("logo.description")}
           />
-          <FormField
-            control={companiesUpdateForm.control}
+          <CustomFormField
             name="areaId"
-            render={({ field }) => (
-              <FormItem className="w-screen max-w-96 px-4">
-                <FormLabel>{t("area.label")}</FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                    name={field.name}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder={t("area.placeholder")} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {areas?.data.map((area) => (
-                        <SelectItem value={area.value} key={area.id}>
-                          {firstLetterUppercase(area.value)}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormDescription>{t("area.description")}</FormDescription>
-                <FormMessage />
-              </FormItem>
+            form={companiesUpdateForm}
+            label={t("area.label")}
+            description={t("area.description")}
+          >
+            {(field) => (
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                name={field.name}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder={t("area.placeholder")} />
+                </SelectTrigger>
+                <SelectContent>
+                  {areas?.data.map((area) => (
+                    <SelectItem value={area.value} key={area.id}>
+                      {firstLetterUppercase(area.value)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             )}
-          />
+          </CustomFormField>
           <CustomFormInput
             form={companiesUpdateForm}
             name="headquarters"
@@ -151,24 +140,12 @@ const CompaniesUpdatePage = () => {
             label={t("kbis.label")}
             description={t("kbis.description")}
           />
-          <FormField
-            control={companiesUpdateForm.control}
+          <CustomFormTextarea
+            form={companiesUpdateForm}
             name="descriptionCompany"
-            render={({ field }) => (
-              <FormItem className="w-screen max-w-96 px-4">
-                <FormLabel>{t("descriptionCompany.label")}</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder={t("descriptionCompany.placeholder")}
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  {t("descriptionCompany.description")}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
+            label={t("descriptionCompany.label")}
+            placeholder={t("descriptionCompany.placeholder")}
+            description={t("descriptionCompany.description")}
           />
           <Button type="submit">{t("button")}</Button>
         </form>

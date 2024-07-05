@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS "Freelance" (
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "Mission" (
+CREATE TABLE IF NOT EXISTS "Missions" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"company_id" uuid NOT NULL,
 	"status" text NOT NULL,
@@ -59,6 +59,7 @@ CREATE TABLE IF NOT EXISTS "Mission" (
 	"description" text NOT NULL,
 	"operating" text NOT NULL,
 	"localisation" text NOT NULL,
+	"price" real NOT NULL,
 	"start_date" timestamp NOT NULL,
 	"end_date" timestamp NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
@@ -86,7 +87,7 @@ CREATE TABLE IF NOT EXISTS "Users" (
 );
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "Candidate" ADD CONSTRAINT "Candidate_mission_id_Mission_id_fk" FOREIGN KEY ("mission_id") REFERENCES "public"."Mission"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "Candidate" ADD CONSTRAINT "Candidate_mission_id_Missions_id_fk" FOREIGN KEY ("mission_id") REFERENCES "public"."Missions"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -146,7 +147,7 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "Mission" ADD CONSTRAINT "Mission_company_id_Company_id_fk" FOREIGN KEY ("company_id") REFERENCES "public"."Company"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "Missions" ADD CONSTRAINT "Missions_company_id_Company_id_fk" FOREIGN KEY ("company_id") REFERENCES "public"."Company"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

@@ -6,19 +6,12 @@ import type { UUID } from "crypto"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 
+import { CustomFormField } from "@/components/forms/CustomFormField"
 import { CustomFormInput } from "@/components/forms/CustomFormInput"
 import { CustomFormTextarea } from "@/components/forms/CustomFormTextarea"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
+import { Form } from "@/components/ui/form"
 import {
   Select,
   SelectContent,
@@ -26,7 +19,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
 import {
   companiesCreateFormValidator,
   type CompaniesCreateValidatorType,
@@ -88,35 +80,31 @@ const CompaniesCreatePage = () => {
             label={t("logo.label")}
             description={t("logo.description")}
           />
-          <FormField
-            control={companiesCreateForm.control}
+          <CustomFormField
+            form={companiesCreateForm}
+            label={t("area.label")}
+            description={t("area.description")}
             name="areaId"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("area.label")}</FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                    name={field.name}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder={t("area.placeholder")} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {areas?.data.map((area) => (
-                        <SelectItem value={area.value} key={area.id}>
-                          {firstLetterUppercase(area.value)}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormDescription>{t("area.description")}</FormDescription>
-                <FormMessage />
-              </FormItem>
+          >
+            {(field) => (
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value as string}
+                name={field.name}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder={t("area.placeholder")} />
+                </SelectTrigger>
+                <SelectContent>
+                  {areas?.data.map((area) => (
+                    <SelectItem value={area.value} key={area.id}>
+                      {firstLetterUppercase(area.value)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             )}
-          />
+          </CustomFormField>
           <CustomFormInput
             form={companiesCreateForm}
             name="headquarters"
@@ -138,22 +126,19 @@ const CompaniesCreatePage = () => {
             label={t("descriptionCompany.label")}
             placeholder={t("descriptionCompany.placeholder")}
           />
-          <FormField
-            control={companiesCreateForm.control}
+          <CustomFormField
+            form={companiesCreateForm}
+            label={t("accept.label")}
             name="accept"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <FormLabel>{t("accept.label")}</FormLabel>
-                <FormMessage />
-              </FormItem>
+          >
+            {(field) => (
+              <Checkbox
+                checked={field.value as boolean}
+                onCheckedChange={field.onChange}
+              />
             )}
-          />
+          </CustomFormField>
+
           <Button type="submit">{t("button")}</Button>
         </form>
       </Form>
