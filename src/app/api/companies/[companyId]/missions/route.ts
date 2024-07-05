@@ -6,13 +6,13 @@ import { SC } from "@/utils/constants/status"
 
 export const GET = async (
   req: Request,
-  { params: { id } }: { params: { id: string } },
+  { params: { companyId } }: { params: { companyId: string } },
 ) => {
   try {
     const missionsData = await db
       .select()
       .from(mission)
-      .where(eq(mission.companyId, id!))
+      .where(eq(mission.companyId, companyId!))
 
     return Response.json(missionsData)
   } catch (error) {

@@ -10,8 +10,8 @@ import { useEffect, useState } from "react"
 import { RxCross2, RxHamburgerMenu, RxPerson } from "react-icons/rx"
 import { toast } from "sonner"
 
-import LocaleSelect from "@/components/utils/LocalSelect"
 import { Button } from "@/components/ui/button"
+import { LocaleSelect } from "@/components/utils/LocaleSelect"
 import { useUser } from "@/features/account/hooks/useUser"
 import { useAppContext } from "@/hooks/useAppContext"
 import { apiFetch } from "@/lib/api"
@@ -32,7 +32,6 @@ export const Navbar = () => {
       await apiFetch({
         url: routes.api.auth.logout,
         method: "PUT",
-        data: null,
         credentials: "include",
       })
     },
@@ -123,7 +122,7 @@ export const Navbar = () => {
         ) : (
           <div className="hidden items-center gap-4 md:flex">
             <Link
-              href={routes.registration}
+              href={routes.register.index}
               onClick={toggleMenu}
               className="text-lg font-bold"
             >
@@ -196,7 +195,7 @@ export const Navbar = () => {
             ) : (
               <div className="flex flex-col items-center gap-10">
                 <Link
-                  href={routes.registration}
+                  href={routes.register.index}
                   onClick={toggleMenu}
                   className="text-3xl font-bold"
                 >
@@ -214,7 +213,7 @@ export const Navbar = () => {
           </div>
 
           <div className="flex items-center justify-center gap-2 pb-5">
-            <LocaleSelect title={t("switchLanguage")} />
+            <LocaleSelect />
           </div>
         </div>
       )}

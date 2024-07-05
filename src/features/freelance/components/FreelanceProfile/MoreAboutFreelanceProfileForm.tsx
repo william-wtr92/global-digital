@@ -7,8 +7,7 @@ import type { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-import CustomFormField from "@/components/forms/CustomFormField"
-import Spinner from "@/components/utils/Spinner"
+import { CustomFormInput } from "@/components/forms/CustomFormInput"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -26,6 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import Spinner from "@/components/utils/Spinner"
 import type { Area } from "@/features/areas/types/area"
 import {
   moreAboutFreelanceSchema,
@@ -90,7 +90,7 @@ const MoreAboutFreelanceProfileForm = ({
         className="flex flex-col items-center gap-6"
       >
         <div className="flex flex-col gap-5">
-          <CustomFormField
+          <CustomFormInput
             name="jobTitle"
             form={form}
             label={firstLetterUppercase(
@@ -103,7 +103,7 @@ const MoreAboutFreelanceProfileForm = ({
               field: t("MoreAboutFreelanceProfileForm.jobTitle"),
             })}
           />
-          <CustomFormField
+          <CustomFormInput
             name="businessName"
             form={form}
             label={firstLetterUppercase(
@@ -151,7 +151,7 @@ const MoreAboutFreelanceProfileForm = ({
             )}
           />
 
-          <CustomFormField
+          <CustomFormInput
             name="localisation"
             form={form}
             label={firstLetterUppercase(
@@ -165,7 +165,7 @@ const MoreAboutFreelanceProfileForm = ({
             })}
           />
 
-          <CustomFormField
+          <CustomFormInput
             name="registrationNumber"
             form={form}
             label={firstLetterUppercase(

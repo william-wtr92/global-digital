@@ -13,7 +13,7 @@ const RegistrationPage = () => {
 
       <div className="flex flex-col gap-20 md:flex-row">
         <Link
-          href={routes.freelance.createProfile}
+          href={routes.register.freelance}
           className="bg-skyBlue p-16 font-semibold uppercase"
         >
           {t("freeLance")}

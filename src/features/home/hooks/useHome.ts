@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query"
 
 import { apiFetch } from "@/lib/api"
-import routes from "@/web/routes"
+import routes from "@/utils/routes"
 
 export type HomeResponse = {
   result: boolean
@@ -22,11 +22,8 @@ const fetchHome = async () => {
   return response.data
 }
 
-export const useHome = () => {
-  const { ...query } = useQuery<HomeResponse>({
+export const useHome = () =>
+  useQuery<HomeResponse>({
     queryKey: ["home"],
     queryFn: fetchHome,
   })
-
-  return query
-}

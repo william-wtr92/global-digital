@@ -2,12 +2,12 @@
 
 import { useTranslations } from "next-intl"
 
-import ImageTitle from "@/components/customs/Home/ImageTitle"
-import SearchInput from "@/components/customs/Home/SearchInput"
-import SubTitleItem from "@/components/customs/Home/SubTitleItem"
-import Spinner from "@/components/customs/Utils/Spinner"
-import useAppContext from "@/web/hooks/useAppContext"
-import { useHome } from "@/web/hooks/useHome"
+import { Loading } from "@/components/layout/Loading"
+import ImageTitle from "@/features/home/components/ImageTitle"
+import SearchInput from "@/features/home/components/SearchInput"
+import SubTitleItem from "@/features/home/components/SubTitleItem"
+import { useHome } from "@/features/home/hooks/useHome"
+import { useAppContext } from "@/hooks/useAppContext"
 
 const IndexPage = () => {
   const { userInfo } = useAppContext()
@@ -15,11 +15,7 @@ const IndexPage = () => {
   const t = useTranslations()
 
   if (isPending) {
-    return (
-      <div className="flex h-full items-center justify-center">
-        <Spinner />
-      </div>
-    )
+    return <Loading />
   }
 
   if (error) {

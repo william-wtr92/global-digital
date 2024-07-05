@@ -11,13 +11,13 @@ import { SC } from "@/utils/constants/status"
 
 export const GET = async (
   req: Request,
-  { params: { id } }: { params: { id: string } },
+  { params: { companyId } }: { params: { companyId: string } },
 ) => {
   try {
     const companyData = await db
       .select()
       .from(company)
-      .where(eq(company.id, id!))
+      .where(eq(company.id, companyId!))
 
     return Response.json(companyData[0])
   } catch (error) {
@@ -30,7 +30,7 @@ export const GET = async (
 
 export const PUT = async (
   req: Request,
-  { params: { id } }: { params: { id: string } },
+  { params: { companyId } }: { params: { companyId: string } },
 ) => {
   try {
     const json = await req.json()
@@ -51,7 +51,7 @@ export const PUT = async (
     const companyData = await db
       .update(company)
       .set(data)
-      .where(eq(company.id, id!))
+      .where(eq(company.id, companyId!))
       .returning()
 
     return Response.json(companyData[0])

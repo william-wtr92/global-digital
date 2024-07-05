@@ -10,8 +10,8 @@ import { useForm } from "react-hook-form"
 import { MdAddReaction } from "react-icons/md"
 import { toast } from "sonner"
 
-import CustomFormField from "@/components/forms/CustomFormField"
-import Spinner from "@/components/utils/Spinner"
+import { CustomFormInput } from "@/components/forms/CustomFormInput"
+import { Loading } from "@/components/layout/Loading"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -136,11 +136,7 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
   }
 
   if (isPending) {
-    return (
-      <div className="flex h-full items-center justify-center">
-        <Spinner />
-      </div>
-    )
+    return <Loading />
   }
 
   if (error) {
@@ -161,7 +157,7 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
           className="flex flex-col items-center gap-6"
         >
           <div className="mb-5 flex flex-col gap-5">
-            <CustomFormField
+            <CustomFormInput
               name="lastName"
               form={form}
               label={firstLetterUppercase(t("Form.UpdateProfilForm.lastName"))}
@@ -173,7 +169,7 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
               })}
             />
 
-            <CustomFormField
+            <CustomFormInput
               name="firstName"
               form={form}
               label={firstLetterUppercase(t("Form.UpdateProfilForm.firstName"))}
@@ -185,7 +181,7 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
               })}
             />
 
-            <CustomFormField
+            <CustomFormInput
               name="email"
               form={form}
               label={firstLetterUppercase(t("Form.UpdateProfilForm.email"))}
@@ -197,7 +193,7 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
               })}
             />
 
-            <CustomFormField
+            <CustomFormInput
               name="phoneNumber"
               form={form}
               label={firstLetterUppercase(
@@ -211,7 +207,7 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
               })}
             />
 
-            <CustomFormField
+            <CustomFormInput
               name="businessName"
               form={form}
               label={firstLetterUppercase(
@@ -225,7 +221,7 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
               })}
             />
 
-            <CustomFormField
+            <CustomFormInput
               name="jobTitle"
               form={form}
               label={firstLetterUppercase(t("Form.UpdateProfilForm.jobTitle"))}
@@ -271,7 +267,7 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
               )}
             />
 
-            <CustomFormField
+            <CustomFormInput
               name="localisation"
               form={form}
               label={firstLetterUppercase(
@@ -285,7 +281,7 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
               })}
             />
 
-            <CustomFormField
+            <CustomFormInput
               name="registrationNumber"
               form={form}
               label={firstLetterUppercase(

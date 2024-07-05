@@ -20,7 +20,7 @@ export const GET = async (req: NextRequest) => {
   }
 
   try {
-    const decoded = await verify(jwt, appConfig.security.jwt.secret)
+    const decoded = verify(jwt, appConfig.security.jwt.secret)
 
     if (!decoded || typeof decoded === "string") {
       return Response.json(

@@ -9,11 +9,10 @@ import { CiSearch } from "react-icons/ci"
 import { toast } from "sonner"
 
 import { Input } from "@/components/ui/input"
+import type { User } from "@/features/account/types/user"
+import SearchDisplayEmployee from "@/features/companies/components/Habilitations/SearchDisplayEmployee"
 import { apiFetch } from "@/lib/api"
 import routes from "@/utils/routes"
-
-import SearchDisplayEmployee from "@/components/customs/Companies/Habilitations/SearchDisplayEmployee"
-import type { User } from "@/types/user"
 
 const SearchEmployee = () => {
   const [search, setSearch] = useQueryState("search", parseAsString)

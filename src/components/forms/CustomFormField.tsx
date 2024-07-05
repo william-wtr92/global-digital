@@ -1,8 +1,10 @@
-"use client"
-
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"
-import { type HTMLInputTypeAttribute, useState } from "react"
-import type { FieldValues, Path, UseFormReturn } from "react-hook-form"
+import type { ReactNode } from "react"
+import type {
+  ControllerRenderProps,
+  FieldValues,
+  Path,
+  UseFormReturn,
+} from "react-hook-form"
 
 import {
   FormControl,
@@ -12,31 +14,26 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 
-type CustomFormFieldProps<T extends FieldValues> = {
+export type BaseCustomFormFieldProps<T extends FieldValues> = {
   name: Path<T>
   form: UseFormReturn<T>
   label?: string
   description?: string
-  placeholder?: string
-  type?: HTMLInputTypeAttribute
 }
 
-const CustomFormField = <T extends FieldValues>({
+type CustomFormFieldProps<T extends FieldValues> =
+  BaseCustomFormFieldProps<T> & {
+    children: (field: ControllerRenderProps<T, Path<T>>) => ReactNode
+  }
+
+export const CustomFormField = <T extends FieldValues>({
   name,
   form,
   label,
   description,
-  placeholder,
-  type,
+  children,
 }: CustomFormFieldProps<T>) => {
-  const [showPassword, setShowPassword] = useState(false)
-
-  const handleShowPassword = () => {
-    setShowPassword(!showPassword)
-  }
-
   return (
     <FormField
       control={form.control}
@@ -44,30 +41,7 @@ const CustomFormField = <T extends FieldValues>({
       render={({ field }) => (
         <FormItem className="w-screen max-w-96 px-4">
           <FormLabel>{label}</FormLabel>
-          <FormControl>
-            <div className="relative">
-              <Input
-                type={
-                  type === "password"
-                    ? showPassword
-                      ? "text"
-                      : "password"
-                    : "text"
-                }
-                placeholder={placeholder}
-                {...field}
-              />
-              {type === "password" && (
-                <div onClick={handleShowPassword}>
-                  {showPassword ? (
-                    <EyeSlashIcon className="absolute right-2 top-1/4 h-5 w-4 hover:cursor-pointer" />
-                  ) : (
-                    <EyeIcon className="absolute right-2 top-1/4 h-5 w-4 hover:cursor-pointer" />
-                  )}
-                </div>
-              )}
-            </div>
-          </FormControl>
+          <FormControl>{children(field)}</FormControl>
           <FormDescription>{description}</FormDescription>
           <FormMessage />
         </FormItem>
@@ -75,5 +49,3 @@ const CustomFormField = <T extends FieldValues>({
     />
   )
 }
-
-export default CustomFormField

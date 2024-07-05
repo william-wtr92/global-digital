@@ -7,8 +7,8 @@ import { SC } from "@/utils/constants/status"
 export const DELETE = async (
   req: Request,
   {
-    params: { id, employeeId },
-  }: { params: { id: string; employeeId: string } },
+    params: { companyId, employeeId },
+  }: { params: { companyId: string; employeeId: string } },
 ) => {
   try {
     await db.transaction(async (tx) => {
@@ -17,12 +17,14 @@ export const DELETE = async (
         .where(
           and(
             eq(employeeRole.employeeId, employeeId),
-            eq(employeeRole.companyId, id),
+            eq(employeeRole.companyId, companyId),
           ),
         )
       await tx
         .delete(employee)
-        .where(and(eq(employee.id, employeeId), eq(employee.companyId, id)))
+        .where(
+          and(eq(employee.id, employeeId), eq(employee.companyId, companyId)),
+        )
     })
 
     return Response.json({ result: true }, { status: SC.success.OK })

@@ -6,7 +6,8 @@ import type { UUID } from "crypto"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 
-import CustomFormField from "@/components/forms/CustomFormField"
+import { CustomFormInput } from "@/components/forms/CustomFormInput"
+import { CustomFormTextarea } from "@/components/forms/CustomFormTextarea"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -73,14 +74,14 @@ const CompaniesCreatePage = () => {
           onSubmit={companiesCreateForm.handleSubmit(onSubmit)}
           className="space-y-5"
         >
-          <CustomFormField
+          <CustomFormInput
             form={companiesCreateForm}
             name="businessName"
             placeholder={t("businessName.placeholder")}
             label={t("businessName.label")}
             description={t("businessName.description")}
           />
-          <CustomFormField
+          <CustomFormInput
             form={companiesCreateForm}
             name="logo"
             placeholder={t("logo.placeholder")}
@@ -116,38 +117,26 @@ const CompaniesCreatePage = () => {
               </FormItem>
             )}
           />
-          <CustomFormField
+          <CustomFormInput
             form={companiesCreateForm}
             name="headquarters"
             placeholder={t("headquarters.placeholder")}
             label={t("headquarters.label")}
             description={t("headquarters.description")}
           />
-          <CustomFormField
+          <CustomFormInput
             form={companiesCreateForm}
             name="kbis"
             placeholder={t("kbis.placeholder")}
             label={t("kbis.label")}
             description={t("kbis.description")}
           />
-          <FormField
-            control={companiesCreateForm.control}
+          <CustomFormTextarea
+            form={companiesCreateForm}
             name="descriptionCompany"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("descriptionCompany.label")}</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder={t("descriptionCompany.placeholder")}
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  {t("descriptionCompany.description")}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
+            description={t("descriptionCompany.description")}
+            label={t("descriptionCompany.label")}
+            placeholder={t("descriptionCompany.placeholder")}
           />
           <FormField
             control={companiesCreateForm.control}

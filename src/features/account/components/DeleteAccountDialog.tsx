@@ -50,7 +50,7 @@ const DeleteAccountDialog = ({ id }: DeleteAccountDialogProps) => {
         queryKey: ["areaMoreAboutFreelance"],
       })
       toast.success(t("Form.UpdateProfilForm.deleteAccountSuccess"))
-      router.push(routes.registration)
+      router.push(routes.home)
     },
     onError: () => {
       toast.error(t("Form.UpdateProfilForm.deleteAccountError"))

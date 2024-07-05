@@ -9,23 +9,19 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select"
-import { locales } from "@/config/i18nConfig"
+import { locales, type Locale } from "@/config/i18nConfig"
 import { usePathname, useRouter } from "@/utils/navigation"
 
-type LocaleSelectProps = {
-  title?: string
-}
-
-const LocaleSelect = ({ title }: LocaleSelectProps) => {
+export const LocaleSelect = () => {
   const router = useRouter()
   const pathname = usePathname()
   const currentLocale = useLocale()
   const [isPending, startTransition] = useTransition()
   const t = useTranslations()
-  const onSelectChange = (value: string) => {
+  const onSelectChange = (value: Locale) => {
     const nextLocale = value
     startTransition(() => {
-      router.replace({ pathname }, { locale: nextLocale })
+      router.replace(pathname, { locale: nextLocale })
     })
   }
 
@@ -37,7 +33,6 @@ const LocaleSelect = ({ title }: LocaleSelectProps) => {
     >
       <SelectTrigger className="animate-fade-down animate-once m-0 flex w-fit gap-2 p-0">
         <CiGlobe className="text-4xl" />
-        {title && <span className="text-lg font-bold">{title}</span>}
       </SelectTrigger>
       <SelectContent className="bg-white">
         <SelectGroup>
@@ -55,5 +50,3 @@ const LocaleSelect = ({ title }: LocaleSelectProps) => {
     </Select>
   )
 }
-
-export default LocaleSelect

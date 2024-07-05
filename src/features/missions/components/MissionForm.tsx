@@ -29,9 +29,12 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
+import {
+  MissionOperating,
+  missionSchema,
+  type MissionType,
+} from "@/features/missions/types/missions"
 import { cn } from "@/utils/style"
-
-import { MissionOperating, missionSchema, type MissionType } from "@/types"
 
 type Props = {
   defaultValues?: Partial<MissionType>

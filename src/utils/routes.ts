@@ -1,7 +1,10 @@
 const routes = {
   home: "/",
   login: "/login",
-  registration: "/registration",
+  register: {
+    index: "/register",
+    freelance: "/register/freelance",
+  },
   companies: {
     "create": "/companies/create",
     ":id": {
@@ -17,11 +20,9 @@ const routes = {
       `/missions/${missionId}/confirm-payment?id=${userId}`,
   },
   freelance: {
-    createProfile: "/freelance/create-profile",
     updateProfile: (name: string, id: string) =>
-      `/freelance/update-profile/${name}?id=${id}`,
-    profile: (name: string, id: string) =>
-      `/freelance/profile/${name}?id=${id}`,
+      `/freelance/${name}/update?id=${id}`,
+    profile: (name: string, id: string) => `/freelance/${name}?id=${id}`,
   },
   search: "/search",
   api: {

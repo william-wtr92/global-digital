@@ -6,7 +6,7 @@ import { CiSearch } from "react-icons/ci"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import routes from "@/web/routes"
+import routes from "@/utils/routes"
 
 const SearchInput = () => {
   const router = useRouter()

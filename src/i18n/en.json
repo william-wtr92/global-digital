@@ -119,7 +119,7 @@
     }
   },
   "LocaleSelect": {
-    "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 French} es {🇪🇸 Spanish} other {Unknown}}"
+    "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 French} other {Unknown}}"
   },
   "Login": {
     "title": "Welcome back!",

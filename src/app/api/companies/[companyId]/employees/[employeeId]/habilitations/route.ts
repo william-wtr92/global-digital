@@ -7,8 +7,8 @@ import { SC } from "@/utils/constants/status"
 export const PATCH = async (
   req: Request,
   {
-    params: { id, employeeId },
-  }: { params: { id: string; employeeId: string } },
+    params: { companyId, employeeId },
+  }: { params: { companyId: string; employeeId: string } },
 ) => {
   const { roleId } = await req.json()
 
@@ -19,7 +19,7 @@ export const PATCH = async (
       .where(
         and(
           eq(employeeRole.employeeId, employeeId),
-          eq(employeeRole.companyId, id),
+          eq(employeeRole.companyId, companyId),
         ),
       )
 

@@ -7,13 +7,13 @@ import { SC } from "@/utils/constants/status"
 
 export const GET = async (
   req: NextRequest,
-  { params: { id } }: { params: { id: string } },
+  { params: { companyId } }: { params: { companyId: string } },
 ) => {
   try {
     const employees = await db
       .select()
       .from(employee)
-      .where(eq(employee.companyId, id))
+      .where(eq(employee.companyId, companyId))
       .leftJoin(employeeRole, eq(employeeRole.employeeId, employee.id))
       .leftJoin(role, eq(role.id, employeeRole.roleId))
       .leftJoin(users, eq(users.id, employee.userId))
@@ -29,14 +29,14 @@ export const GET = async (
 
 export const POST = async (
   req: Request,
-  { params: { id } }: { params: { id: string } },
+  { params: { companyId } }: { params: { companyId: string } },
 ) => {
   const { userId } = await req.json()
 
   try {
     const newEmployee = await db
       .insert(employee)
-      .values({ companyId: id, userId })
+      .values({ companyId, userId })
       .returning()
 
     const ownerRole = await db
@@ -45,7 +45,7 @@ export const POST = async (
       .where(eq(role.value, "owner"))
 
     await db.insert(employeeRole).values({
-      companyId: id,
+      companyId,
       employeeId: newEmployee[0].id,
       roleId: ownerRole[0].id,
     })

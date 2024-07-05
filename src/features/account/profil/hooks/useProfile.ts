@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query"
 
-import type { Profile } from "@/features/freelance/types/freelance"
+import type { ApiProfile } from "@/features/account/profil/types/api/profile"
 import { apiFetch } from "@/lib/api"
 import routes from "@/utils/routes"
 
@@ -15,7 +15,7 @@ const fetchProfile = async (id: string) => {
 }
 
 export const useProfile = (id: string) =>
-  useQuery<Profile>({
+  useQuery<ApiProfile>({
     queryKey: ["profile"],
     queryFn: () => fetchProfile(id),
   })

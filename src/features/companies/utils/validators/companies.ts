@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import type { ReadonlyArrayZod } from "@/utils/types"
+import type { ReadonlyArrayZod } from "@/types/utils"
 
 export const companiesCreateFormValidator = (areas: ReadonlyArrayZod) =>
   z.object({

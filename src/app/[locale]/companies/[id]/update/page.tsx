@@ -7,7 +7,7 @@ import { useParams, useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 
-import CustomFormField from "@/components/customs/Forms/CustomFormField"
+import { CustomFormInput } from "@/components/forms/CustomFormInput"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -27,14 +27,14 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import type { SelectCompany } from "@/db/schema"
-import { apiFetch, type ApiResponse } from "@/lib/api"
-import { capitalizeFirstLetter } from "@/utils/forms"
-import type { ReadonlyArrayZod } from "@/utils/types"
 import {
-  type CompaniesUpdateValidatorType,
   companiesUpdateFormValidator,
-} from "@/utils/validators/companies"
-import routes from "@/web/routes"
+  type CompaniesUpdateValidatorType,
+} from "@/features/companies/utils/validators/companies"
+import { apiFetch, type ApiResponse } from "@/lib/api"
+import type { ReadonlyArrayZod } from "@/types/utils"
+import routes from "@/utils/routes"
+import { firstLetterUppercase } from "@/utils/string"
 
 const CompaniesUpdatePage = () => {
   const { id } = useParams()
@@ -83,7 +83,7 @@ const CompaniesUpdatePage = () => {
 
   const onSubmit = async (values: CompaniesUpdateValidatorType) => {
     await mutateAsync(values)
-    router.replace(routes.companies[":id"](id as string))
+    router.replace(routes.companies[":id"].index(id as string))
   }
 
   return (
@@ -94,14 +94,14 @@ const CompaniesUpdatePage = () => {
           onSubmit={companiesUpdateForm.handleSubmit(onSubmit)}
           className="space-y-5"
         >
-          <CustomFormField
+          <CustomFormInput
             form={companiesUpdateForm}
             name="businessName"
             placeholder={t("businessName.placeholder")}
             label={t("businessName.label")}
             description={t("businessName.description")}
           />
-          <CustomFormField
+          <CustomFormInput
             form={companiesUpdateForm}
             name="logo"
             placeholder={t("logo.placeholder")}
@@ -126,7 +126,7 @@ const CompaniesUpdatePage = () => {
                     <SelectContent>
                       {areas?.data.map((area) => (
                         <SelectItem value={area.value} key={area.id}>
-                          {capitalizeFirstLetter(area.value)}
+                          {firstLetterUppercase(area.value)}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -137,14 +137,14 @@ const CompaniesUpdatePage = () => {
               </FormItem>
             )}
           />
-          <CustomFormField
+          <CustomFormInput
             form={companiesUpdateForm}
             name="headquarters"
             placeholder={t("headquarters.placeholder")}
             label={t("headquarters.label")}
             description={t("headquarters.description")}
           />
-          <CustomFormField
+          <CustomFormInput
             form={companiesUpdateForm}
             name="kbis"
             placeholder={t("kbis.placeholder")}

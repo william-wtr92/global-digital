@@ -7,10 +7,9 @@ import type { Dispatch, SetStateAction } from "react"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
+import type { User } from "@/features/account/types/user"
 import { apiFetch } from "@/lib/api"
 import routes from "@/utils/routes"
-
-import type { User } from "@/types/user"
 
 type SearchDisplayEmployeeProps = {
   employeesSuggestions: User[]

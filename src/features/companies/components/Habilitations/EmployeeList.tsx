@@ -17,12 +17,11 @@ import {
 } from "@/components/ui/select"
 import DeleteEmployeeDialog from "@/features/companies/components/Habilitations/DeleteEmployeeDialog"
 import type { EmployeeResponse } from "@/features/companies/employee/hooks/useEmployee"
+import { useRole } from "@/features/companies/employee/hooks/useRole"
+import { useAppContext } from "@/hooks/useAppContext"
 import { apiFetch } from "@/lib/api"
 import { getFullName } from "@/utils/functions"
 import routes from "@/utils/routes"
-
-import { useRole } from "@/features/companies/hooks/useRole"
-import { useAppContext } from "@/layouts/hooks/useAppContext"
 
 type EmployeeListProps = {
   employees: EmployeeResponse["employees"]

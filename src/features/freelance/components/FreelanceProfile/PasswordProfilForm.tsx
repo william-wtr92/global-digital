@@ -8,7 +8,7 @@ import type { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-import CustomFormField from "@/components/forms/CustomFormField"
+import { CustomFormInput } from "@/components/forms/CustomFormInput"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import {
@@ -85,7 +85,7 @@ const PasswordProfilForm = ({
         className="flex flex-col items-center gap-6"
       >
         <div className="flex flex-col gap-5">
-          <CustomFormField
+          <CustomFormInput
             name="password"
             form={form}
             label={firstLetterUppercase(t("Form.PasswordProfilForm.password"))}
@@ -93,7 +93,7 @@ const PasswordProfilForm = ({
             description={t("Form.PasswordProfilForm.passwordDescription")}
             type="password"
           />
-          <CustomFormField
+          <CustomFormInput
             name="confirmPassword"
             form={form}
             placeholder="********"
