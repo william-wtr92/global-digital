@@ -1,8 +1,6 @@
 import { eq } from "drizzle-orm"
-import { drizzle } from "drizzle-orm/node-postgres"
-import { Pool } from "pg"
 
-import appConfig from "@/config/appConfig"
+import { db } from "@/db/client"
 import {
   type InsertFreelance,
   type InsertEmployee,
@@ -24,21 +22,7 @@ import {
 } from "@/db/schema"
 import { hashPassword } from "@/utils/hashPassword"
 
-const {
-  db: { host, user, password, port, name },
-} = appConfig
-
 const seed = async () => {
-  const client = new Pool({
-    host,
-    user,
-    password,
-    port,
-    database: name,
-  })
-
-  const db = drizzle(client)
-
   await db.delete(candidate)
   await db.delete(employeeRole)
   await db.delete(freelance)

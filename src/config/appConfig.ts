@@ -5,7 +5,6 @@ config({ path: ".env.local" })
 
 const appConfigSchema = z
   .object({
-    isBuild: z.string(),
     port: z.number(),
     db: z.object({
       host: z.string(),
@@ -48,7 +47,6 @@ const appConfigSchema = z
   .strict()
 
 const appConfig = appConfigSchema.parse({
-  isBuild: process.env.IS_BUILD,
   port: parseInt(process.env.PORT!, 10),
   db: {
     host: process.env.DB_HOST,
