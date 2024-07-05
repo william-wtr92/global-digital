@@ -25,6 +25,9 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
+      <head>
+        <title>CyberLinker</title>
+      </head>
       <body>
         <NextIntlClientProvider messages={messages}>
           <AppContextProvider sessionUserInfo={userInfo}>
