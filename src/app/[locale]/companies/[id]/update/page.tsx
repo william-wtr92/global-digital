@@ -83,7 +83,7 @@ const CompaniesUpdatePage = () => {
 
   const onSubmit = async (values: CompaniesUpdateValidatorType) => {
     await mutateAsync(values)
-    router.replace(routes.companies[":id"](id as string))
+    router.replace(routes.companies[":id"].index(id as string))
   }
 
   return (
