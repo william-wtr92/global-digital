@@ -265,7 +265,7 @@ const MissionForm = ({ defaultValues, onSubmit, submitText }: Props) => {
           />
           <Button
             disabled={!form.formState.isValid}
-            className={`bg-darkBlue mx-auto w-1/2 py-2.5 font-semibold text-white ${!form.formState.isValid ? "cursor-not-allowed opacity-50" : "bg-gray-800 hover:cursor-pointer"}`}
+            className={`mx-auto w-1/2 bg-darkBlue py-2.5 font-semibold text-white ${!form.formState.isValid ? "cursor-not-allowed opacity-50" : "bg-gray-800 hover:cursor-pointer"}`}
             type="submit"
           >
             {submitText}
