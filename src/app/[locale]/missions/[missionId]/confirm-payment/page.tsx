@@ -23,15 +23,15 @@ const ConfirmPaymentPage = () => {
       </RoughNotation>
       <div className="mt-10 flex items-center gap-10">
         <div className="rounded-md border-2 px-6 py-4">
-          <span>{resultFreelance?.businessName[0].toUpperCase()}</span>
+          <span>{data?.businessName[0].toUpperCase()}</span>
         </div>
         <h2 className="text-2xl font-semibold">
-          {resultProfile?.firstName} {resultProfile?.lastName}
+          {data?.firstName} {data?.lastName}
         </h2>
       </div>
       <span>
         {t("ConfirmPayment.description", {
-          name: `${resultProfile?.firstName} ${resultProfile?.lastName}`,
+          name: `${data?.firstName} ${data?.lastName}`,
         })}
       </span>
       <span>{t("ConfirmPayment.finalDescription")}</span>
