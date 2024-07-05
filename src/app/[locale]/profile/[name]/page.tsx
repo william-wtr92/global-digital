@@ -21,7 +21,6 @@ const FreelanceAccount = () => {
   const router = useRouter()
   const [id] = useQueryState("id")
   const { userInfo } = useAppContext()
-
   const { isPending, data, error, isError } = useProfile(id!)
 
   if (userInfo.id !== id) {
