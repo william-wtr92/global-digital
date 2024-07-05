@@ -105,7 +105,7 @@ const FreelanceAccount = () => {
             </div>
           </div>
 
-          <LocalisationAndArea data={data} />
+          <LocalisationAndArea />
         </div>
       </div>
     </div>

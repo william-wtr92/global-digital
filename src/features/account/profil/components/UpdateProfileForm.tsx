@@ -205,93 +205,98 @@ const UpdateProfilForm = ({ profile }: UpdateProfilFormProps) => {
               })}
             />
 
-            <CustomFormInput
-              name="businessName"
-              form={form}
-              label={firstLetterUppercase(
-                t("Form.UpdateProfilForm.businessName"),
-              )}
-              placeholder={firstLetterUppercase(
-                t("Form.UpdateProfilForm.businessName"),
-              )}
-              description={t("Form.UpdateProfilForm.description", {
-                field: t("Form.UpdateProfilForm.businessName"),
-              })}
-            />
+            {isFreelance && (
+              <>
+                <CustomFormInput
+                  name="businessName"
+                  form={form}
+                  label={firstLetterUppercase(
+                    t("Form.UpdateProfilForm.businessName"),
+                  )}
+                  placeholder={firstLetterUppercase(
+                    t("Form.UpdateProfilForm.businessName"),
+                  )}
+                  description={t("Form.UpdateProfilForm.description", {
+                    field: t("Form.UpdateProfilForm.businessName"),
+                  })}
+                />
 
-            <CustomFormInput
-              name="jobTitle"
-              form={form}
-              label={firstLetterUppercase(t("Form.UpdateProfilForm.jobTitle"))}
-              placeholder={firstLetterUppercase(
-                t("Form.UpdateProfilForm.jobTitle"),
-              )}
-              description={t("Form.UpdateProfilForm.description", {
-                field: t("Form.UpdateProfilForm.jobTitle"),
-              })}
-            />
+                <CustomFormInput
+                  name="jobTitle"
+                  form={form}
+                  label={firstLetterUppercase(
+                    t("Form.UpdateProfilForm.jobTitle"),
+                  )}
+                  placeholder={firstLetterUppercase(
+                    t("Form.UpdateProfilForm.jobTitle"),
+                  )}
+                  description={t("Form.UpdateProfilForm.description", {
+                    field: t("Form.UpdateProfilForm.jobTitle"),
+                  })}
+                />
+                <FormField
+                  control={form.control}
+                  name="areaId"
+                  render={({ field }) => (
+                    <FormItem className="w-screen max-w-96 px-4">
+                      <FormLabel>
+                        {t("Form.UpdateProfilForm.selectActivityArea")}
+                      </FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={profile.Freelance.areaId}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue
+                              placeholder={firstLetterUppercase(
+                                t("Form.UpdateProfilForm.activityArea"),
+                              )}
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {data.map((area) => (
+                            <SelectItem key={area.id} value={area.id}>
+                              {area.value}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="areaId"
-              render={({ field }) => (
-                <FormItem className="w-screen max-w-96 px-4">
-                  <FormLabel>
-                    {t("Form.UpdateProfilForm.selectActivityArea")}
-                  </FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={profile.Freelance.areaId}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          placeholder={firstLetterUppercase(
-                            t("Form.UpdateProfilForm.activityArea"),
-                          )}
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {data.map((area) => (
-                        <SelectItem key={area.id} value={area.id}>
-                          {area.value}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <CustomFormInput
+                  name="localisation"
+                  form={form}
+                  label={firstLetterUppercase(
+                    t("Form.UpdateProfilForm.localisation"),
+                  )}
+                  placeholder={firstLetterUppercase(
+                    t("Form.UpdateProfilForm.localisation"),
+                  )}
+                  description={t("Form.UpdateProfilForm.description", {
+                    field: t("Form.UpdateProfilForm.localisation"),
+                  })}
+                />
 
-            <CustomFormInput
-              name="localisation"
-              form={form}
-              label={firstLetterUppercase(
-                t("Form.UpdateProfilForm.localisation"),
-              )}
-              placeholder={firstLetterUppercase(
-                t("Form.UpdateProfilForm.localisation"),
-              )}
-              description={t("Form.UpdateProfilForm.description", {
-                field: t("Form.UpdateProfilForm.localisation"),
-              })}
-            />
-
-            <CustomFormInput
-              name="registrationNumber"
-              form={form}
-              label={firstLetterUppercase(
-                t("Form.UpdateProfilForm.registrationSiren"),
-              )}
-              placeholder={firstLetterUppercase(
-                t("Form.UpdateProfilForm.registrationSiren"),
-              )}
-              description={t("Form.UpdateProfilForm.description", {
-                field: t("Form.UpdateProfilForm.registrationNumber"),
-              })}
-            />
+                <CustomFormInput
+                  name="registrationNumber"
+                  form={form}
+                  label={firstLetterUppercase(
+                    t("Form.UpdateProfilForm.registrationSiren"),
+                  )}
+                  placeholder={firstLetterUppercase(
+                    t("Form.UpdateProfilForm.registrationSiren"),
+                  )}
+                  description={t("Form.UpdateProfilForm.description", {
+                    field: t("Form.UpdateProfilForm.registrationNumber"),
+                  })}
+                />
+              </>
+            )}
           </div>
           <Button type="submit">{t("Form.UpdateProfilForm.submit")}</Button>
         </form>
