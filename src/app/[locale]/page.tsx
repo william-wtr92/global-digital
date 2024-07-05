@@ -31,7 +31,7 @@ const IndexPage = () => {
   }
 
   return (
-    <div className="text-blueText flex flex-col items-center justify-center py-10">
+    <div className="flex flex-col items-center justify-center py-10 text-blueText">
       <div className="flex flex-col items-center">
         <h1 className="w-72 text-center text-2xl font-bold md:w-96">
           {t("Home.title")}
@@ -53,7 +53,7 @@ const IndexPage = () => {
         </div>
 
         {userInfo.id && <SearchInput />}
-        {!userInfo.id && <div className="bg-darkBlue mt-20 w-72 py-0.5"></div>}
+        {!userInfo.id && <div className="mt-20 w-72 bg-darkBlue py-0.5"></div>}
 
         <div className="mx-3 mt-16 flex flex-col items-center justify-center gap-10">
           <ImageTitle

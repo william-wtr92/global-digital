@@ -23,7 +23,7 @@ const SearchInput = () => {
         title={t("Home.search.placeholder")}
         type="search"
         placeholder={t("Home.search.placeholder")}
-        className="bg-skyBlue cursor-pointer rounded-full p-6 text-xs focus-visible:outline-none focus-visible:ring-0 md:text-sm"
+        className="cursor-pointer rounded-full bg-skyBlue p-6 text-xs focus-visible:outline-none focus-visible:ring-0 md:text-sm"
       />
       <CiSearch className="absolute right-2.5 top-4 h-4" />
     </Button>

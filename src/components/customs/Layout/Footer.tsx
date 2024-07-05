@@ -20,7 +20,7 @@ const Footer = () => {
   const t = useTranslations("Footer")
 
   return (
-    <div className="bg-skyBlue flex flex-col items-center gap-10 py-10">
+    <div className="flex flex-col items-center gap-10 bg-skyBlue py-10">
       <div className="flex flex-col items-center gap-4">
         {footerItem.map((item, index) => (
           <Link href={item.link} key={index} className="uppercase">

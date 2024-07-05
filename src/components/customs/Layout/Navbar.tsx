@@ -73,7 +73,7 @@ const Navbar = () => {
 
   return (
     <div className="sticky top-0 z-50">
-      <div className="bg-medianBlue flex h-16 items-center justify-between p-3">
+      <div className="flex h-16 items-center justify-between bg-medianBlue p-3">
         <Link href={routes.home} className="text-xl font-bold">
           CYBERLINKER
         </Link>
@@ -81,7 +81,7 @@ const Navbar = () => {
         {userInfo.id ? (
           <div className="hidden items-center gap-6 md:flex xl:gap-20">
             <Link href={routes.missions.search}>
-              <p className="text-medium bg-medianBlue rounded-md border-2 border-black border-opacity-20 px-4 py-1 hover:shadow-xl">
+              <p className="text-medium rounded-md border-2 border-black border-opacity-20 bg-medianBlue px-4 py-1 hover:shadow-xl">
                 <kbd className="flex items-center gap-4 xl:gap-8">
                   <span className="hidden text-sm font-light opacity-55 xl:block">
                     {t("search.placeholder")}
@@ -112,7 +112,7 @@ const Navbar = () => {
               <LocaleSelect />
               <Button
                 onClick={handleLogout}
-                className="text-md bg-darkBlue cursor-pointer rounded-md px-3 py-1.5 font-normal text-white"
+                className="text-md cursor-pointer rounded-md bg-darkBlue px-3 py-1.5 font-normal text-white"
                 variant="ghostNoHover"
                 size="none"
                 onClickCapture={handleLogout}
@@ -133,7 +133,7 @@ const Navbar = () => {
             <Link
               href={routes.login}
               onClick={toggleMenu}
-              className="bg-darkBlue rounded-full px-4 py-1 text-white"
+              className="rounded-full bg-darkBlue px-4 py-1 text-white"
             >
               {t("login")}
             </Link>
@@ -152,7 +152,7 @@ const Navbar = () => {
       </div>
 
       {isMenuOpen && (
-        <div className="bg-medianBlue fixed inset-0 flex flex-col md:hidden">
+        <div className="fixed inset-0 flex flex-col bg-medianBlue md:hidden">
           <div className="flex h-16 items-center justify-between p-3">
             <Link
               href={routes.home}
@@ -189,7 +189,7 @@ const Navbar = () => {
                   variant="ghostNoHover"
                   size="none"
                   onClick={handleLogout}
-                  className="bg-darkBlue rounded-full px-10 py-2 text-2xl font-bold text-white"
+                  className="rounded-full bg-darkBlue px-10 py-2 text-2xl font-bold text-white"
                 >
                   {t("logout")}
                 </Button>
@@ -206,7 +206,7 @@ const Navbar = () => {
                 <Link
                   href={routes.login}
                   onClick={toggleMenu}
-                  className="bg-darkBlue rounded-full px-10 py-2 text-2xl font-bold text-white"
+                  className="rounded-full bg-darkBlue px-10 py-2 text-2xl font-bold text-white"
                 >
                   {t("login")}
                 </Link>
