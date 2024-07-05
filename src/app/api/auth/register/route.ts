@@ -8,25 +8,25 @@ import { hashPassword } from "@/utils/hashPassword"
 import { signJWT } from "@/utils/jwt"
 
 export const POST = async (req: NextRequest) => {
-  const body = await req.json()
+  const { profile, role } = await req.json()
 
   try {
-    const [passwordHash, passwordSalt] = await hashPassword(body.password)
+    const [passwordHash, passwordSalt] = await hashPassword(profile.password)
 
     const user = await db
       .insert(users)
-      .values({ ...body, passwordHash, passwordSalt })
+      .values({ ...profile, passwordHash, passwordSalt })
       .returning()
 
-    await db.insert(freelance).values({
-      userId: user[0].id,
-      ...body,
-    })
+    role === "freelance" &&
+      (await db.insert(freelance).values({
+        userId: user[0].id,
+        ...profile,
+      }))
 
     const jwt = signJWT(user[0].id)
 
     cookies().set("Authorization", jwt.toString(), {
-      httpOnly: true,
       secure: true,
       maxAge: appConfig.security.cookies.authExpiration,
       sameSite: "strict",

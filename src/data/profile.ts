@@ -1,6 +1,6 @@
-import type { Profile } from "@/types/freelance"
+import type { FreelanceProfile } from "@/types/freelance"
 
-export const emptyProfile: Profile = {
+export const emptyProfile: FreelanceProfile = {
   firstName: "",
   lastName: "",
   email: "",

@@ -8,7 +8,7 @@ export type Freelance = {
   registrationNumber: string
 }
 
-export type Profile = {
+export type FreelanceProfile = {
   id?: string
   firstName: string
   lastName: string

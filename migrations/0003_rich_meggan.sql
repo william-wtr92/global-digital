@@ -1,0 +1,1 @@
+ALTER TABLE "Employee" ALTER COLUMN "company_id" DROP NOT NULL;

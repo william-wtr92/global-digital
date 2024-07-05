@@ -13,12 +13,15 @@ const RegistrationPage = () => {
 
       <div className="flex flex-col gap-20 md:flex-row">
         <Link
-          href={routes.freelance.createProfile}
+          href={routes.createProfile("freelance")}
           className="bg-skyBlue p-16 font-semibold uppercase"
         >
           {t("freeLance")}
         </Link>
-        <Link href={"/"} className="bg-skyBlue p-16 font-semibold uppercase">
+        <Link
+          href={routes.createProfile("recruiter")}
+          className="bg-skyBlue p-16 font-semibold uppercase"
+        >
           {t("recruiter")}
         </Link>
       </div>

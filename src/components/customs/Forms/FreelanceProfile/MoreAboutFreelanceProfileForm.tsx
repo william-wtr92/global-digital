@@ -32,15 +32,15 @@ import {
   MoreAboutFreelanceSchema,
   type MoreAboutFreelanceType,
 } from "@/types/formTypes"
-import type { Profile } from "@/types/freelance"
+import type { FreelanceProfile } from "@/types/freelance"
 import { capitalizeFirstLetter } from "@/utils/forms"
 import routes from "@/web/routes"
 
 type MoreAboutFreelanceProfileFormProps = {
   currentStep: number
   setCurrentStep: Dispatch<SetStateAction<number>>
-  profile: Profile
-  setProfile: Dispatch<SetStateAction<Profile>>
+  profile: FreelanceProfile
+  setProfile: Dispatch<SetStateAction<FreelanceProfile>>
 }
 
 const MoreAboutFreelanceProfileForm = ({

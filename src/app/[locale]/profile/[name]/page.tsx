@@ -4,16 +4,16 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useQueryState } from "nuqs"
-import { CiLocationOn } from "react-icons/ci"
 import { IoSettingsOutline } from "react-icons/io5"
 import { RxPerson } from "react-icons/rx"
 import { toast } from "sonner"
 
+import LocalisationAndArea from "@/components/customs/Profile/LocalisationAndArea"
 import Spinner from "@/components/customs/Utils/Spinner"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { getFullNameLowerCase } from "@/utils/functions"
 import useAppContext from "@/web/hooks/useAppContext"
-import { useFreelanceProfile } from "@/web/hooks/useProfile"
+import { useProfile } from "@/web/hooks/useProfile"
 import routes from "@/web/routes"
 
 const FreelanceAccount = () => {
@@ -22,13 +22,7 @@ const FreelanceAccount = () => {
   const [id] = useQueryState("id")
   const { userInfo } = useAppContext()
 
-  const { isPending, data, error } = useFreelanceProfile(id || "")
-
-  if (userInfo.id !== id) {
-    router.push(routes.home)
-
-    return
-  }
+  const { isPending, data, error } = useProfile(id || "")
 
   if (isPending) {
     return (
@@ -56,7 +50,7 @@ const FreelanceAccount = () => {
     <div className="flex h-full flex-col">
       {userInfo.id === id && (
         <Link
-          href={routes.freelance.updateProfile(
+          href={routes.updateProfile(
             getFullNameLowerCase(data.Users.firstName, data.Users.lastName),
             id,
           )}
@@ -79,9 +73,12 @@ const FreelanceAccount = () => {
               <h1 className="text-center text-4xl font-bold text-blueText md:text-start">
                 {data.Users.firstName} {data.Users.lastName}
               </h1>
-              <p className="text-center text-xl md:text-left">
-                {data.Freelance.jobTitle}
-              </p>
+
+              {data.Freelance && (
+                <p className="text-center text-xl md:text-left">
+                  {data.Freelance.jobTitle}
+                </p>
+              )}
 
               <div className="g mt-2 flex items-center justify-center gap-1 md:justify-start">
                 {[...Array(4)].map((_, i) => (
@@ -107,16 +104,7 @@ const FreelanceAccount = () => {
             </div>
           </div>
 
-          <div className="flex flex-col items-center justify-center gap-4 md:flex-row md:justify-between md:gap-0 md:py-10">
-            <div className="flex items-center gap-2 text-xl md:w-full">
-              <CiLocationOn className="text-3xl" />
-              <p className="text-2xl font-medium">
-                {data.Freelance.localisation}
-              </p>
-            </div>
-
-            <p className="text-2xl font-medium md:w-full">{data.Area.value}</p>
-          </div>
+          <LocalisationAndArea data={data} />
         </div>
       </div>
     </div>
