@@ -5,27 +5,23 @@ import appConfig from "@/config/appConfig"
 import * as schema from "@/db/schema"
 
 const {
+  isBuild,
   db: { host, user, password, port, name },
 } = appConfig
+const client = new Client({
+  host,
+  user,
+  password,
+  port,
+  database: name,
+})
 
-let db: ReturnType<typeof drizzle>
-
-if (process.env.IS_BUILD === "false") {
-  const client = new Client({
-    host,
-    user,
-    password,
-    port,
-    database: name,
-  })
-
-  try {
+try {
+  if (isBuild === "false") {
     await client.connect()
-  } catch (error) {
-    process.stderr.write((error as Error).message)
   }
-
-  db = drizzle(client, { schema })
+} catch (error) {
+  process.stderr.write((error as Error).message)
 }
 
-export { db }
+export const db = drizzle(client, { schema })
