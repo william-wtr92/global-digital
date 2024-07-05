@@ -1,0 +1,149 @@
+name: CD
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: 'Choose the environment to deploy to'
+        required: true
+        default: 'dev'
+        options:
+          - dev
+          - prod
+      destroy:
+        type: boolean
+        description: 'Choose whether to destroy the infrastructure'
+        required: true
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+
+  terraform:
+    name: Terraform
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./infrastructure/terraform/plan
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Create terraform.tfvars file
+        run: |
+          echo "access_key = \"${{ secrets.TF_SCW_ACCESS_KEY }}\"" > terraform.tfvars
+          echo "secret_key = \"${{ secrets.TF_SCW_SECRET_KEY }}\"" >> terraform.tfvars
+          echo "project_id = \"${{ secrets.TF_SCW_PROJECT_ID }}\"" >> terraform.tfvars
+          echo "organization_id = \"${{ secrets.TF_SCW_ORGANIZATION_ID }}\"" >> terraform.tfvars
+          echo "region = \"${{ vars.TF_SCW_REGION }}\"" >> terraform.tfvars
+          echo "zone = \"${{ vars.TF_SCW_ZONE }}\"" >> terraform.tfvars
+          echo "project_name = \"${{ vars.TF_SCW_PROJECT_NAME }}\"" >> terraform.tfvars
+          echo "project_env = \"${{ vars.TF_SCW_PROJECT_ENV }}\"" >> terraform.tfvars
+          echo "pool_size = \"${{ vars.TF_SCW_POOL_SIZE }}\"" >> terraform.tfvars
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan -input=false -var-file=terraform.tfvars
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -var-file=terraform.tfvars
+
+      - name: Upload Terraform state
+        uses: actions/upload-artifact@v2
+        with:
+          name: terraform-state
+          path: ./infrastructure/terraform/plan/terraform.tfstate
+
+      - name: Upload kubeconfig
+        uses: actions/upload-artifact@v2
+        with:
+          name: kubeconfig
+          path: ./infrastructure/terraform/plan/kubeconfig
+
+  deploy-database:
+    name: Deploy database
+    needs: terraform
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./infrastructure/helm
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download kubeconfig
+        uses: actions/download-artifact@v2
+        with:
+          name: kubeconfig
+          path: ./infrastructure/helm/
+
+      - name: Configure kubectl
+        run: |
+          mkdir -p ~/.kube
+          mv kubeconfig ~/.kube/config
+
+      - name: Install Helm
+        run: |
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+
+      - name: Add Helm repo
+        run: helm repo add bitnami https://charts.bitnami.com/bitnami
+
+      - name: Update Helm repo
+        run: helm repo update
+
+      - name: Install Postgres Helm chart
+        run: helm upgrade --install postgres bitnami/postgresql --namespace postgres --create-namespace --values values/postgres-values.yaml
+
+  deploy-webapp:
+    name: Deploy webapp
+    needs: deploy-database
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./infrastructure/kubernetes/app
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download kubeconfig
+        uses: actions/download-artifact@v2
+        with:
+          name: kubeconfig
+          path: ./infrastructure/kubernetes/app/
+
+      - name: Configure kubectl
+        run: |
+          mkdir -p ~/.kube
+          mv kubeconfig ~/.kube/config
+
+      - name: Create NS
+        run: kubectl create ns app-ns
+
+      - name: Create secret
+        run: kubectl create secret docker-registry regcred --docker-server=ghcr.io --docker-username=${{ secrets.DOCKER_USERNAME }} --docker-password=${{ secrets.DOCKER_PASSWORD }} --namespace app-ns
+
+      - name: Apply Kubernetes resources
+        run: kubectl apply -f .
