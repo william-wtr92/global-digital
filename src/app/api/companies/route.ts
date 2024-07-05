@@ -1,19 +1,11 @@
-import { z } from "zod"
-
 import { db } from "@/db/client"
 import { company } from "@/db/schema"
 import { SC } from "@/def/status"
 import type { ReadonlyArrayZod } from "@/utils/types"
-import { companiesCreateFormValidator } from "@/utils/validators/companies"
-
-const companyCreateValidator = z.object({
-  businessName: z.string().min(1),
-  description: z.string().min(1),
-  areaId: z.string().uuid(),
-  logo: z.string().url(),
-  headQuarter: z.string().min(1),
-  kbisUrl: z.string().url(),
-})
+import {
+  companiesCreateFormValidator,
+  companyCreateValidator,
+} from "@/utils/validators/companies"
 
 export const POST = async (req: Request) => {
   try {
