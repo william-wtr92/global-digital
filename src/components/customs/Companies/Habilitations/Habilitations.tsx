@@ -40,7 +40,7 @@ const Habilitations = () => {
 
   return (
     <div className="my-6 flex h-full flex-col items-center gap-6">
-      <h1 className="w-2/3 text-center text-2xl font-bold md:text-4xl">
+      <h1 className="w-2/3 text-center text-2xl font-bold text-blueText md:text-4xl">
         {t("Companies.habilitation.title")}
       </h1>
 

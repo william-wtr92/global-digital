@@ -3,6 +3,24 @@
     "owner": "Owner",
     "manager": "Manager"
   },
+  "Home": {
+    "title": "Meet the talents of today and tomorrow.",
+    "publishedMission": "Missions published",
+    "freelanceAvailable": "Freelancers available",
+    "subscribedCompanies": "Registered companies",
+    "projectDeserveBest": "Your projects deserve the best collaborators.",
+    "rightYourContract": "Write your contracts with peace of mind thanks to our experts.",
+    "collaborativeSpace": "Take advantage of collaborative spaces dedicated to your projects.",
+    "search": {
+      "placeholder": "Search for a mission or freelancer"
+    }
+  },
+  "Footer": {
+    "legalNotice": "Legal Notice",
+    "aboutUs": "About Us",
+    "siteMap": "Sitemap",
+    "rightReserved": "© 2024 CYBERLINKER ALL RIGHTS RESERVED."
+  },
   "CompaniesId": {
     "availablesMissions": "Availables missions",
     "error": "Internal Server Error"

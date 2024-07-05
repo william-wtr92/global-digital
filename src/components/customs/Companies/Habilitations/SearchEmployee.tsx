@@ -80,7 +80,7 @@ const SearchEmployee = () => {
           employeesSuggestions={employeesSuggestions}
           focus={focus}
           setEmployeesSuggestions={setEmployeesSuggestions}
-        />{" "}
+        />
       </div>
     </>
   )

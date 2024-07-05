@@ -71,7 +71,7 @@ const SearchDisplayEmployee = ({
                 size="none"
                 key={item.id}
                 onMouseDown={() => handleAddEmployee(item.id)}
-                className="text-md cursor-pointer justify-start rounded px-2 py-1 hover:bg-gray-200"
+                className="text-md cursor-pointer justify-start rounded px-2 py-1 hover:bg-skyBlue"
               >
                 {item.firstName}
               </Button>

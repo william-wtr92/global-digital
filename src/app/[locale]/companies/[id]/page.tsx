@@ -2,8 +2,10 @@
 
 import { useQuery } from "@tanstack/react-query"
 import Image from "next/image"
+import Link from "next/link"
 import { useParams } from "next/navigation"
 import { useFormatter, useTranslations } from "next-intl"
+import { BsPersonGear } from "react-icons/bs"
 import { toast } from "sonner"
 
 import Spinner from "@/components/customs/Utils/Spinner"
@@ -16,7 +18,7 @@ import routes from "@/web/routes"
 const CompaniesIdPage = () => {
   const t = useTranslations("CompaniesId")
   const format = useFormatter()
-  const { id } = useParams()
+  const { id } = useParams() as { id: string }
   const {
     data: companyResult,
     isSuccess,
@@ -83,6 +85,9 @@ const CompaniesIdPage = () => {
   return (
     <div className="mt-6 flex flex-col items-center gap-5">
       <div className="flex items-center justify-center gap-5">
+        <Link href={routes.companies[":id"].habilitations(id)}>
+          <BsPersonGear className="text-5xl" />
+        </Link>
         <Image
           src={companyResult!.data.logo}
           alt={`Logo of the company ${companyResult!.data.businessName}`}

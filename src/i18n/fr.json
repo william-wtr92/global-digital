@@ -3,6 +3,24 @@
     "owner": "Propriétaire",
     "manager": "Gestionnaire"
   },
+  "Home": {
+    "title": "Rencontrez les talents d’aujourd’hui, et de demain.",
+    "publishedMission": "Missions publiées",
+    "freelanceAvailable": "Freelances disponibles",
+    "subscribedCompanies": "Entreprises inscrites",
+    "projectDeserveBest": "Vos projets méritent les meilleurs collaborateurs.",
+    "rightYourContract": "Rédigez vos contrats l’esprit léger grâce à nos experts.",
+    "collaborativeSpace": "Profitez d’espaces collaboratifs dédiés à vos projets.",
+    "search": {
+      "placeholder": "Rechercher une mission ou un freelance"
+    }
+  },
+  "Footer": {
+    "legalNotice": "Mentions légales",
+    "aboutUs": "À propos de nous",
+    "siteMap": "Plan du site",
+    "rightReserved": "© 2024 CYBERLINKER TOUS DROITS RÉSERVÉS."
+  },
   "Error": {
     "anErrorOccurred": "Une erreur est survenue",
     "email_unique": "Cet email est déjà utilisé",
@@ -12,7 +30,6 @@
     "registrationSuccess": "Inscription réussie",
     "updtaedSuccess": "Profil mis à jour avec succès"
   },
-  "Areas": {},
   "CompaniesId": {
     "availablesMissions": "Missions disponibles",
     "error": "Une erreur est survenu"

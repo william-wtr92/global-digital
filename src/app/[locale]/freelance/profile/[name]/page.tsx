@@ -76,7 +76,7 @@ const FreelanceAccount = () => {
               </AvatarFallback>
             </Avatar>
             <div className="flex flex-col gap-4">
-              <h1 className="text-center text-4xl font-bold md:text-start">
+              <h1 className="text-center text-4xl font-bold text-blueText md:text-start">
                 {data.Users.firstName} {data.Users.lastName}
               </h1>
               <p className="text-center text-xl md:text-left">

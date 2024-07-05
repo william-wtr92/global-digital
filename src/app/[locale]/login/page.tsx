@@ -153,7 +153,7 @@ const LoginPage = () => {
             </Link>
             <Button
               disabled={!form.formState.isValid}
-              className={`w-1/2 bg-gray-400 py-2.5 font-semibold text-white ${!form.formState.isValid ? "cursor-not-allowed opacity-50" : "bg-gray-800 hover:cursor-pointer"}`}
+              className={`w-1/2 bg-darkBlue py-2.5 font-semibold text-white ${!form.formState.isValid ? "cursor-not-allowed opacity-50" : "bg-gray-700 hover:cursor-pointer"}`}
               type="submit"
             >
               {t("Form.submit")}
