@@ -1,0 +1,6 @@
+---
+auth:
+  audit:
+    logConnections: true
+  postgresPassword: password
+...
