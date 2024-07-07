@@ -8,10 +8,10 @@ import { IoSettingsOutline } from "react-icons/io5"
 import { RxPerson } from "react-icons/rx"
 import { toast } from "sonner"
 
-import LocalisationAndArea from "@/components/customs/Profile/LocalisationAndArea"
 import { Loading } from "@/components/layout/Loading"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useProfile } from "@/features/account/profil/hooks/useProfile"
+import LocalisationAndArea from "@/features/freelance/components/LocalisationAndArea"
 import { useAppContext } from "@/hooks/useAppContext"
 import { getFullNameLowerCase } from "@/utils/functions"
 import routes from "@/utils/routes"
@@ -21,7 +21,7 @@ const FreelanceAccount = () => {
   const router = useRouter()
   const [id] = useQueryState("id")
   const { userInfo } = useAppContext()
-  const { isPending, data, error } = useProfile(id!)
+  const { isPending, data, isError } = useProfile(id!)
 
   if (userInfo.id !== id) {
     router.push(routes.home)
@@ -33,15 +33,8 @@ const FreelanceAccount = () => {
     return <Loading />
   }
 
-  if (error) {
+  if (isError) {
     toast.error(t("Error.anErrorOccurred"))
-    router.push(routes.home)
-
-    return
-  }
-
-  if (data.isError) {
-    toast.error(t(`Error.${data.message}`))
     router.push(routes.home)
 
     return

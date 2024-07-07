@@ -1,9 +1,7 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query"
-
 import type { SelectCandidate, SelectUser } from "@/db/schema"
-import { apiFetch } from "@/lib/api"
+import { useQuery } from "@/hooks/useQuery"
 import routes from "@/utils/routes"
 
 type Response = {
@@ -14,18 +12,5 @@ type Response = {
   }[]
 }
 
-const fetchCandidates = async (missionId: string) => {
-  const response = await apiFetch<Response>({
-    url: routes.api.missions.candidate.list(missionId),
-    method: "GET",
-    credentials: "include",
-  })
-
-  return response.data
-}
-
 export const useCandidates = (missionId: string) =>
-  useQuery<Response>({
-    queryKey: ["candidates", missionId],
-    queryFn: () => fetchCandidates(missionId),
-  })
+  useQuery<Response>(routes.api.missions.candidate.list(missionId))

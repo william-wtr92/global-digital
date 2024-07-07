@@ -37,7 +37,7 @@ import {
   updateAccountFreelanceSchema,
   updateAccountUserSchema,
   type UpdateAccountFreelanceType,
-} from "@/features/auth/registration/utils/validators/form"
+} from "@/features/auth/register/utils/validators/form"
 import type { FreelanceProfile } from "@/features/freelance/types/freelance"
 import { apiFetch } from "@/lib/api"
 import { getFullNameLowerCase } from "@/utils/functions"

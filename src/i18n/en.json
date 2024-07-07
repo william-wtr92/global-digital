@@ -109,7 +109,7 @@
     "updtaedSuccess": "Profile updated successfully"
   },
   "Navbar": {
-    "signup": "Registration",
+    "signup": "Register",
     "login": "Login",
     "logout": "Logout",
     "logoutSuccess": "You have been successfully logged out.",

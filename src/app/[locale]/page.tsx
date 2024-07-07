@@ -11,14 +11,14 @@ import { useAppContext } from "@/hooks/useAppContext"
 
 const IndexPage = () => {
   const { userInfo } = useAppContext()
-  const { data, isPending, error } = useHome()
+  const { data, isPending, isError } = useHome()
   const t = useTranslations()
 
   if (isPending) {
     return <Loading />
   }
 
-  if (error) {
+  if (isError) {
     return (
       <div className="flex h-full items-center justify-center text-xl">
         {t("Error.anErrorOccurred")}

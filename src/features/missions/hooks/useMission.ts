@@ -1,7 +1,7 @@
-import { useQuery } from "@tanstack/react-query"
+"use client"
 
 import type { SelectCompany, SelectMission } from "@/db/schema"
-import { apiFetch } from "@/lib/api"
+import { useQuery } from "@/hooks/useQuery"
 import routes from "@/utils/routes"
 
 type Response = {
@@ -13,18 +13,5 @@ type Response = {
   }
 }
 
-const fetchMission = async (missionId: string) => {
-  const response = await apiFetch<Response>({
-    url: routes.api.missions.detailedMission(missionId),
-    method: "GET",
-    credentials: "include",
-  })
-
-  return response.data
-}
-
 export const useMission = (missionId: string) =>
-  useQuery<Response>({
-    queryKey: ["mission", missionId],
-    queryFn: () => fetchMission(missionId),
-  })
+  useQuery<Response>(routes.api.missions.detailedMission(missionId))

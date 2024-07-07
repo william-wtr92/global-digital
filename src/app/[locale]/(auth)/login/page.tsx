@@ -21,7 +21,10 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { loginSchema, type LoginType } from "@/features/auth/login/types/login"
+import {
+  loginSchema,
+  type LoginType,
+} from "@/features/auth/login/utils/validators/login"
 import { apiFetch } from "@/lib/api"
 import { SC } from "@/utils/constants/status"
 import routes from "@/utils/routes"
@@ -142,7 +145,7 @@ const LoginPage = () => {
             </Link>
             <Button
               disabled={!form.formState.isValid}
-              className={`bg-darkBlue w-1/2 py-2.5 font-semibold text-white ${!form.formState.isValid ? "cursor-not-allowed opacity-50" : "bg-gray-700 hover:cursor-pointer"}`}
+              className={`w-1/2 bg-darkBlue py-2.5 font-semibold text-white ${!form.formState.isValid ? "cursor-not-allowed opacity-50" : "bg-gray-700 hover:cursor-pointer"}`}
               type="submit"
             >
               {t("Form.submit")}

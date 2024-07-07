@@ -66,9 +66,7 @@ const UpdateMissionPage = () => {
   }
 
   if (!data?.detailedMission.isEmployee) {
-    router.push(routes.missions.search)
-
-    return null
+    router.replace(routes.missions.search)
   }
 
   return (

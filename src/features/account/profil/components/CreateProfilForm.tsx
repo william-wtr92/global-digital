@@ -12,7 +12,7 @@ import { Form } from "@/components/ui/form"
 import {
   signupFormSchema,
   type SignupType,
-} from "@/features/auth/registration/utils/validators/form"
+} from "@/features/auth/register/utils/validators/form"
 import type { FreelanceProfile } from "@/features/freelance/types/freelance"
 import { firstLetterUppercase } from "@/utils/string"
 

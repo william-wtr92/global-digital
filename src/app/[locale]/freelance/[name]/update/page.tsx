@@ -16,7 +16,7 @@ const FreelanceUpdateProfile = () => {
   const t = useTranslations()
   const { userInfo } = useAppContext()
   const [id] = useQueryState("id")
-  const { data, error, isPending } = useProfile(id!)
+  const { data, isPending, isError } = useProfile(id!)
 
   if (userInfo.id !== id) {
     router.push(routes.home)
@@ -28,15 +28,8 @@ const FreelanceUpdateProfile = () => {
     return <Loading />
   }
 
-  if (error) {
+  if (isError) {
     toast.error(t("Error.anErrorOccurred"))
-    router.push(routes.home)
-
-    return
-  }
-
-  if (data.isError) {
-    toast.error(t(`Error.${data.message}`))
     router.push(routes.home)
 
     return

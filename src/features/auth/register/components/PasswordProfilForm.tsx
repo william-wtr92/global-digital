@@ -14,7 +14,7 @@ import { Form } from "@/components/ui/form"
 import {
   passwordSchema,
   type PasswordType,
-} from "@/features/auth/registration/utils/validators/form"
+} from "@/features/auth/register/utils/validators/form"
 import type { FreelanceProfile } from "@/features/freelance/types/freelance"
 import { apiFetch } from "@/lib/api"
 import routes from "@/utils/routes"

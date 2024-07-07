@@ -9,7 +9,6 @@ import { useAreas } from "@/features/areas/hooks/useAreas"
 const LocalisationAndArea = () => {
   const [id] = useQueryState("id")
   const { data: dataProfile } = useProfile(id!)
-
   const { data: dataAreas } = useAreas()
 
   if (dataProfile) {

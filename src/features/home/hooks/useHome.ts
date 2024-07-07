@@ -1,8 +1,6 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query"
-
-import { apiFetch } from "@/lib/api"
+import { useQuery } from "@/hooks/useQuery"
 import routes from "@/utils/routes"
 
 export type HomeResponse = {
@@ -14,16 +12,4 @@ export type HomeResponse = {
   }
 }
 
-const fetchHome = async () => {
-  const response = await apiFetch<HomeResponse>({
-    url: routes.api.home,
-  })
-
-  return response.data
-}
-
-export const useHome = () =>
-  useQuery<HomeResponse>({
-    queryKey: ["home"],
-    queryFn: fetchHome,
-  })
+export const useHome = () => useQuery<HomeResponse>(routes.api.home)

@@ -17,6 +17,7 @@ export const apiFetch = async <Body>({
   const baseApiURL = process.env.NEXT_PUBLIC_BASE_API_URL || ""
   const res = await fetch(`${baseApiURL}${url}`, {
     method: method ?? "GET",
+    credentials: "include",
     ...(data && { body: JSON.stringify(data) }),
     ...options,
     headers: {

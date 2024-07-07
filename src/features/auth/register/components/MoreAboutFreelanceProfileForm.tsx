@@ -30,7 +30,7 @@ import type { Area } from "@/features/areas/types/area"
 import {
   moreAboutFreelanceSchema,
   type MoreAboutFreelanceType,
-} from "@/features/auth/registration/utils/validators/form"
+} from "@/features/auth/register/utils/validators/form"
 import type { FreelanceProfile } from "@/features/freelance/types/freelance"
 import { apiFetch } from "@/lib/api"
 import routes from "@/utils/routes"
