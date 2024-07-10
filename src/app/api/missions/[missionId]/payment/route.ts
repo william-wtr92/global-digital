@@ -5,9 +5,9 @@ import Stripe from "stripe"
 import appConfig from "@/config/appConfig"
 import { db } from "@/db/client"
 import { mission } from "@/db/schema"
-import { SC } from "@/def/status"
-import { MissionStatus } from "@/types"
-import routes from "@/web/routes"
+import { MissionStatus } from "@/features/missions/types/missions"
+import { SC } from "@/utils/constants/status"
+import routes from "@/utils/routes"
 
 /* eslint-disable camelcase */
 const stripe = new Stripe(appConfig.security.stripe.privateKey)

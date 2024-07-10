@@ -126,7 +126,7 @@
     }
   },
   "LocaleSelect": {
-    "locale": "{locale, select, en {🇺🇸 Anglais} fr {🇫🇷 Français} es {🇪🇸 Espagnol} other {Unknown}}"
+    "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 Français} other {Unknown}}"
   },
   "Login": {
     "title": "Bon retour !",

@@ -3,9 +3,9 @@
 import { type NextRequest, NextResponse } from "next/server"
 import createMiddleware from "next-intl/middleware"
 
-import routes from "@/web/routes"
+import { locales, type Locale } from "@/config/i18nConfig"
+import routes from "@/utils/routes"
 
-const locales = ["en", "fr"]
 const adminPathname = "/admin"
 const middlewareI18n = createMiddleware({
   locales,
@@ -40,7 +40,7 @@ export default function middleware(request: NextRequest) {
     )
     const redirectUrl = new URL(request.nextUrl.toString())
 
-    if (!token && !isPublic && locales.includes(locale)) {
+    if (!token && !isPublic && locales.includes(locale as Locale)) {
       redirectUrl.pathname = `/${locale}${routes.login}`
 
       return NextResponse.redirect(redirectUrl)

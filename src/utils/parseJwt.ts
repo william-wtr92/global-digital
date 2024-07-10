@@ -1,4 +1,4 @@
-export type UserToken = {
+type UserToken = {
   user: { id: string; firstName: string; lastName: string }
 }
 

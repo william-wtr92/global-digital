@@ -1,44 +1,35 @@
-import { cookies } from "next/headers"
-import { NextIntlClientProvider } from "next-intl"
-import { getMessages } from "next-intl/server"
 import { Toaster } from "sonner"
 
 import "@/app/globals.css"
 
-import Layout from "@/components/customs/Layout/Layout"
+import { BaseLayout } from "@/layouts/BaseLayout"
+import { AppContextProvider } from "@/providers/AppContext"
+import { IntlClientProvider } from "@/providers/NextIntlClientProvider"
 import TanstackProvider from "@/providers/TanstackProvider"
-import { parseSession } from "@/utils/parseJwt"
-import { AppContextProvider } from "@/web/hooks/useAppContext"
 
-export default async function LocaleLayout({
+export default function LocaleLayout({
   children,
   params: { locale },
 }: {
   children: React.ReactNode
   params: { locale: string }
 }) {
-  const messages = await getMessages()
-  const tokenValue = cookies().get("Authorization")?.value
-  const userInfo = tokenValue
-    ? parseSession(tokenValue).user
-    : { id: "", firstName: "", lastName: "" }
-
   return (
     <html lang={locale}>
       <head>
         <title>CyberLinker</title>
       </head>
       <body>
-        <NextIntlClientProvider messages={messages}>
-          <AppContextProvider sessionUserInfo={userInfo}>
+        <IntlClientProvider>
+          <AppContextProvider>
             <TanstackProvider>
-              <Layout>
+              <BaseLayout>
                 {children}
                 <Toaster position="bottom-right" richColors />
-              </Layout>
+              </BaseLayout>
             </TanstackProvider>
           </AppContextProvider>
-        </NextIntlClientProvider>
+        </IntlClientProvider>
       </body>
     </html>
   )

@@ -109,7 +109,7 @@
     "updtaedSuccess": "Profile updated successfully"
   },
   "Navbar": {
-    "signup": "Registration",
+    "signup": "Register",
     "login": "Login",
     "logout": "Logout",
     "logoutSuccess": "You have been successfully logged out.",
@@ -119,7 +119,7 @@
     }
   },
   "LocaleSelect": {
-    "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 French} es {🇪🇸 Spanish} other {Unknown}}"
+    "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 Français} other {Unknown}}"
   },
   "Login": {
     "title": "Welcome back!",

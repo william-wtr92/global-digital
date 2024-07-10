@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server"
 
 import { db } from "@/db/client"
 import { candidate, mission } from "@/db/schema"
-import { SC } from "@/def/status"
+import { SC } from "@/utils/constants/status"
 
 export const DELETE = async (
   req: NextRequest,

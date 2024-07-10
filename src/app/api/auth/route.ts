@@ -5,7 +5,7 @@ import { type NextRequest } from "next/server"
 import appConfig from "@/config/appConfig"
 import { db } from "@/db/client"
 import { users } from "@/db/schema"
-import { SC } from "@/def/status"
+import { SC } from "@/utils/constants/status"
 import { sanitizeUser } from "@/utils/dto/sanitizeUser"
 
 export const GET = async (req: NextRequest) => {
@@ -20,7 +20,7 @@ export const GET = async (req: NextRequest) => {
   }
 
   try {
-    const decoded = await verify(jwt, appConfig.security.jwt.secret)
+    const decoded = verify(jwt, appConfig.security.jwt.secret)
 
     if (!decoded || typeof decoded === "string") {
       return Response.json(

@@ -10,27 +10,29 @@ import {
 } from "@heroicons/react/24/outline"
 import { CheckIcon } from "@radix-ui/react-icons"
 import { loadStripe } from "@stripe/stripe-js"
-import { useQueryClient, useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useTranslations } from "next-intl"
+import { useFormatter, useTranslations } from "next-intl"
 import { useQueryState } from "nuqs"
 import { useState } from "react"
 import { toast } from "sonner"
 
-import CustomAlertDialog from "@/components/customs/Utils/CustomAlertDialog"
-import Spinner from "@/components/customs/Utils/Spinner"
+import { Loading } from "@/components/layout/Loading"
 import { Button } from "@/components/ui/button"
-import { SC } from "@/def/status"
+import CustomAlertDialog from "@/components/utils/CustomAlertDialog"
+import { useCandidate } from "@/features/missions/candidate/hooks/useCandidate"
+import { useCandidates } from "@/features/missions/candidate/hooks/useCandidates"
+import { useMission } from "@/features/missions/hooks/useMission"
+import {
+  MissionOperating,
+  MissionStatus,
+} from "@/features/missions/types/missions"
 import { apiFetch } from "@/lib/api"
-import { MissionOperating, MissionStatus } from "@/types"
-import { endDate, startDate } from "@/utils/date"
+import { SC } from "@/utils/constants/status"
 import { getFullName } from "@/utils/functions"
+import routes from "@/utils/routes"
 import { firstLetterUppercase } from "@/utils/string"
-import { useCandidate } from "@/web/hooks/useCandidate"
-import { useCandidates } from "@/web/hooks/useCandidates"
-import { useMission } from "@/web/hooks/useMission"
-import routes from "@/web/routes"
 
 const stripePublicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 
@@ -43,9 +45,9 @@ const stripePromise = loadStripe(stripePublicKey)
 // eslint-disable-next-line complexity
 const DetailMissionPage = () => {
   const router = useRouter()
+  const formatter = useFormatter()
   const queryClient = useQueryClient()
   const t = useTranslations("Missions")
-
   const [id] = useQueryState("id")
 
   const [openDelete, setDeleteOpen] = useState<boolean>(false)
@@ -56,7 +58,7 @@ const DetailMissionPage = () => {
     data: missionData,
     isLoading: missionLoading,
     isError: missionError,
-  } = useMission(id || "")
+  } = useMission(id!)
   const resultMission =
     !missionLoading && !missionError ? missionData?.detailedMission : null
   const detailedMission = resultMission?.Missions
@@ -67,7 +69,7 @@ const DetailMissionPage = () => {
     data: candidateData,
     isLoading: candidateLoading,
     isError: candidateError,
-  } = useCandidate(id || "")
+  } = useCandidate(id!)
   const resultCandidate =
     !candidateLoading && !candidateError
       ? candidateData?.isUserAlreadyCandidate
@@ -77,7 +79,7 @@ const DetailMissionPage = () => {
     data: candidatesData,
     isLoading: candidatesLoading,
     isError: candidatesError,
-  } = useCandidates(id || "")
+  } = useCandidates(id!)
   const resultCandidates =
     !candidatesLoading && !candidatesError ? candidatesData?.candidates : null
 
@@ -88,8 +90,6 @@ const DetailMissionPage = () => {
           ? routes.api.missions.candidate.delete(id!)
           : routes.api.missions.candidate.send(id!),
         method: resultCandidate ? "DELETE" : "POST",
-        data: {},
-        credentials: "include",
       })
 
       if (response.status !== SC.success.OK) {
@@ -114,8 +114,6 @@ const DetailMissionPage = () => {
       const response = await apiFetch({
         url: routes.api.missions.candidate.deleteByEmployee(id!, candidateId),
         method: "DELETE",
-        data: {},
-        credentials: "include",
       })
 
       if (response.status !== SC.success.OK) {
@@ -136,8 +134,6 @@ const DetailMissionPage = () => {
       const response = await apiFetch({
         url: routes.api.missions.candidate.acceptedByEmployee(id!, candidateId),
         method: "PATCH",
-        data: {},
-        credentials: "include",
       })
 
       if (response.status !== SC.success.OK) {
@@ -349,7 +345,7 @@ const DetailMissionPage = () => {
   }
 
   if (missionLoading || candidateLoading || candidatesLoading) {
-    return <Spinner />
+    return <Loading />
   }
 
   return (
@@ -374,8 +370,20 @@ const DetailMissionPage = () => {
             <div className="flex flex-col items-center gap-3 xl:flex-row">
               <span>{t("duration")}</span>
               <span className="font-semibold">
-                {startDate(detailedMission)} {t("to")}{" "}
-                {endDate(detailedMission)}
+                {formatter.dateTime(
+                  new Date(resultMission.Missions.startDate),
+                  {
+                    year: "2-digit",
+                    month: "2-digit",
+                    day: "2-digit",
+                  },
+                )}{" "}
+                {t("to")}{" "}
+                {formatter.dateTime(new Date(resultMission.Missions.endDate), {
+                  year: "2-digit",
+                  month: "2-digit",
+                  day: "2-digit",
+                })}
               </span>
             </div>
           </div>

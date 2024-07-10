@@ -35,11 +35,3 @@ export const calculateDateSincePosted = (
 
   return `${minutes} ${minutes > 1 ? t("minutes") : t("minute")}`
 }
-
-export const startDate = (mission: SelectMission) => {
-  return new Date(mission.startDate).toLocaleDateString()
-}
-
-export const endDate = (mission: SelectMission) => {
-  return new Date(mission.endDate).toLocaleDateString()
-}

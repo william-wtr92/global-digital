@@ -1,85 +1,46 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query"
 import Image from "next/image"
 import Link from "next/link"
 import { useParams } from "next/navigation"
 import { useFormatter, useTranslations } from "next-intl"
 import { BsPersonGear } from "react-icons/bs"
-import { toast } from "sonner"
 
-import Spinner from "@/components/customs/Utils/Spinner"
-import type { SelectArea, SelectCompany, SelectMission } from "@/db/schema"
-import { SC } from "@/def/status"
-import { apiFetch, type ApiResponse } from "@/lib/api"
-import { capitalizeFirstLetter } from "@/utils/forms"
-import routes from "@/web/routes"
+import { AnErrorOccurred } from "@/components/layout/errors/AnErrorOccurred"
+import { Loading } from "@/components/layout/Loading"
+import { useArea } from "@/features/areas/hooks/useArea"
+import { useCompany } from "@/features/companies/hooks/useCompany"
+import { useCompanyMissions } from "@/features/companies/missions/hooks/useCompanyMissions"
+import routes from "@/utils/routes"
+import { firstLetterUppercase } from "@/utils/string"
 
 const CompaniesIdPage = () => {
-  const t = useTranslations("CompaniesId")
-  const format = useFormatter()
-  const { id } = useParams() as { id: string }
+  const t = useTranslations()
+  const formatter = useFormatter()
+  const { id } = useParams<{ id: string }>()
   const {
     data: companyResult,
     isSuccess,
-    isLoading: isLoadingCompany,
-  } = useQuery<ApiResponse<SelectCompany>>({
-    queryKey: [routes.api.companies[":id"].index(id as string)],
-    queryFn: async () => {
-      const response = await apiFetch({
-        url: routes.api.companies[":id"].index(id as string),
-      })
+    isPending: isPendingCompany,
+    isError: isCompanyError,
+  } = useCompany(id)
+  const {
+    data: areaResult,
+    isPending: isPendingArea,
+    isError: isErrorArea,
+  } = useArea(companyResult?.areaId as string, { enabled: isSuccess })
+  const {
+    data: missionsResult,
+    isPending: isPendingMissions,
+    isError: isErrorMissions,
+  } = useCompanyMissions(id, { enabled: isSuccess })
 
-      if (response.status !== SC.success.OK) {
-        toast.error(t("error"))
-      }
+  if (isPendingCompany || isPendingArea || isPendingMissions) {
+    return <Loading />
+  }
 
-      return response
-    },
-  })
-
-  const { data: areaResult, isLoading: isLoadingArea } = useQuery<
-    ApiResponse<SelectArea>
-  >({
-    enabled: isSuccess,
-    queryKey: [routes.api.areas[":id"](companyResult?.data.areaId as string)],
-    queryFn: async () => {
-      const response = await apiFetch({
-        url: routes.api.areas[":id"](companyResult?.data.areaId as string),
-      })
-
-      if (response.status !== SC.success.OK) {
-        toast.error(t("error"))
-      }
-
-      return response
-    },
-  })
-
-  const { data: missionsResult, isLoading: isLoadingMissions } = useQuery<
-    ApiResponse<SelectMission[]>
-  >({
-    enabled: isSuccess,
-    queryKey: [routes.api.companies[":id"].missions(id as string)],
-    queryFn: async () => {
-      const response = await apiFetch({
-        url: routes.api.companies[":id"].missions(id as string),
-      })
-
-      if (response.status !== SC.success.OK) {
-        toast.error(t("error"))
-      }
-
-      return response
-    },
-  })
-
-  if (isLoadingCompany || isLoadingArea || isLoadingMissions) {
-    return (
-      <div className="flex h-full items-center justify-center">
-        <Spinner />
-      </div>
-    )
+  if (isCompanyError || isErrorArea || isErrorMissions) {
+    return <AnErrorOccurred />
   }
 
   return (
@@ -89,33 +50,40 @@ const CompaniesIdPage = () => {
           <BsPersonGear className="text-5xl" />
         </Link>
         <Image
-          src={companyResult!.data.logo}
-          alt={`Logo of the company ${companyResult!.data.businessName}`}
+          src={companyResult.logo}
+          alt={`Logo of the company ${companyResult.businessName}`}
           width={360}
           height={360}
           className="rounded-md"
         />
         <div className="flex flex-col items-center gap-3">
-          <h1 className="text-5xl font-bold">
-            {companyResult?.data.businessName}
-          </h1>
-          <h2>{companyResult?.data.headQuarter}</h2>
-          <h3>{capitalizeFirstLetter(areaResult!.data.value)}</h3>
+          <h1 className="text-5xl font-bold">{companyResult?.businessName}</h1>
+          <h2>{companyResult?.headQuarter}</h2>
+          <h3>{firstLetterUppercase(areaResult!.value)}</h3>
         </div>
       </div>
-      <p className="text-xl">{companyResult?.data.description}</p>
+      <p className="text-xl">{companyResult.description}</p>
       <div className="flex flex-col items-center justify-center gap-6">
-        <h1 className="text-5xl font-bold">{t("availablesMissions")}</h1>
+        <h1 className="text-5xl font-bold">
+          {t("CompaniesId.availablesMissions")}
+        </h1>
         <div className="flex flex-col">
-          {missionsResult?.data.map((mission) => (
+          {missionsResult?.map((mission) => (
             <div className="flex flex-col" key={mission.id}>
               <h2>
                 <span className="text-2xl font-bold">{mission.title}</span> -{" "}
                 <span className="text-xl">
-                  {format.dateTimeRange(
-                    new Date(mission.startDate),
-                    new Date(mission.endDate),
-                  )}
+                  {formatter.dateTime(new Date(mission.startDate), {
+                    year: "2-digit",
+                    month: "2-digit",
+                    day: "2-digit",
+                  })}{" "}
+                  {t("Missions.to")}{" "}
+                  {formatter.dateTime(new Date(mission.endDate), {
+                    year: "2-digit",
+                    month: "2-digit",
+                    day: "2-digit",
+                  })}
                 </span>
               </h2>
               <p>{mission.description}</p>

@@ -4,8 +4,11 @@ import { type NextRequest } from "next/server"
 import appConfig from "@/config/appConfig"
 import { db } from "@/db/client"
 import { freelance, users } from "@/db/schema"
+import { SC } from "@/utils/constants/status"
 import { hashPassword } from "@/utils/hashPassword"
 import { signJWT } from "@/utils/jwt"
+
+export const runtime = "nodejs"
 
 export const POST = async (req: NextRequest) => {
   const { profile, role } = await req.json()
@@ -34,6 +37,9 @@ export const POST = async (req: NextRequest) => {
 
     return Response.json({ result: true })
   } catch (e) {
-    return Response.json({ error: e }, { status: 500 })
+    return Response.json(
+      { error: e },
+      { status: SC.serverErrors.INTERNAL_SERVER_ERROR },
+    )
   }
 }
