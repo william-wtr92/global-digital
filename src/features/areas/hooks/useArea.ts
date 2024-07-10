@@ -1,21 +1,9 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query"
-
 import type { Area } from "@/features/areas/types/area"
-import { apiFetch } from "@/lib/api"
+import { useQuery } from "@/hooks/useQuery"
+import type { OmitQueryFnAndKey } from "@/types/utils"
 import routes from "@/utils/routes"
 
-const fetchArea = async (id: string) => {
-  const response = await apiFetch({
-    url: routes.api.areas[":id"](id),
-  })
-
-  return response.data
-}
-
-export const useArea = (id: string) =>
-  useQuery<Area>({
-    queryKey: [routes.api.areas[":id"](id)],
-    queryFn: () => fetchArea(id),
-  })
+export const useArea = (id: string, options?: OmitQueryFnAndKey<Area>) =>
+  useQuery(routes.api.areas[":id"](id), options)

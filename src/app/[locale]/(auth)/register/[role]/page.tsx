@@ -49,7 +49,7 @@ const emptyProfile: FreelanceProfile = {
 }
 
 const CreateProfile = () => {
-  const { role } = useParams() as { role: string }
+  const { role } = useParams<{ role: string }>()
   const router = useRouter()
   const t = useTranslations("Form.FreelanceStep")
   const [currentStep, setCurrentStep] = useState(0)

@@ -1,11 +1,12 @@
 "use client"
 
-import { useFormatter, useTranslations } from "next-intl"
 import Image from "next/image"
 import Link from "next/link"
 import { useParams } from "next/navigation"
+import { useFormatter, useTranslations } from "next-intl"
 import { BsPersonGear } from "react-icons/bs"
 
+import { AnErrorOccurred } from "@/components/layout/errors/AnErrorOccurred"
 import { Loading } from "@/components/layout/Loading"
 import { useArea } from "@/features/areas/hooks/useArea"
 import { useCompany } from "@/features/companies/hooks/useCompany"
@@ -20,16 +21,26 @@ const CompaniesIdPage = () => {
   const {
     data: companyResult,
     isSuccess,
-    isLoading: isLoadingCompany,
+    isPending: isPendingCompany,
+    isError: isCompanyError,
   } = useCompany(id)
-  const { data: areaResult, isLoading: isLoadingArea } = useArea(
-    companyResult?.areaId as string,
-  )
-  const { data: missionsResult, isLoading: isLoadingMissions } =
-    useCompanyMissions(id, { isSuccess })
+  const {
+    data: areaResult,
+    isPending: isPendingArea,
+    isError: isErrorArea,
+  } = useArea(companyResult?.areaId as string, { enabled: isSuccess })
+  const {
+    data: missionsResult,
+    isPending: isPendingMissions,
+    isError: isErrorMissions,
+  } = useCompanyMissions(id, { enabled: isSuccess })
 
-  if (isLoadingCompany || isLoadingArea || isLoadingMissions) {
+  if (isPendingCompany || isPendingArea || isPendingMissions) {
     return <Loading />
+  }
+
+  if (isCompanyError || isErrorArea || isErrorMissions) {
+    return <AnErrorOccurred />
   }
 
   return (
@@ -39,8 +50,8 @@ const CompaniesIdPage = () => {
           <BsPersonGear className="text-5xl" />
         </Link>
         <Image
-          src={companyResult!.logo}
-          alt={`Logo of the company ${companyResult!.businessName}`}
+          src={companyResult.logo}
+          alt={`Logo of the company ${companyResult.businessName}`}
           width={360}
           height={360}
           className="rounded-md"
@@ -51,7 +62,7 @@ const CompaniesIdPage = () => {
           <h3>{firstLetterUppercase(areaResult!.value)}</h3>
         </div>
       </div>
-      <p className="text-xl">{companyResult?.description}</p>
+      <p className="text-xl">{companyResult.description}</p>
       <div className="flex flex-col items-center justify-center gap-6">
         <h1 className="text-5xl font-bold">
           {t("CompaniesId.availablesMissions")}

@@ -1,6 +1,7 @@
-import { useFormatter, useTranslations } from "next-intl"
 import Link from "next/link"
+import { useFormatter, useTranslations } from "next-intl"
 
+import { AnErrorOccurred } from "@/components/layout/errors/AnErrorOccurred"
 import Spinner from "@/components/utils/Spinner"
 import { useMissions } from "@/features/missions/hooks/useMissions"
 import { calculateDateSincePosted } from "@/utils/date"
@@ -13,10 +14,17 @@ type Props = {
 const MissionsList = ({ searchQuery }: Props) => {
   const t = useTranslations("Missions")
   const formatter = useFormatter()
-  const { data, isLoading, error } = useMissions()
-  const results = !isLoading && !error ? data?.searchResults : []
+  const { data, isPending, isError } = useMissions()
 
-  const filteredResults = results?.filter((result) => {
+  if (isPending) {
+    return <Spinner />
+  }
+
+  if (isError) {
+    return <AnErrorOccurred />
+  }
+
+  const filteredResults = data.searchResults.filter((result) => {
     const missionTitle = result.Missions.title.toLowerCase()
     const companyName = result.Company.businessName.toLowerCase()
     const query = searchQuery.toLowerCase()
@@ -24,13 +32,9 @@ const MissionsList = ({ searchQuery }: Props) => {
     return missionTitle.includes(query) || companyName.includes(query)
   })
 
-  if (isLoading) {
-    return <Spinner />
-  }
-
   return (
     <div className="flex h-full w-full flex-col gap-10 overflow-y-auto scroll-auto px-2 py-10 xl:w-1/2 xl:px-0 xl:py-0">
-      {filteredResults?.map((result) => (
+      {filteredResults.map((result) => (
         <Link
           key={result.Missions.id}
           href={routes.missions.detailedMission(result.Missions.id)}

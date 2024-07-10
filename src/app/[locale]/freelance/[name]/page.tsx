@@ -1,8 +1,8 @@
 "use client"
 
-import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { useQueryState } from "nuqs"
 import { IoSettingsOutline } from "react-icons/io5"
 import { RxPerson } from "react-icons/rx"

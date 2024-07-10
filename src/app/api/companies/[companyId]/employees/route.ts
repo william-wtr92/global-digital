@@ -18,7 +18,7 @@ export const GET = async (
       .leftJoin(role, eq(role.id, employeeRole.roleId))
       .leftJoin(users, eq(users.id, employee.userId))
 
-    return Response.json({ result: true, employees }, { status: SC.success.OK })
+    return Response.json(employees, { status: SC.success.OK })
   } catch (e) {
     return Response.json(
       { isError: true, message: "anErrorOccurred" },

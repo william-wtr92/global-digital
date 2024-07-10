@@ -11,9 +11,9 @@ import {
 import { CheckIcon } from "@radix-ui/react-icons"
 import { loadStripe } from "@stripe/stripe-js"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useFormatter, useTranslations } from "next-intl"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useFormatter, useTranslations } from "next-intl"
 import { useQueryState } from "nuqs"
 import { useState } from "react"
 import { toast } from "sonner"
@@ -90,7 +90,6 @@ const DetailMissionPage = () => {
           ? routes.api.missions.candidate.delete(id!)
           : routes.api.missions.candidate.send(id!),
         method: resultCandidate ? "DELETE" : "POST",
-        credentials: "include",
       })
 
       if (response.status !== SC.success.OK) {
@@ -115,8 +114,6 @@ const DetailMissionPage = () => {
       const response = await apiFetch({
         url: routes.api.missions.candidate.deleteByEmployee(id!, candidateId),
         method: "DELETE",
-        data: {},
-        credentials: "include",
       })
 
       if (response.status !== SC.success.OK) {
@@ -137,8 +134,6 @@ const DetailMissionPage = () => {
       const response = await apiFetch({
         url: routes.api.missions.candidate.acceptedByEmployee(id!, candidateId),
         method: "PATCH",
-        data: {},
-        credentials: "include",
       })
 
       if (response.status !== SC.success.OK) {

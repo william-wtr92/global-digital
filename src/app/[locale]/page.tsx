@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl"
 
+import { AnErrorOccurred } from "@/components/layout/errors/AnErrorOccurred"
 import { Loading } from "@/components/layout/Loading"
 import ImageTitle from "@/features/home/components/ImageTitle"
 import SearchInput from "@/features/home/components/SearchInput"
@@ -19,11 +20,7 @@ const IndexPage = () => {
   }
 
   if (isError) {
-    return (
-      <div className="flex h-full items-center justify-center text-xl">
-        {t("Error.anErrorOccurred")}
-      </div>
-    )
+    return <AnErrorOccurred />
   }
 
   return (

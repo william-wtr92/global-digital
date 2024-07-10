@@ -1,19 +1,11 @@
-import {
-  useQuery as useTanStackQuery,
-  type UndefinedInitialDataOptions,
-} from "@tanstack/react-query"
+import { useQuery as useTanStackQuery } from "@tanstack/react-query"
 
 import { apiFetch } from "@/lib/api"
+import type { OmitQueryFnAndKey } from "@/types/utils"
 import { ApiError } from "@/utils/ApiError"
 import { SC } from "@/utils/constants/status"
 
-export const useQuery = <T>(
-  url: string,
-  options?: Omit<
-    UndefinedInitialDataOptions<T, ApiError>,
-    "queryKey" | "queryFn"
-  >,
-) =>
+export const useQuery = <T>(url: string, options?: OmitQueryFnAndKey<T>) =>
   useTanStackQuery<T, ApiError>({
     queryKey: [url],
     queryFn: async () => {

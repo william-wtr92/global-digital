@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl"
 import { useQueryState } from "nuqs"
 import { RoughNotation } from "react-rough-notation"
 
+import { Loading } from "@/components/layout/Loading"
 import { useProfile } from "@/features/account/profil/hooks/useProfile"
 
 const ConfirmPaymentPage = () => {
@@ -11,8 +12,12 @@ const ConfirmPaymentPage = () => {
   const [id] = useQueryState("id")
   const { data, isLoading, isError } = useProfile(id!)
 
-  const resultProfile = !isLoading && !isError ? data?.Users : null
-  const resultFreelance = !isLoading && !isError ? data?.Freelance : null
+  if (isLoading) {
+    return <Loading />
+  }
+
+  const resultProfile = !isError ? data?.Users : null
+  const resultFreelance = !isError ? data?.Freelance : null
 
   return (
     <div className="flex h-screen flex-col items-center justify-center gap-8">
@@ -23,15 +28,15 @@ const ConfirmPaymentPage = () => {
       </RoughNotation>
       <div className="mt-10 flex items-center gap-10">
         <div className="rounded-md border-2 px-6 py-4">
-          <span>{data?.businessName[0].toUpperCase()}</span>
+          <span>{resultFreelance?.businessName[0].toUpperCase()}</span>
         </div>
         <h2 className="text-2xl font-semibold">
-          {data?.firstName} {data?.lastName}
+          {resultProfile?.firstName} {resultProfile?.lastName}
         </h2>
       </div>
       <span>
         {t("ConfirmPayment.description", {
-          name: `${data?.firstName} ${data?.lastName}`,
+          name: `${resultProfile?.firstName} ${resultProfile?.lastName}`,
         })}
       </span>
       <span>{t("ConfirmPayment.finalDescription")}</span>

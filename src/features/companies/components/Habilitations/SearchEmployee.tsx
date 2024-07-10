@@ -1,8 +1,8 @@
 "use client"
 
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useTranslations } from "next-intl"
 import { useParams } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { parseAsString, useQueryState } from "nuqs"
 import { type ChangeEvent, useEffect, useState } from "react"
 import { CiSearch } from "react-icons/ci"

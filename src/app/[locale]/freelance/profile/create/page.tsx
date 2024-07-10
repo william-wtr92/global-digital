@@ -5,9 +5,9 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 
 import CreateFreelanceProfilForm from "@/features/account/profil/components/CreateProfilForm"
-import AvatarFreelanceProfile from "@/features/freelance/components/FreelanceProfile/AvatarFreelanceProfile"
-import MoreAboutFreelanceProfileForm from "@/features/freelance/components/FreelanceProfile/MoreAboutFreelanceProfileForm"
-import PasswordProfilForm from "@/features/freelance/components/FreelanceProfile/PasswordProfilForm"
+import AvatarFreelanceProfile from "@/features/auth/register/components/AvatarFreelanceProfile"
+import MoreAboutFreelanceProfileForm from "@/features/auth/register/components/MoreAboutFreelanceProfileForm"
+import PasswordProfilForm from "@/features/auth/register/components/PasswordProfilForm"
 import type { FreelanceProfile } from "@/features/freelance/types/freelance"
 import routes from "@/utils/routes"
 

@@ -15,7 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import type { Employee } from "@/features/companies/employee/types/employee"
+import type { Employee } from "@/features/companies/employees/types/employee"
 import { useAppContext } from "@/hooks/useAppContext"
 import { apiFetch } from "@/lib/api"
 import routes from "@/utils/routes"

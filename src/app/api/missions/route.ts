@@ -35,9 +35,9 @@ export const GET = async (req: Request) => {
       { result: true, searchResults },
       { status: SC.success.OK },
     )
-  } catch (e) {
+  } catch (error) {
     return Response.json(
-      { error: e },
+      { error },
       { status: SC.serverErrors.INTERNAL_SERVER_ERROR },
     )
   }

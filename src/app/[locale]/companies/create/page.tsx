@@ -25,6 +25,7 @@ import {
 } from "@/features/companies/utils/validators/companies"
 import { apiFetch } from "@/lib/api"
 import type { ReadonlyArrayZod } from "@/types/utils"
+import type { ApiError } from "@/utils/ApiError"
 import routes from "@/utils/routes"
 import { firstLetterUppercase } from "@/utils/string"
 
@@ -40,7 +41,7 @@ const CompaniesCreatePage = () => {
   })
   const { mutateAsync } = useMutation<
     void,
-    Error,
+    ApiError,
     CompaniesCreateValidatorType
   >({
     mutationKey: [routes.api.companies.index],

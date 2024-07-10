@@ -16,8 +16,6 @@ export const GET = async (
 
     return Response.json(missionsData)
   } catch (error) {
-    console.error(error)
-
     return Response.json(
       { error },
       { status: SC.serverErrors.INTERNAL_SERVER_ERROR },

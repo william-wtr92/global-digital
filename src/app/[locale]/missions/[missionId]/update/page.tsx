@@ -1,11 +1,12 @@
 "use client"
 
 import { useMutation } from "@tanstack/react-query"
-import { useTranslations } from "next-intl"
 import { useParams, useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { RoughNotation } from "react-rough-notation"
 import { toast } from "sonner"
 
+import { Loading } from "@/components/layout/Loading"
 import MissionForm from "@/features/missions/components/MissionForm"
 import { useMission } from "@/features/missions/hooks/useMission"
 import type {
@@ -20,9 +21,9 @@ const UpdateMissionPage = () => {
   const t = useTranslations("Missions")
   const router = useRouter()
   const { missionId } = useParams<{ missionId: string }>()
-  const { data, isLoading, isError } = useMission(missionId)
+  const { data, isPending, isError } = useMission(missionId)
   const resultMission =
-    !isLoading && !isError ? data?.detailedMission.Missions : null
+    !isPending && !isError ? data.detailedMission.Missions : null
 
   const validOperating = (
     value: string | undefined,
@@ -47,7 +48,6 @@ const UpdateMissionPage = () => {
         url: routes.api.missions.updateMission(missionId),
         method: "PATCH",
         data,
-        credentials: "include",
       })
 
       if (response.status !== SC.success.OK) {
@@ -63,6 +63,10 @@ const UpdateMissionPage = () => {
 
   const handleSubmit = (data: MissionType) => {
     mutation.mutate(data)
+  }
+
+  if (isPending) {
+    return <Loading />
   }
 
   if (!data?.detailedMission.isEmployee) {
