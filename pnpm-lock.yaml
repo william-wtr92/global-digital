@@ -7985,8 +7985,6 @@ snapshots:
 
   postgres@3.4.4: {}
 
-  postgres@3.4.4: {}
-
   prelude-ls@1.2.1: {}
 
   prettier-linter-helpers@1.0.0:
