@@ -9,7 +9,7 @@
     "db:drop": "pnpm exec drizzle-kit drop",
     "db:seed": "tsx ./src/db/seed.ts",
     "dev": "next dev",
-    "dev:compose": "docker-compose --env-file .env.local -f compose.dev.yml up",
+    "dev:compose": "docker-compose --env-file .env.local up",
     "format": "prettier -c ./src",
     "format:fix": "prettier -w ./src",
     "lint": "next lint",
