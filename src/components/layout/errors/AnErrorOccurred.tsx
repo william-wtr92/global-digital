@@ -5,7 +5,7 @@ export const AnErrorOccurred = () => {
 
   return (
     <div className="flex h-full items-center justify-center text-xl">
-      {t("Error.anErrorOccurred")}
+      {t("anErrorOccurred")}
     </div>
   )
 }
